@@ -1,0 +1,137 @@
+div.login {
+    border: 1px solid #666666;
+    border-radius: 5px;
+    height: 190px;
+    margin: 0 auto;
+    padding: 1%;
+    width: 20%;
+	float:none;
+	margin-top:5%;
+}
+.login .fields{margin-left:3%}
+.login .field input[type="submit"]{width: 45%; }
+.login .field input[type="reset"]{width: 45%;}
+.login .field input[type="text"], .login .field input[type="password"]{width:150px;}
+.carriers {
+    margin: 0 auto;
+    width: 75%;
+	float:none;
+}
+
+.image_wrapper_rate {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    padding-bottom: 20px;
+    width: 93%;
+}
+.image_wrapper_rate .rates-data {
+    float: left;
+    width: 70%;
+}
+
+.rates-data .left-rates, .rates-data .right-rates, .country .left, .country .right {
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 45%;
+}
+
+.inter {
+    float: left;
+    margin-left: 4%;
+}
+
+.country {
+    float: left;
+    width: 85%;
+}
+.carier .right label,.carier .left label,.inter label,.country label,.rates-data .left-rates label,.rates-data .right-rates label,.rates-data .left-data label,.rates-data .right-data label{
+	color: #000;
+    font-size: 15px;}
+
+.country select {
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 35px;
+    line-height: 1.42857;
+    margin-top: 5px;
+    padding: 5px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 76%;
+}
+
+.rates-data .left-rates input, .rates-data .right-rates input, .right-data .boxs input {
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 1.42857;
+    margin-top: 5px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 70%;
+}
+.right-data .boxs {
+    float: left;
+    margin-right: 5%;
+    width: 17%;
+}
+
+.rates-data .left-data, .rates-data .right-data {
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 45%;
+}
+.carrier .carier h3{text-align:left;}
+
+.carrier .carier .left {
+    float: left;
+    padding-bottom: 15px;
+    padding-left: 2%;
+    width: 50%;
+	display:none;
+}
+.carrier .carier .right{width:45%;  float:left; display:none;}
+
+.carier:hover .right{display:block; }
+.carier:hover .left{display:block; }
+
+
+.carrier {
+    float: left;
+    margin-top: 0;
+    width: 20%;
+}
+
+
+.submit {
+    float: left;
+    margin-left: 4%;
+    margin-right: 10%;
+    margin-top: 15px;
+    text-align: center;
+}
+#submit {
+    background: none repeat scroll 0 0 #666666;
+    border: medium none;
+    border-radius: 5px;
+    color: white;
+    display: block;
+    float: left;
+    padding: 10px 20% !important;
+    text-align: center;
+    text-decoration: none;
+  /*  width: 100% !important;*/
+}

@@ -1,0 +1,36 @@
+Task ID,Created At,Completed At,Last Modified,Name,Assignee,Due Date,Tags,Notes,Projects,Parent Task
+2.08E+13,11/21/2014,,11/21/2014,Confirm delete before deleting any user (enter some code),,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Discount calculation bug fix in User-View,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Domestic/International destination and country selection,,,,"Phase II
+No taxes are applied to the international calculation
+Taxes applicable to various destinations inside the country",ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,CSS attach logo to each row and color each row according to carrier color scheme,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Code cleanup (pretty clean already),,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Testing & Validation for all implemented features,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Packaging & Deployment,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Privileged rate % form entry and discount rate calculation,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,GetRates:,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Phase I:,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Phase II (TODO):,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Remove welcome and news box on home,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Session maintenance with loginID displayed at the top,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Carrier selection to be saved as user settings,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Multi-Package support,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Spinner to show progress (timeout on error),,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Error handling to make sure that not all fail if one carrier service is not available,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,"Delivery date of shipment to be added <Monday November 23, 2014>",,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,User Management to be done under one page for all users,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Contact Information,,,,,,User Management to be done under one page for all users
+2.08E+13,11/21/2014,,11/21/2014,Billing Information,,,,,,User Management to be done under one page for all users
+2.08E+13,11/21/2014,,11/21/2014,Discount Rates,,,,,,User Management to be done under one page for all users
+2.08E+13,11/21/2014,,11/21/2014,Privileged User Discount Rates ,,,,,,User Management to be done under one page for all users
+2.08E+13,11/21/2014,,11/21/2014,Star User Configuration page will also have the account numbers for its account2s,,,,,,User Management to be done under one page for all users
+2.08E+13,11/21/2014,,11/21/2014,Remove discount button from nav bar,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Move Create Star User under star-user tab,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Create Shipment adding to customer accounts,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Responsive Layout Design,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,ShipSpot Logo Placement,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,GetRates: DHL/Loomis Integration,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Tracking page design: Layout & Elements,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,Search items to be saved and displayed as list on the logged in home of user,,,,,ShipSpot Web-Tool,
+2.08E+13,11/21/2014,,11/21/2014,TODO,,,,,ShipSpot Web-Tool,
