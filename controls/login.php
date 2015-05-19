@@ -3,7 +3,6 @@ session_start();
 require_once('../connections/db.php'); 
 $Email=$_POST["txt_Email"];
 $Password=$_POST["txt_Password"];
-
 if(isset($_SESSION['Email']))
 {
 	$msg =  "You are already loged in with user name ".$_SESSION['Email']." !";
@@ -17,59 +16,9 @@ else if(isset($_SESSION['Admin_Email']))
 else if($Email!="" or $Password!="")
 {
 	$rs = mysql_query("select  * from users where Email='$Email' AND Password='$Password' ",$cn)or die(mysql_error());
-	$row = mysql_fetch_array($rs);
-	$dbemail=$row["Email"];
-	$dbpass=$row["Password"];
-	$dbowner=$row["owner"];
-	$dbposted_rates =$row["Posted_Rates"];
-	$dbdisc_rates =$row["Discounted_Rates"];
-	$dbpridisc_rates =$row["privilege_discount"];
+	$row = mysql_fetch_array($rs,MYSQL_ASSOC);
 	
-	//for admin site
-	/*$rs_admin = mysql_query("select User_Id,Email,Password,Owner,Posted_Rates,Discounted_Rates from admin_users where Email='$Email' AND Password='$Password' ",$cn)or die(mysql_error());
-	$row_admin = mysql_fetch_array($rs_admin);
-	$admin_dbemail=$row_admin["Email"];
-	$admin_dbpass=$row_admin["Password"];
-	$admin_dbOwner=$row_admin["Owner"];
-	$admin_dbposted_rates =$row_admin["Posted_Rates"];
-	$admin_dbdisc_rates =$row_admin["Discounted_Rates"];
-	$admin_dbpridisc_rates =$row["privilege_discount"];*/
-		
-	
-		if($dbemail==$Email && $dbpass==$Password )  // there should be a confirm  user
-		{
-				$_SESSION['Email'] = $Email;
-				$_SESSION['Password'] = $Password;
-				$_SESSION['Posted_Rate_Flag'] = $dbposted_rates;
-				$_SESSION['Disc_Rate_Flag'] = $dbdisc_rates;
-				$_SESSION['Pri_Disc_Rate_Flag'] = $dbpridisc_rates;
-				$_SESSION['DB_UPS']  = @$row['UPS'];	  
-				$_SESSION['DB_FEDEX']  = @$row['FEDEX'];	  
-				$_SESSION['DB_CANADAPOST']  = @$row['CANADAPOST'];	  
-				$_SESSION['DB_PUROLATOR']  = @$row['PUROLATOR'];	  
-				$_SESSION['DB_TNT']  = @$row['TNT'];	  
-				$_SESSION['DB_LOOMIS']  = @$row['LOOMIS'];	  
-				$_SESSION['DB_DHL'] =  @$row['DHL'];
-				setSession($dbowner,$Email,$cn);				//set accounts variable for each carrier for login client 
-				$msg =  "Welcome User!";
-				header("location:../index.php?para=15&msg=$msg");					
-		}
-		else if($admin_dbemail == $Email&& $admin_dbpass==$Password) 
-		{
-				$_SESSION['Admin_Email'] = $Email;
-				$_SESSION['Owner'] = $admin_dbOwner;
-				$_SESSION['Posted_Rate_Flag'] = $admin_dbposted_rates;
-				$_SESSION['Disc_Rate_Flag'] = $admin_dbdisc_rates;
-				$_SESSION['Pri_Disc_Rate_Flag'] = $admin_dbpridisc_rates;
-				$_SESSION['User_Id'] = $row_admin['User_Id'];
-				
-				//$_SESSION['discount']= $admin_dbdiscount;
-				setSession($admin_dbOwner,$Email,$cn);					//set accounts variable for each carrier for admin or star user 
-
-				$msg =  "Welcome Admin!";
-				header("location:../index.php?para=6&msg=$msg");			
-		}	
-		else if(!$row)
+      if(!$row)
 		{
 			$msg ="Invalid User Name or Password";
 			header("location:../index.php?para=1&msg=$msg");
@@ -82,6 +31,7 @@ else if($Email!="" or $Password!="")
 		}
 		else
 		{
+			   $_SESSION['user'] = $row;
 				header("location:../index.php?para=3");
 		}
 }
@@ -93,6 +43,8 @@ else
 	
 	function setSession($dbowner,$Email,$cn)
 	{
+		
+		         
 				$c1 = mysql_query("select * from carriers where User_Email='$dbowner' and carrier_name = 'UPS' ",@$cn)or die(mysql_error());
 				$c2 = mysql_query("select * from carriers where User_Email='$dbowner' and carrier_name = 'Fedex' ",@$cn)or die(mysql_error());
 				$c3 = mysql_query("select * from carriers where User_Email='$dbowner' and carrier_name = 'Canada Post' ",@$cn)or die(mysql_error());

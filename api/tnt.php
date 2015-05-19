@@ -5,6 +5,11 @@
 		require_once("../admin/adminRates.php");
 		require_once("TnT/TnT.php");
 		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
+		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
 		
@@ -24,16 +29,20 @@
 		$packingType 	= $_GET['ship_type'];
 		
 		$tntRate = new tnt;
+		$selectClause = "*";
+		$whereClause = " name='TnT'";
+		$tntDetail = getGenrealCarriers($selectClause,$whereClause);
 		
-		if(isset($_SESSION['Admin_Email'])) // check if admin login or local user to give an option to select carrier
+	//	$tntDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
+		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
-				$rateData = $tntRate->setCredentials($admin_col1_tnt,$admin_col2_tnt,$admin_col3_tnt,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+				$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		}
 		else
 		{		
 			if($_SESSION['DB_TNT'] =='Y')
 			{
-			$rateData = $tntRate->setCredentials($admin_col1_tnt,$admin_col2_tnt,$admin_col3_tnt,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+			$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 			}
 		}
 		$check = array();
@@ -45,13 +54,13 @@
 				// not in array
 				if($canadaRate['rate'])
 				{
-					  if($_SESSION['Pri_Disc_Rate_Flag']=='Y'){
+					  if($userObj->is_privilege_discount == 1){
 					   
 					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_tnt'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
 						
 				   }else{
-					if($_SESSION['Disc_Rate_Flag']=='Y') ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
+					if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 					{	
 						$canDiscount =$canadaRate['rate']- ($_SESSION['discount_tnt'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
@@ -62,7 +71,7 @@
 					} 
 				   }
 				$canName = $canadaRate['name'];
-					if($_SESSION['Posted_Rate_Flag']== 'Y')
+					if($userObj->is_posted_rate == 1)
 					{
 						$canRate = $canadaRate['rate'];
 					}

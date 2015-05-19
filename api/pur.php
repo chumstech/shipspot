@@ -5,8 +5,15 @@
 		require_once("../admin/adminRates.php");
 		require_once("Purolator/purolator.php");
 		
+		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
+		
+		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
 		
 		$from 	= $_GET['txt_from'];
 		$to		= $_GET['txt_to'];
@@ -25,27 +32,32 @@
 
 		$purolatorRate = new puroRate;
 		
-		if(isset($_SESSION['Admin_Email'])) // check if admin login or local user to give an option to select carrier
+		$selectClause = "*";
+		$whereClause = " name='Purolator'";
+		$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
+		
+		//$purolatorDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
+		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
-				$rateData = $purolatorRate->setCredentials($admin_col1_purolator,$admin_col2_purolator,$admin_col3_purolator,$admin_col4_purolator,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
+				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
 		}
 		else
 		{
 			if($_SESSION['DB_PUROLATOR']=='Y')
 			{
-				$rateData = $purolatorRate->setCredentials($admin_col1_purolator,$admin_col2_purolator,$admin_col3_purolator,$admin_col4_purolator,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
+				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
 			}
 		}
 		
 		foreach($rateData as $canadaRate)
 		{
-			if($_SESSION['Pri_Disc_Rate_Flag']=='Y'){
+			if($userObj->is_privilege_discount == 1){
 					   
 					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_purolator'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
-			if($_SESSION['Disc_Rate_Flag']=='Y') ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
+			if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 			{	
 				$canDiscount = $canadaRate['rate'] - $_SESSION['discount_purolator'] * $canadaRate['rate'];
 				$canDiscount = round($canDiscount,2);
@@ -65,7 +77,7 @@
 			
 			$canDelivery = $canadaRate['deliveryDate'];
 			$canShipping = $canadaRate['shippingDate'];
-			if($_SESSION['Posted_Rate_Flag']== 'Y')
+			if($userObj->is_posted_rate == 1)
 			{
 				$canRate = $canadaRate['rate'];
 			}

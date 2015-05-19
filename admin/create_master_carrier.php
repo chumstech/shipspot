@@ -107,52 +107,37 @@ if($Submit)
 
 
 ?>
-
-<form id="form1" name="form1" method="post" action="">
-  <table width="59%" height="422" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="2"><?php echo @$msg;?></td>
-    </tr>
-    <tr>
-      <td colspan="2"><h2>Create Carriers</h2></td>
-    </tr>
-    <tr>
-      <td width="64%">Carrier Name</td>
-      <td width="36%"><?php if(isset($carrier_id)){ echo @$v_name; } else {?>
-	  <input name="txt_name" type="text" id="txt_name" value=""/><?php } ?></td>
-    </tr>
-    <tr>
-      <td>Key / CPCID </td>
-      <td><input name="txt_key" type="text" id="txt_key" value="<?php echo @$v_key; ?>"/></td>
-    </tr>
-    <tr>
-      <td>Password </td>
-      <td><input name="txt_password" type="text" id="txt_password" value="<?php echo @$v_password; ?>"/></td>
-    </tr>
-    <tr>
-      <td> Account Number / Billing Account </td>
-      <td><input name="txt_account_number" type="text" id="txt_account_number" value="<?php echo @$v_account; ?>"/></td>
-    </tr>
-    <tr>
-      <td>Shipper Number/ Meter Number / Registerd Account Number </td>
-      <td><input name="txt_shipper_number" type="text" id="txt_shipper_number" value="<?php echo @$v_other; ?>"/></td>
-    </tr>
-    <tr>
-      <td>Other Information </td>
-      <td><input name="txt_otherinfo" type="text" id="txt_otherinfo" value="<?php echo @$v_otherinfo; ?>"/></td>
-    </tr>
-    <tr>
-      <td>User Email Id </td>
-      <td><input name="txt_user" type="text" id="txt_user" value="<?php echo @$v_email; ?>"/></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td><?php if(!isset($carrier_id)){?><input name="Submit" type="submit" id="Submit" value="Submit" /> <?php } else {?>
-        <input name="Update" type="submit" id="Update" value="Update" /><?php } ?>
-      <input name="cancel" type="reset" id="cancel" value="Cancel" />      </td>
-    </tr>
-  </table>
+<div class="rates">
+<div class="message"><?php echo @$msg;?></div>
+<div class="image_wrapper_rate">
+<h3>Create Carriers</h3>
+<form style="padding: 20px 3%;">
+  <div class="form-group">
+    <?php if(isset($carrier_id)){ echo @$v_name; } else {?>
+	  <input name="txt_name" placeholder="Carrier Name" style="width: 30%;" class="form-control input-lg" type="text" id="txt_name" value=""/>
+	<?php } ?>
+  </div>
+  <div class="form-group">
+    <input name="txt_key" placeholder="Key / CPCID" style="width: 30%;" type="text" id="txt_key" value="<?php echo @$v_key; ?>"/>
+  </div>
+  <div class="form-group">
+    <input name="txt_password" placeholder="Password" style="width: 30%;" type="text" id="txt_password" value="<?php echo @$v_password; ?>"/>
+  </div>
+  <div class="form-group">
+		<input name="txt_account_number" style="width: 30%;" placeholder="Account Number / Billing Account" type="text" id="txt_account_number" value="<?php echo @$v_account; ?>"/>
+  </div>
+  <div class="form-group">
+    <input name="txt_shipper_number" style="width: 30%;" placeholder="Shipper Number/ Meter Number / Registerd Account Number" type="text" id="txt_shipper_number" value="<?php echo @$v_other; ?>"/>
+  </div>
+  <div class="form-group">
+    <input placeholder="User Email ID" style="width: 30%;" name="txt_user" type="text" id="txt_user" value="<?php echo @$v_email; ?>"/>
+  </div>
+  <div class="form-group">
+  	<textarea name="txt_otherinfo" id="txt_otherinfo" class="" style="width: 50%; height: 145px;" placeholder="Other Information"><?php echo @$v_otherinfo; ?></textarea>
+  </div>
+  <?php if(!isset($carrier_id)){?><input class="btn btn-primary" name="Submit" type="submit" id="Submit" value="Submit" /> <?php } else {?>
+        <input name="Update" class="btn btn-primary" type="submit" id="Update" value="Update" /><?php } ?>
+      <input name="cancel" class="btn btn-default" type="reset" id="cancel" value="Cancel" />      
 </form>
+</div>
+</div>

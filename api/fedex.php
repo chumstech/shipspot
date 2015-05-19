@@ -2,8 +2,13 @@
 		ini_set('display_errors',0);
 		session_start();
 		require_once('../connections/db.php');
-		require_once("../admin/adminRates.php");
+		require_once("../controls/functions.php");
 		require_once("FedEx/RateAvailableServices.php");
+		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
 		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
@@ -14,33 +19,41 @@
 		$length = $_GET['txt_length'];
 		$width 	= $_GET['txt_width'];
 		$height = $_GET['txt_height'];
-
+        
+        $selectClause = "*";
+        $whereClause = " name='Fedex'";
+		$fedexDetail = getGenrealCarriers($selectClause,$whereClause);
+		$fedexRate = new FedEx;	
 		
-		$fedexRate = new FedEx;
-		
-		if(isset($_SESSION['Admin_Email'])) // check if admin login or local user to give an option to select carrier
+		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
-			$rateData = $fedexRate->setCredentials($admin_col1_fedex,$admin_col2_fedex,$admin_col3_fedex,$admin_col4_fedex,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
+			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
+			
 		}
 		else
 		{
 			if($_SESSION['DB_FEDEX'] == 'Y')
 			{
-			$rateData = $fedexRate->setCredentials($admin_col1_fedex,$admin_col2_fedex,$admin_col3_fedex,$admin_col4_fedex,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
+			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
 			}
 		}
-	
-		foreach($rateData as $canadaRate)
+		foreach($rateData as $fedexRate)
 		{
-			if($_SESSION['Pri_Disc_Rate_Flag']=='Y'){
+			
+			
+			
+			$object = (object) array('user_id' => $userObj->id,'carrier_id' => $fedexDetail->id);
+			$carrierDiscounts =  geGenrealCarrierDiscount($object);
+			if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_fedex'] * $canadaRate['rate']);
+					   $canDiscount = $fedexRate['rate'] + ($carrierDiscounts->privilege_discount * $fedexRate['rate']);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
-			if($_SESSION['Disc_Rate_Flag']=='Y') ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
+			if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 			{	
-				$canDiscount = $canadaRate['amount']- ($_SESSION['discount_fedex'] *$canadaRate['amount']);
+				
+				$canDiscount = $fedexRate['amount']- ($carrierDiscounts->discount *$fedexRate['amount']);
 				$canDiscount = round($canDiscount,2);
 			}
 			else
@@ -49,13 +62,13 @@
 			}
 			}
 			
-			$canName = $canadaRate['serviceType'];
+			$canName = $fedexRate['serviceType'];
 			$canName = str_replace('_', ' ', $canName);
 			$canName = ucwords(strtolower($canName));
 			
-			if($_SESSION['Posted_Rate_Flag']== 'Y')
+			if($userObj->is_posted_rate == 1)
 			{
-				$canRate = $canadaRate['amount'];
+				$canRate = $fedexRate['amount'];
 			}
 			else
 			{
@@ -78,13 +91,13 @@
 				}
 				else
 				{
-					if($canadaRate['DeliveryTimestamp'])
+					if($fedexRate['DeliveryTimestamp'])
 					{
-						$canDelivery = $canadaRate['DeliveryTimestamp'];
+						$canDelivery = $fedexRate['DeliveryTimestamp'];
 						$canDelivery = date("F d Y", strtotime($canDelivery));
 						
 						$canShipping = date('Y-m-d');
-						$date1=date_create($canadaRate['DeliveryTimestamp']);
+						$date1=date_create($fedexRate['DeliveryTimestamp']);
 						$date2=date_create($canShipping);
 						$diff=date_diff($date1,$date2);
 						$canType = $diff->format("%a");
@@ -106,7 +119,7 @@
 			
 			
 			
-			$canadaRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);
+			$fedexRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);
 		}
 		//echo "NO RECORDS";
-		echo $_GET['callback'] . "(" . json_encode($canadaRates) . ")";
+		echo $_GET['callback'] . "(" . json_encode($fedexRates) . ")";

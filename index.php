@@ -4,6 +4,12 @@ session_start();
 require_once('connections/db.php'); 
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
+
+$userObj = "";
+if(isset($_SESSION['user'])){
+	$userObj = (object)	$_SESSION['user'];
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,10 +20,42 @@ $msg = @$_GET['msg'];
 <meta name="description" content="Shiping company - UPS, FedEx Rates, Purator Rates" />
 <link href="css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
 <link href="css/custom.css" rel="stylesheet" type="text/css" />
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+<link href="css/owl.transitions.css" rel="stylesheet" type="text/css" />
+<link href="css/owl.carousel.css" rel="stylesheet" type="text/css" />
+<link href="css/owl.theme.css" rel="stylesheet" type="text/css" />
+<!-- <link href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
+
+<!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
+<!-- <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
 <script src="js/apiCalls.js" type="text/javascript"></script>
 <script src="js/jquery.tablesorter.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/owl.carousel.js" type="text/javascript"></script>
+<!-- <script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script> -->
+<!-- <script src="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script> -->
+<script type="text/javascript">
+$(document).ready(function() {
+   // $('#users').dataTable();
+	// $('#starusers').dataTable();
+	// $('#carriers').dataTable();
+} );
+$(document).ready(function() {
+ 
+  $("#owl-demo").owlCarousel({
+ 
+      autoPlay: 3000, //Set AutoPlay to 3 seconds
+ 
+      items : 4,
+      itemsDesktop : [1199,3],
+      itemsDesktopSmall : [979,3]
+ 
+  });
+ 
+});
+</script>
+
  <!-- Site JavaScript -->      	
 	
         <script type="text/javascript">
@@ -67,50 +105,48 @@ $msg = @$_GET['msg'];
 </head>
 <body> 
 
-	<div id="BodyHeader"> 
-	 <ul>      
-	   		   <li><a href="index.php?para=1">Home</a></li>
-               <li><a href="index.php?para=4">Create Shipment</a></li>
-               <li><a href="index.php?para=5">Tracking</a></li>
-			   <li><a href="index.php?para=1" >Contact</a></li>
-			  
-					
+	<div id="header">
+    	<div class="topBar">
+        	    	<div class="logo"><a href="index.php"><img src="images/shipspot.png" alt="ShipSpot" /></a>
+        </div>
+        <div class="menu">
+        <ul>      
+	   		   <li class="<?php if($_GET['para']== 1){echo 'active';} ?>"><a href="index.php?para=1">Home</a></li>
+               <li class="<?php if($_GET['para']== 4){echo 'active';} ?>"><a href="index.php?para=4">Create Shipment</a></li>
+               <li class="<?php if($_GET['para']== 5){echo 'active';} ?>"><a href="index.php?para=5">Tracking</a></li>
+			   <li class="<?php if($_GET['para']== 11){echo 'active';} ?>"><a href="index.php?para=11" >Contact</a></li>
+			<?php   
+			$userObj = "";
+              if(isset($_SESSION['user'])){
+               $userObj = (object) $_SESSION['user'];
+            }
+			?>
 
-			  <?php	if (@$_SESSION['Admin_Email'] && @$_SESSION['Owner'] == "self")
-					{
+			  <?php	if ($userObj->user_type == 1)
+				{
 			?>	
-						<li><a href="index.php?para=7" class="current"> Users</a></li>
-                        <li><a href="index.php?para=3">Get Rates</a></li>
-						<li><a href="index.php?para=10" class="current"> Star Users</a></li>
-						<li><a href="index.php?para=9" class="current">Create Carriers</a></li>
+						<li class="<?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current"> Users</a></li>
+                        <li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="<?php if($_GET['para']== 10){echo 'active';} ?>"><a href="index.php?para=10" class="current"> Star Users</a></li>
+						<li class="<?php if($_GET['para']== 9){echo 'active';} ?>"><a href="index.php?para=9" class="current">Create Carriers</a></li>
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
 			<?php
-					}else if (@$_SESSION['Admin_Email'] && @$_SESSION['Owner'] != "self")
+					}else if ($userObj->email && $userObj->user_type != 1)
 					{
 					
 			?>
-            			<li><a href="index.php?para=3">Get Rates</a></li>
-						<li><a href="index.php?para=7" class="current">View Users</a></li>
+            			<li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="<?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current">View Users</a></li>
 			<?php }?>
-			
-<!--					<?php if (@$_SESSION['Admin_Email']) { ?>
-							
-                    <li><a href="index.php?para=6" class="current"> Inbox</a></li>
-                    <li><a href="./controls/logout.php" class="current"> Logout</a></li>
-					<?php	} elseif (@$_SESSION['Email']) {?>-->
-                    <li><a href="index.php?para=3">Get Rates</a></li>
-                    <!--<li><a href="index.php?para=15" class="current"> Inbox</a></li>
-                    <li><a href="./controls/logout.php" class="current"> Logout</a></li>
-					<?php } ?>-->
     </ul>
-    
-	<?php if (@$_SESSION['Admin_Email'] || @$_SESSION['Email']) { ?>
+    </div>
+        <?php if ($userObj->user_type == 1 || isset($userObj->email)) { ?>
     	
-        <?php if (@$_SESSION['Admin_Email']) {
-			 $user_name = @$_SESSION['Admin_Email'];
-			} elseif (@$_SESSION['Email']) { 
-			 $user_name = @$_SESSION['Email'];
+        <?php if ($userObj->user_type == 1) {
+			 $user_name = $userObj->email;
+			} elseif ($userObj->email) { 
+			 $user_name = $userObj->email;
 			} 
 			else
 			{
@@ -123,26 +159,27 @@ $msg = @$_GET['msg'];
 			$str = str_replace(array('_', ',', '-', '.'), ' ', $user_name);
 			$user_name =  $str;
 			?>
-    			
-	<div class="user_dashboard">
-    	<h3>Welcome <?php echo $user_name; ?></h3>
-    	<div class="left">
-        	<img alt="user" src="images/user.png" style="width:100%;" />
+            <div class="user_dashboard">
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Hi <?php echo $user_name; ?>!
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <?php if ($userObj->user_type == 1) { ?>		
+                        <li><a tabindex="-1" href="index.php?para=6">Inbox</a></li>
+                  		<li><a tabindex="-1" href="./controls/logout.php">Logout</a></li>
+                	<?php	} elseif ($userObj->email) {?>
+                		<li><a tabindex="-1" href="index.php?para=15">Inbox</a></li>
+                  		<li><a tabindex="-1" href="./controls/logout.php">Logout</a></li>
+                	<?php } ?>  
+                  </ul>
+                </div>
+                    </div>
+    		<?php } ?>
         </div>
-        <div class="right">
-				<?php if (@$_SESSION['Admin_Email']) { ?>		
-                    <a href="index.php?para=6" class="current"> Inbox</a>
-                    <a href="./controls/logout.php" class="current"> Logout</a>
-					<?php	} elseif (@$_SESSION['Email']) {?>
-                    <a href="index.php?para=15" class="current"> Inbox</a>
-                    <a href="./controls/logout.php" class="current"> Logout</a>
-				<?php } ?>
-        </div>
-    </div>
-    <?php } ?>
 	
     </div>
-    <?php // print_r($_SESSION); ?>
 		 <div id="content_wrapper">
 		     <?php 
 
@@ -157,7 +194,8 @@ $msg = @$_GET['msg'];
 		case 7 : include('admin/view_users.php'); echo "<title>Shipspot Set Owner</title>"; break ; 
 		case 8 : include('admin/create_star_users.php'); echo "<title>Shipspot Star Users</title>"; break ; 
 		case 9 : include('admin/create_master_carrier.php'); echo "<title>Shipspot Master Carriers</title>"; break ; 
-		case 10 : include('admin/view_star_usersr.php'); echo "<title>Shipspot View Star Users</title>"; break ; 
+		case 10 : include('admin/view_star_usersr.php'); echo "<title>Shipspot View Star Users</title>"; break ;
+		case 11 : include('controls/contact.php'); echo "<title>Contact Us</title>"; break ; 
 		case 13 : include('admin/set_owner.php'); echo "<title>Shipspot View Set Owner</title>"; break ; 
 		case 14 : include('admin/view_carrier.php'); echo "<title>Shipspot View Carrier</title>"; break ; 
 		case 15 : include('controls/user_inbox.php'); echo "<title>Shipspot inbox</title>"; break ; 
@@ -170,5 +208,8 @@ $msg = @$_GET['msg'];
 ?>
 		 </div>
          <p>&nbsp;</p>
+         <div class="footer">
+         All Rights Resevred Shipspot © 2015
+         </div>
 </body>
 </html>

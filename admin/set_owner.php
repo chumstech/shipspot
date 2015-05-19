@@ -2,6 +2,7 @@
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
 $User_Id = @$_GET['User_Id'];
+
 $owner_posted = @$_POST['txt_owner'];
 $show_posted = @$_POST['show_posted'];
 $show_disc = @$_POST['show_disc'];

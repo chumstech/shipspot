@@ -5,6 +5,11 @@
 		require_once("../admin/adminRates.php");
 		require_once("UPS/upsRate.php");
 		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
+		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
 		
@@ -16,29 +21,33 @@
 		$height = $_GET['txt_height'];
 		$packingType 	= $_GET['ship_type'];
 
-		$upsRate = new upsRate;
+		$selectClause = "*";
+		$whereClause = " name='UPS'";
+		$upsDetail = getGenrealCarriers($selectClause,$whereClause);
 		
-		if(isset($_SESSION['Admin_Email'])) // check if admin login or local user to give an option to select carrier
+		$upsRate = new upsRate;
+		//$fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no
+		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
-				$rateData = $upsRate->setCredentials($admin_col3_ups,$admin_col1_ups,$admin_col2_ups,$admin_col4_ups,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
+				$rateData = $upsRate->setCredentials($upsDetail->account_no,$upsDetail->api_key,$upsDetail->password,$upsRate->other_account_no,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
 		}
 		else
 		{
 			if($_SESSION['DB_UPS'] == 'Y')
 			{
-				$rateData = $upsRate->setCredentials($admin_col3_ups,$admin_col1_ups,$admin_col2_ups,$admin_col4_ups,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
+				$rateData = $upsRate->setCredentials($upsDetail->account_no,$upsDetail->api_key,$upsDetail->password,$upsRate->other_account_no,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
 			}
 		}
 		
 		foreach($rateData as $canadaRate)
 		{
-			       if($_SESSION['Pri_Disc_Rate_Flag']=='Y'){
+			       if($userObj->is_privilege_discount == 1){
 					   
 					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_ups'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
 						
 				   }else{		   
-					if($_SESSION['Disc_Rate_Flag']=='Y') ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
+					if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 					{	
 						$canDiscount = $canadaRate['rate'] - ($_SESSION['discount_ups'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
@@ -50,7 +59,7 @@
 				   }
 			$canName = $canadaRate['name'];
 			
-			if($_SESSION['Posted_Rate_Flag']== 'Y')
+			if($userObj->is_posted_rate  == 1)
 			{
 				$canRate = $canadaRate['rate'];
 			}

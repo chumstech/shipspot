@@ -1,5 +1,5 @@
 <?php
-		$rs_carrier = mysql_query("select * from carriers where User_Email='farhan_admin' order by carrier_name",$cn)or die(mysql_error());
+		$rs_carrier = mysql_query("select * from  genreal_carriers order by name",$cn)or die(mysql_error());
 		while($row_carrier = mysql_fetch_array($rs_carrier))
 		{
 			$_SESSION['admin_col1'][] = $row_carrier['carrier_key'];
@@ -43,15 +43,6 @@
 		$admin_col4_ups = $_SESSION['admin_col4'][6];
 		
 		
-function getUserSelectedCarriers($object)
-{
-	$selectedCarrier = mysql_query("select * from star_user_carrier_selected where star_user_id='$object->User_Id' ")or die(mysql_error());
-	$selectedCarriers = mysql_fetch_array($selectedCarrier,MYSQL_ASSOC);
-	if(is_array($selectedCarriers) and count($selectedCarriers) > 0){
-	  return explode(',',$selectedCarriers['selected_carrier']);
-	}else{
-		return array();
-	}
-}
+
 
 ?>

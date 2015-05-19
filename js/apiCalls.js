@@ -1,4 +1,5 @@
-var appBaseURL = document.location.protocol + '//96.126.101.70/';
+//var appBaseURL = document.location.protocol + '//96.126.101.70/';
+var appBaseURL = document.location.protocol + '//localhost/';
 function updateUserSelectedCarriers()
 {
 	var dataArry = [];

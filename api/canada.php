@@ -5,6 +5,11 @@
 		require_once("../admin/adminRates.php");
 		require_once("canadaPost/canadapost.php");
 		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
+		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
 		$from 	= $_GET['txt_from'];
@@ -21,12 +26,16 @@
 		$check_tnt 		= $_GET['check_tnt'];
 		$check_dhl 		= $_GET['check_dhl'];
 		$packingType 	= $_GET['ship_type'];
+		
+		$selectClause = "*";
+		$whereClause = " name='Canada Post'";
+		$canadaDetail = getGenrealCarriers($selectClause,$whereClause);
 
 		$canadaPostRate = new CanadaPost();
-		
-		if(isset($_SESSION['Admin_Email'])) // check if admin login or local user to give an option to select carrier
+
+		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
-				$rateData = $canadaPostRate->setCredentials($admin_col1_canada,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+				$rateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		}
 		else
 		{
@@ -38,7 +47,7 @@
 		
 		foreach($rateData as $canadaRate)
 		{
-			 if($_SESSION['Pri_Disc_Rate_Flag']=='Y'){
+			if($userObj->is_privilege_discount == 1){
 					   
 					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_canada_post'] * $canadaRate['rate']);
 						$canDiscount = round($canDiscount,2);
@@ -57,7 +66,7 @@
 			$canName = "Canada Post ".$canadaRate['name'];
 			$canDelivery = $canadaRate['deliveryDate'];
 			//$canShipping = $canadaRate['shippingDate'];
-			if($_SESSION['Posted_Rate_Flag']== 'Y')
+			if($userObj->is_posted_rate  == 1)
 			{
 				$canRate = $canadaRate['rate'];
 			}

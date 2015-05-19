@@ -84,75 +84,44 @@ if($Submit)
 
 
 ?>
-
-<form id="form1" name="form1" method="post" action="index.php?para=2">
-  <table width="33%" height="422" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan="2"><?php echo @$msg;?></td>
-    </tr>
-    <tr>
-      <td colspan="2"><h2>Sign Up</h2></td>
-    </tr>
-    <tr>
-      <td width="52%">Select Star Owner</td>
-      <td width="48%"><select name="starowner">
-      <?php while ($starowner = mysql_fetch_array($starOwners)){?>
-      <option value="<?php echo $starowner['User_Id']; ?>"><?php echo $starowner['First_Name']." ".$starowner['Last_Name']; ?></option>
+<div class="rates">
+<div class="message"><?php echo @$msg;?></div>
+<div class="image_wrapper_rate">
+<h3>Sign Up</h3>
+<form style="padding: 20px 3%;" method="post" action="index.php?para=2">
+  	<div class="form-group">
+    	<select name="starowner" style="width:31%;">
+        	<option value="">Select Star Owner</option>
+      		<?php while ($starowner = mysql_fetch_array($starOwners)){?>
+      		<option value="<?php echo $starowner['User_Id']; ?>"><?php echo $starowner['First_Name']." ".$starowner['Last_Name']; ?></option>
 		<?php }  ?>
-      </select></td>
-    </tr>
-    <tr>
-      <td width="52%">First Name: </td>
-      <td width="48%"><input name="txt_Fname" type="text" id="txt_Fname"/></td>
-    </tr>
-    <tr>
-      <td>Last Name : </td>
-      <td><input name="txt_Lname" type="text" id="txt_Lname"/></td>
-    </tr>
-    <tr>
-      <td>Address: </td>
-      <td><input name="txt_Address" type="text" id="txt_Address"/></td>
-    </tr>
-    <tr>
-      <td>Country: </td>
-      <td><select name="txt_Country" id="txt_Country">
-          <option value="CA">Canada</option>
-          <option value="US">Unites State</option>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Phone: </td>
-      <td><input name="txt_Phone_number" type="text" id="txt_Phone_number"/></td>
-    </tr>
-    <tr>
-      <td>Email:</td>
-      <td><input name="txt_Email" type="text" id="txt_Email"/></td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td><input name="txt_Password" type="text" id="txt_Password"/></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td><img src="./images/captcha.php" /></td>
-    </tr>
-    <tr>
-      <td height="58">Enter Verification Code like in above black box:</td>
-      <td><input name="vercode" type="text" id="vercode"/></td>
-    </tr>
-    <tr>
-      <td height="41">Comments: </td>
-      <td><input name="txt_Comments" type="text" id="txt_Comments"/></td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td><input name="Submit" type="submit" id="Submit" value="Submit" />
+      	</select>
+  	</div>
+  	<div class="form-group">
+    	<input name="txt_Fname" type="text" placeholder="First Name" class="form-control input-lg" style="width:30%;" id="txt_Fname"/>
+  	</div>
+    <div class="form-group">
+    	<input name="txt_Lname" placeholder="Last Name" class="form-control input-lg" style="width:30%;" type="text" id="txt_Lname"/>
+  	</div>
+    <div class="form-group">
+    	<input name="txt_Phone_number" placeholder="Phone" class="form-control input-lg" style="width:30%;" type="text" id="txt_Phone_number"/>
+  	</div>
+    <div class="form-group">
+    	<input name="txt_Email" placeholder="Email" class="form-control input-lg" style="width:30%;" type="text" id="txt_Email"/>
+  	</div>
+    <div class="form-group">
+    	<img src="./images/captcha.php" />
+  	</div>
+    <div class="form-group">
+    	<input name="vercode" placeholder="Please enter above Captcha code here" class="form-control input-lg" style="width:30%;" type="text" id="vercode"/>
+  	</div>
+    <div class="form-group">
+  	<textarea name="txt_Comments" id="txt_Comments" class="" style="width: 50%; height: 145px;" placeholder="Enter Your Comments"></textarea>
+  </div>
+  <input name="Submit" class="btn btn-primary" type="submit" id="Submit" value="Submit" />
         <span class="button float_r">
-        <input name="cancel" type="reset" id="cancel" value="Cancel" />
-      </span></td>
-    </tr>
-  </table>
+        <input name="cancel" class="btn btn-default" type="reset" id="cancel" value="Cancel" />
+      </span>
 </form>
+</div>
+</div>

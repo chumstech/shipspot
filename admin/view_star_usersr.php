@@ -1,9 +1,17 @@
+<style>
+.action {
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 3%;
+    width: 12%;
+}
+</style>
 <h2>Star Users </h2>
 <div class="action">
-	<a href="index.php?para=8" class="button">Create Star Users</a>
+	<a href="index.php?para=8" class="button btn">Create Star Users</a>
 </div>
                       
-    <table width="99%" border="0">
+    <table width="99%" border="0" id="starusers" class="table table-striped table-bordered">
       <tr>
         <?php echo @$msg;?>
       </tr>
@@ -17,18 +25,18 @@
         <td width="6%"><strong>Delete</strong></td>
       </tr>
       <?php 
-  		$QueryString = "select * from admin_users order by 1";
+  		$QueryString = "select * from users where user_type=2";
 		$Query = mysql_query($QueryString,@$cn);
 		while($data = mysql_fetch_array($Query)){
   ?>
       <tr>
-        <td><a href="index.php?para=14&Star_User_Email=<?php echo $data['Email']; ?>"><?php echo @$data['User_Id'].' - '.@$data['First_Name'].' '.@$data['Last_Name']; ?></a></td>
-        <td><?php echo @$data['Address']; ?></td>
-        <td><?php echo @$data['Country']; ?></td>
-        <td><?php echo @$data['Phone_Number']; ?></td>
-        <td><?php echo @$data['Email']; ?></td>
-        <td><?php echo @$data['Owner']; ?></td>
-        <td><a href="admin/del_selected_entity.php?Star_User_Id=<?php echo $data['User_Id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="19" title="Delete" alt="delete"/> </a></td>
+        <td><a href="index.php?para=14&Star_User_Email=<?php echo $data['email']; ?>"><?php echo @$data['id'].' - '.@$data['first_name'].' '.@$data['last_name']; ?></a></td>
+        <td><?php echo @$data['address']; ?></td>
+        <td><?php echo @$data['country']; ?></td>
+        <td><?php echo @$data['contact']; ?></td>
+        <td><?php echo @$data['email']; ?></td>
+        <td><?php echo @$data['parent_id']; ?></td>
+        <td><a href="admin/del_selected_entity.php?Star_User_Id=<?php echo $data['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="19" title="Delete" alt="delete"/> </a></td>
       </tr>
       <?php }?>
     </table>

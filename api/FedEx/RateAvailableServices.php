@@ -73,6 +73,7 @@
 																					
 																					
 					$response = $client->getRates($request);
+					//var_dump($response);
 					if(is_array($response -> RateReplyDetails))
 					{
 						

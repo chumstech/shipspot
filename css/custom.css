@@ -1,12 +1,11 @@
 div.login {
     border: 1px solid #666666;
     border-radius: 5px;
-    height: 190px;
-    margin: 0 auto;
+    float: left;
+    height: auto !important;
+    margin: 5% 38%;
     padding: 1%;
-    width: 20%;
-	float:none;
-	margin-top:5%;
+    width: 26%;
 }
 .login .fields{margin-left:3%}
 .login .field input[type="submit"]{width: 45%; }
@@ -17,14 +16,14 @@ div.login {
     width: 75%;
 	float:none;
 }
-
 .image_wrapper_rate {
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 20px;
     padding-bottom: 20px;
-    width: 93%;
+    width: 100%;
 }
 .image_wrapper_rate .rates-data {
     float: left;
@@ -47,9 +46,13 @@ div.login {
     float: left;
     width: 85%;
 }
-.carier .right label,.carier .left label,.inter label,.country label,.rates-data .left-rates label,.rates-data .right-rates label,.rates-data .left-data label,.rates-data .right-data label{
-	color: #000;
-    font-size: 15px;}
+
+.carier .right label, .carier .left label, .inter label, .country label, .rates-data .left-rates label, .rates-data .right-rates label, .rates-data .left-data label, .rates-data .right-data label {
+    color: #000;
+    display: inline !important;
+    font-size: 14px;
+}
+
 
 .country select {
     background-image: none;
@@ -64,8 +67,9 @@ div.login {
     margin-top: 5px;
     padding: 5px 12px;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-    width: 76%;
+    width: 87%;
 }
+
 
 .rates-data .left-rates input, .rates-data .right-rates input, .right-data .boxs input {
     background-image: none;
@@ -80,7 +84,7 @@ div.login {
     margin-top: 5px;
     padding: 6px 12px;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-    width: 70%;
+    width: 80%;
 }
 .right-data .boxs {
     float: left;
@@ -124,7 +128,7 @@ div.login {
     text-align: center;
 }
 #submit {
-    background: none repeat scroll 0 0 #666666;
+/*    background: none repeat scroll 0 0 #666666;
     border: medium none;
     border-radius: 5px;
     color: white;
@@ -132,6 +136,13 @@ div.login {
     float: left;
     padding: 10px 20% !important;
     text-align: center;
-    text-decoration: none;
+    text-decoration: none;*/
   /*  width: 100% !important;*/
+}
+
+
+.inter [type="radio"] {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: -5px;
 }
