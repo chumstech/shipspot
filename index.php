@@ -27,8 +27,8 @@ if(isset($_SESSION['user'])){
 <link href="css/owl.theme.css" rel="stylesheet" type="text/css" />
 <!-- <link href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 
-<!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
-<!-- <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
 <script src="js/apiCalls.js" type="text/javascript"></script>
 <script src="js/jquery.tablesorter.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>

@@ -12,30 +12,7 @@
 </div>
 </div>
 <div class="rightContent">
-	<div class="rates">
-    <div class="image_wrapper_rate">
-    <h3>How its Works</h3>
-    <div class="homeTxt">
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non velit sit amet tellus scelerisque mattis. Donec luctus fringilla odio, id sollicitudin libero molestie vitae. Sed blandit mauris ac nulla sollicitudin vehicula. Nullam in tellus lorem. Nulla ornare nisi arcu, ac volutpat lectus mollis id. Sed et pellentesque tortor. Nam vel enim vehicula, bibendum nunc non, sagittis diam. In hac habitasse platea dictumst. Fusce nunc leo, consectetur eget nisl at, mattis interdum nunc. Nulla sit amet erat viverra sapien tincidunt blandit. Cras consectetur id mi sit amet ultrices. Nulla lacinia, leo in scelerisque mattis, quam nibh vulputate ipsum, ac vehicula turpis neque et est.</p>
-    </div>
-    </div>
-</div>
-</div>
 
-<div class="rates">
-    <div class="image_wrapper_rate">
-    <h3>We Offers Shippments For</h3>
-    <div id="owl-demo">         
-      <div class="item"><img src="images/fedexSlider.gif" alt="FedEx"></div>
-      <div class="item"><img src="images/candaPostSlider.jpg" alt="Canada Post"></div>
-      <div class="item"><img src="images/dhlSlider.png" alt="DHL"></div>
-      <div class="item"><img src="images/upsSlider.png" alt="UPS"></div>
-      <div class="item"><img src="images/purolatorSlider.png" alt="Purolator"></div>
-      <div class="item"><img src="images/tntSlider.png" alt="TNT"></div>
-      <div class="item"><img src="images/loomisSlider.png" alt="Loomis"></div>
-    </div>
-    </div>
-</div>
 <?php 
 $userObj = "";
 if(isset($_SESSION['user'])){
@@ -43,10 +20,6 @@ if(isset($_SESSION['user'])){
 }
 ?>
 <?php if ($userObj->user_type == 1 || $userObj->email) { ?>
-	<div class="carriers">
-    	  <!--<h2>Carriers</h2>-->
-    	  <?php // include('carriers.php'); ?>
-    </div>
     <?php } ?>
     <?php if ($userObj->user_type != 1 && $userObj->email == '') { ?>
     <div class="login">
@@ -67,11 +40,37 @@ if(isset($_SESSION['user'])){
                          <input name="cancel" type="reset" id="cancel" value="Cancel" />
                        </div>
                          </div>
-                    </div>
-                   </div>
 			</form>
     </div>
-    <?php } ?>
+<?php } ?>
+
+	<div class="rates">
+    <div class="image_wrapper_rate">
+    <h3>How its Works</h3>
+    <div class="homeTxt">
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non velit sit amet tellus scelerisque mattis. Donec luctus fringilla odio, id sollicitudin libero molestie vitae. Sed blandit mauris ac nulla sollicitudin vehicula. Nullam in tellus lorem. Nulla ornare nisi arcu, ac volutpat lectus mollis id. Sed et pellentesque tortor. Nam vel enim vehicula, bibendum nunc non, sagittis diam. In hac habitasse platea dictumst. Fusce nunc leo, consectetur eget nisl at, mattis interdum nunc. Nulla sit amet erat viverra sapien tincidunt blandit. Cras consectetur id mi sit amet ultrices. Nulla lacinia, leo in scelerisque mattis, quam nibh vulputate ipsum, ac vehicula turpis neque et est.</p>
+    </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="rates">
+    <div class="image_wrapper_rate">
+    <h3>We Offers Shippments For</h3>
+    <div id="owl-demo">         
+      <div class="item"><img src="images/fedexSlider.gif" alt="FedEx"></div>
+      <div class="item"><img src="images/candaPostSlider.jpg" alt="Canada Post"></div>
+      <div class="item"><img src="images/dhlSlider.png" alt="DHL"></div>
+      <div class="item"><img src="images/upsSlider.png" alt="UPS"></div>
+      <div class="item"><img src="images/purolatorSlider.png" alt="Purolator"></div>
+      <div class="item"><img src="images/tntSlider.png" alt="TNT"></div>
+      <div class="item"><img src="images/loomisSlider.png" alt="Loomis"></div>
+    </div>
+    </div>
+</div>
+
 </div>
 
 
