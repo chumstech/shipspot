@@ -355,7 +355,7 @@ while($data = mysql_fetch_array($Query))
     <tr>
       <td height="41">Owner : </td>
       <td> 
-	  <?php if ($userObj->user_type == 3 && $userObj->email) 
+	  <?php if ($userObj->user_type == 1 && $userObj->email) 
 		{
 	  ?>
 	  <select name="txt_owner" id="txt_owner" >  
@@ -369,7 +369,7 @@ while($data = mysql_fetch_array($Query))
 		}
 		?>
       </select><?php }?>
-      <?php if ($userObj->user_type == 1 && $userObj->email) 
+      <?php if ($userObj->user_type == 2 && $userObj->email) 
 		{
 	  ?>
 	  <select name="txt_owner" id="txt_owner" >
@@ -402,7 +402,9 @@ while($data = mysql_fetch_array($Query))
 	$carriersOptions = '';
 		while($carrier = mysql_fetch_array($carriers))
 		{
-			if($DB_UPS =='1'){ $checked = 'checked="checked"'; } else { $checked = '';}
+			//var_dump($carrier);
+			$DB_Carrier = checkCarrierAllowed($carrier['id'],$user_id);
+			if($DB_Carrier =='1'){ $checked = 'checked="checked"'; } else { $checked = '';}
 			$carriersOptions .= '<tr>';
 			  $carriersOptions .= '<td>'.$carrier['name'].' Enabled : </td>';
 			  $carriersOptions .= '<td><input type="checkbox" name="'.str_replace(' ', '_', strtolower($carrier['name'])).'" value="1" '.$checked.'/></td>';
@@ -418,62 +420,24 @@ while($data = mysql_fetch_array($Query))
 <div id="form_discount">
   <table width="100%" border="0" align="center">
     <tr>
-      <td colspan="2"><h2>Assign Discounts to the Users</h2></td>
+      <td colspan="2"><h2>Assign Discounts</h2></td>
     </tr>
 	    <tr>
       <td colspan="2"><div align="center"><?php //echo @$msg; ?></div></td>
     </tr>
-    <tr>
-      <td width="48%">User Email </td>
-      <td width="52%"> <input name="txt_Email" type="text" id="txt_Email" value="<?php echo @$user_email; ?>" /> </td>
-    </tr>
-
-        <tr>
-          <td height="38">UPS</td>
-          <td><input name="txt_ups" type="text" id="txt_ups" value="<?php echo @$v_ups; ?>" />
-          %          </td>
-        </tr>
-        <tr>
-          <td height="38">FedEx</td>
-          <td><input name="txt_fedex" type="text" id="txt_fedex" value="<?php echo  @$v_fedex; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">Canada Post </td>
-          <td><input name="txt_canada" type="text" id="txt_canada" value="<?php echo @ $v_canada; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">Purolator Express </td>
-          <td><input name="txt_purolator" type="text" id="txt_purolator" value="<?php echo @$v_purolator; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">TnT Express </td>
-          <td><input name="txt_tnt" type="text" id="txt_tnt" value="<?php echo @$v_tnt; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">DHL</td>
-          <td><input name="txt_dhl" type="text" id="txt_dhl" value="<?php echo @$v_dhl; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td>Loomis</td>
-          <td><input name="txt_loomis" type="text" id="txt_loomis" value="<?php echo @$v_loomis; ?>" />
-          %</td>
-        </tr>
-<!--    <tr>
-      <td>&nbsp;</td>
-      <td> <?php if(@$v_user_email){ ?>
-	  <input name="Update" type="submit" id="Update" value="Update" />
-	  <?php }else{?>
-	  <input name="Submit" type="submit" id="Submit" value="Submit" /> 
-      <?php }?>
-      <input type="reset" name="Submit2" value="Reset" />
-	  
-	  </td>
-    </tr>-->
+	<?php $carriers = getCarriers();
+	$carriersOptions = '';
+		while($carrier = mysql_fetch_array($carriers))
+		{
+			//var_dump($carrier);
+			$DB_Carrier_Discount = checkCarrierDiscount($carrier['id'],$user_id);
+			$carriersDiscountOptions .= '<tr>';
+          		$carriersDiscountOptions .= '<td height="38">'.$carrier['name'].' %</td>';
+          		$carriersDiscountOptions .= '<td><input name="'.str_replace(' ', '_', strtolower($carrier['name'])).'_discount" type="text" id="'.str_replace(' ', '_', strtolower($carrier['name'])).'_discount" value="'.$DB_Carrier_Discount.'" /></td>';
+        	$carriersDiscountOptions .= '</tr>';
+		}
+		echo $carriersDiscountOptions;
+	?>
   </table>
   </div>
 <!--</form>-->
@@ -484,65 +448,31 @@ while($data = mysql_fetch_array($Query))
 <!-- <input type="hidden"  name="atxt_Email" id="atxt_Email" value="<?php echo @$user_email; ?>"/> -->
   <table width="100%" border="0" align="center">
     <tr>
-      <td colspan="2"><h2>Assign Privilege Discounts to the Users</h2></td>
+      <td colspan="2"><h2>Assign Privilege Discounts</h2></td>
     </tr>
 	    <tr>
       <td colspan="2"><div align="center"><?php //echo @$msg; ?></div></td>
     </tr>
-<!--    <tr>
-      <td width="48%">User Email </td>
-      <td width="52%"> <input name="txt_Email" type="text" id="txt_Email" value="<?php echo @$user_email; ?>" /> </td>
-    </tr>-->
-
-        <tr>
-          <td height="38">UPS</td>
-          <td><input name="atxt_ups" type="text" id="atxt_ups" value="<?php echo @$p_ups; ?>" />
-          %          </td>
-        </tr>
-        <tr>
-          <td height="38">FedEx</td>
-          <td><input name="atxt_fedex" type="text" id="atxt_fedex" value="<?php echo  @$p_fedex; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">Canada Post </td>
-          <td><input name="atxt_canada" type="text" id="atxt_canada" value="<?php echo @ $p_canada; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">Purolator Express </td>
-          <td><input name="atxt_purolator" type="text" id="atxt_purolator" value="<?php echo @$p_purolator; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">TnT Express </td>
-          <td><input name="atxt_tnt" type="text" id="atxt_tnt" value="<?php echo @$p_tnt; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td height="38">DHL</td>
-          <td><input name="atxt_dhl" type="text" id="atxt_dhl" value="<?php echo @$p_dhl; ?>" />
-          % </td>
-        </tr>
-        <tr>
-          <td>Loomis</td>
-          <td><input name="atxt_loomis" type="text" id="atxt_loomis" value="<?php echo @$p_loomis; ?>" />
-          %</td>
-        </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td> 
-    <!--  <input type="reset" name="Submit2" value="Reset" />-->
-	  
-	  </td>
-    </tr>
+		<?php $carriers = getCarriers();
+            $carriersOptions = '';
+                while($carrier = mysql_fetch_array($carriers))
+                {
+                    //var_dump($carrier);
+                    $DB_Carrier_P_Discount = checkCarrierPriviligedDiscount($carrier['id'],$user_id);
+                    $carriersPDiscountOptions .= '<tr>';
+                        $carriersPDiscountOptions .= '<td height="38">'.$carrier['name'].' %</td>';
+                        $carriersPDiscountOptions .= '<td><input name="'.str_replace(' ', '_', strtolower($carrier['name'])).'_p_discount" type="text" id="'.str_replace(' ', '_', strtolower($carrier['name'])).'_discount" value="'.$DB_Carrier_P_Discount.'" /></td>';
+                    $carriersPDiscountOptions .= '</tr>';
+                }
+                echo $carriersPDiscountOptions;
+		?>
   </table>
   </div>
   <div style="float:right;width:90px;margin-top:10px;margin-bottom:10px;margin-right:25px">
-  <?php if(@$p_user_email){ ?>
-	  <input name="Update" type="submit" id="submit" value="Update" i />
+  <?php if(isset($_GET['update'])){ ?>
+	  <input name="Update" class="btn btn-primary" type="submit" id="submit" value="Update" i />
 	  <?php }else{?>
-	  <input name="Submit" type="submit" id="Submit" value="Submit" /> 
+	  <input name="Submit" class="btn btn-primary" type="submit" id="Submit" value="Submit" /> 
       <?php }?>
       </div>
   </form>

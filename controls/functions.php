@@ -43,7 +43,6 @@ function getCarriers()
 {
   $query = "SELECT id,name from genreal_carriers";
   $ref =  mysql_query($query);
-  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
   return $ref;
 }
 
@@ -61,4 +60,28 @@ function getUserEmail($id)
   $ref =  mysql_query($query);
   $row = mysql_fetch_array($ref,MYSQL_ASSOC);
   return $row['email'] ;
+}
+
+function checkCarrierAllowed($carrier_id,$user_id)
+{
+  $query = "SELECT is_allowed from user_carrier_details where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $row['is_allowed'] ;
+}
+
+function checkCarrierDiscount($carrier_id,$user_id)
+{
+  $query = "SELECT discount from users_discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $row['discount'] ;	
+}
+
+function checkCarrierPriviligedDiscount($carrier_id,$user_id)
+{
+  $query = "SELECT privilege_discount from users_discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $row['privilege_discount'] ;	
 }
