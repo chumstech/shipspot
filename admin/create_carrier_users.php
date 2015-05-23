@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
 $First_Name = @$_POST['txt_Fname'];
