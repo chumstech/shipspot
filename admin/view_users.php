@@ -1,7 +1,7 @@
 <?php 
 function getUsers($cn)
 {
-	 $queryString = "select * from users where user_type=2 order by id";
+	 $queryString = "select * from users where user_type !=1 order by id";
 	$quesry = mysql_query($queryString,@$cn);
 	$userData = array();
 	while($data = mysql_fetch_array($quesry,MYSQL_ASSOC)){
@@ -59,10 +59,10 @@ $userData = getUsers($cn);
           <td><?php echo @$data['country']; ?></td>
           <td><?php echo @$data['contact']; ?></td>
           <td><?php echo @$data['email']; ?></td>
-          <td><?php echo @$data['parent_id']; ?>	</td>
+          <td><?php echo getUserName($data['parent_id']); ?>	</td>
 		
-        <td><a href="admin/del_selected_entity.php?User_Id=<?php echo $data['User_Id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
-        <td><a href="index.php?para=13&User_Id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
+        <td><a href="admin/del_selected_entity.php?user_id=<?php echo $data['User_Id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
+        <td><a href="index.php?para=13&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
         </tr>
            <?php if(isset($data['child']) and count($data['child']) > 0){
            	  foreach($data['child'] as $chalidData){
@@ -74,10 +74,10 @@ $userData = getUsers($cn);
           <td><?php echo @$chalidData['country']; ?></td>
           <td><?php echo @$chalidData['contact']; ?></td>
           <td><?php echo @$chalidData['email']; ?></td>
-          <td><?php echo @$chalidData['parent_id']; ?>	</td>
+          <td><?php echo getUserName($data['parent_id']); ?>	</td>
 		
-        <td><a href="admin/del_selected_entity.php?User_Id=<?php echo $chalidData['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
-        <td><a href="index.php?para=13&User_Id=<?php echo $chalidData['User_Id']; ?>&user_email=<?php echo $chalidData['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
+        <td><a href="admin/del_selected_entity.php?user_id=<?php echo $chalidData['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
+        <td><a href="index.php?para=13&user_id=<?php echo $chalidData['User_Id']; ?>&user_email=<?php echo $chalidData['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
         </tr>
            <?php 
             }

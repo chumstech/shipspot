@@ -34,7 +34,31 @@ function geGenrealCarrierDiscount(&$object)
 	$row = (object) mysql_fetch_array($ref,MYSQL_ASSOC);
 	return $row;
 }
-function getUsers()
+/*function getUsers()
 {
 	return 'i m here';
+}*/
+
+function getCarriers()
+{
+  $query = "SELECT id,name from genreal_carriers";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $ref;
+}
+
+function getUserName($id)
+{
+  $query = "SELECT last_name,first_name from users where id='".$id."' ";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $row['first_name']." ".$row['last_name'] ;
+}
+
+function getUserEmail($id)
+{
+  $query = "SELECT email from users where id=$id ";
+  $ref =  mysql_query($query);
+  $row = mysql_fetch_array($ref,MYSQL_ASSOC);
+  return $row['email'] ;
 }

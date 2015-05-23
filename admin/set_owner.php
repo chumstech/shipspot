@@ -1,7 +1,11 @@
 <?php
+$userObj = "";
+if(isset($_SESSION['user'])){
+	$userObj = (object)	$_SESSION['user'];
+}
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
-$User_Id = @$_GET['User_Id'];
+$user_id = @$_GET['user_id'];
 
 $owner_posted = @$_POST['txt_owner'];
 $show_posted = @$_POST['show_posted'];
@@ -86,9 +90,9 @@ if($Submit)
 					where User_Id= '$User_Id'";
 		
 		}
-	/*echo $QueryString;
-	die();*/
-	$Query = mysql_query($QueryString,@$cn) or die(mysql_error());
+	$Query = mysql_query($QueryString,@$cn) 
+	or 
+	die(mysql_error());
 	$msg = "Values has been updated for $Email".$UPS;
 		
 	
@@ -195,9 +199,7 @@ if($Update)
 									MBy = '$usermby' 
 					where User_Id= '$User_Id'";
 		}
-//	echo '<pre>';echo $QueryString;
-	//die();
-//	$Query = mysql_query($QueryString);
+
 	$res = mysql_query($QueryString,$cn) or die(mysql_error());
 	
 	//die(print_r($_POST));
@@ -288,20 +290,20 @@ if(isset($user_email))
 }
 
 
-$QueryString = "select * from users where User_Id= '$User_Id'";
+$QueryString = "select * from users where id= '$user_id'";
 $Query = mysql_query($QueryString,@$cn);
 while($data = mysql_fetch_array($Query))
 {
-	$First_Name = @$data['First_Name'];
-	$Last_Name  =@$data['Last_Name']; 
-	$Address  =@$data['Address'];
-	$Country  = @$data['Country'];
-	$Phone_Number = @$data['Phone_Number'];
-	$Email  = @$data['Email'];
-	$owner  = @$data['owner'];	  
-	$Posted_Rates  = @$data['Posted_Rates'];
-	$privilege_discount = @$data['privilege_discount'];	  
-	$Discounted_Rates  = @$data['Discounted_Rates'];
+	$First_Name = @$data['first_name'];
+	$Last_Name  =@$data['last_name']; 
+	$Address  =@$data['address'];
+	$Country  = @$data['country'];
+	$Phone_Number = @$data['contact'];
+	$Email  = @$data['email'];
+	$owner  = @$data['parent_id'];	  
+	$Posted_Rates  = @$data['is_posted_rate'];
+	$privilege_discount = @$data['is_privilege_discount'];	  
+	$Discounted_Rates  = @$data['is_discounted_rate'];
   	$DB_UPS  = @$data['UPS'];	  
   	$DB_FEDEX  = @$data['FEDEX'];	  
   	$DB_CANADAPOST  = @$data['CANADAPOST'];	  
@@ -352,81 +354,62 @@ while($data = mysql_fetch_array($Query))
     </tr>
     <tr>
       <td height="41">Owner : </td>
-      <td>
-	  <?php 
-	  if (@$_SESSION['Admin_Email'] && @$_SESSION['Owner'] == "self")
+      <td> 
+	  <?php if ($userObj->user_type == 3 && $userObj->email) 
 		{
 	  ?>
-	  <select name="txt_owner" id="txt_owner" >
- 		  <option selected="<?php echo @$owner;?>"><?php echo @$owner;?></option>	   
+	  <select name="txt_owner" id="txt_owner" >  
 	  <?php
-	  
-	  	$QueryString = "select distinct * from admin_users where Email != '$owner'";
-		$Query = mysql_query($QueryString,@$cn);
+	  	$QueryString = "select distinct * from users where user_type = 2";
+		$Query = mysql_query($QueryString);
 		while($data = mysql_fetch_array($Query)){
 	   ?>
-          <option value="<?php echo @$data['Email'];?>" ><?php echo @$data['Email'];?></option>
+          <option value="<?php echo @$data['id'];?>" ><?php echo @$data['first_name']." ".@$data['last_name'];?></option>
 		<?php
 		}
 		?>
-      </select><?php }?></td>
+      </select><?php }?>
+      <?php if ($userObj->user_type == 1 && $userObj->email) 
+		{
+	  ?>
+	  <select name="txt_owner" id="txt_owner" >
+ 		  <option selected="<?php echo @$owner;?>"><?php echo getUserName($owner);?></option>	   
+      </select><?php }?>
+      </td>
     </tr>
     <tr>
       <td>Show Posted Rates : </td>
       <td><select name="show_posted" id="show_posted">  
-        <option <?php if($Posted_Rates == 'Y') { echo 'selected="selected"';}?> value="Y">Yes</option>
-        <option <?php if($Posted_Rates == 'N') { echo 'selected="selected"';}?> value="N">No</option>
+        <option <?php if($Posted_Rates == '1') { echo 'selected="selected"';}?> value="1">Yes</option>
+        <option <?php if($Posted_Rates == '0') { echo 'selected="selected"';}?> value="0">No</option>
       </select>      </td>
     </tr>
     <tr>
       <td>Show Discounted Rates : </td>
       <td><select name="show_disc" id="show_disc">   
-        <option <?php if($Discounted_Rates == 'Y') { echo 'selected="selected"';}?> value="Y">Yes</option>
-        <option <?php if($Discounted_Rates == 'N') { echo 'selected="selected"';}?> value="N">No</option>
+        <option <?php if($Discounted_Rates == '1') { echo 'selected="selected"';}?> value="1">Yes</option>
+        <option <?php if($Discounted_Rates == '0') { echo 'selected="selected"';}?> value="0">No</option>
       </select></td>
     </tr>
     <tr>
       <td>Privilege Discount Enable: </td>
       <td><select name="privilege_discount" id="privilege_discount">	   
-        <option <?php if($privilege_discount == 'Y') { echo 'selected="selected"';}?> value="Y">Yes</option>
-        <option <?php if($privilege_discount == 'N') { echo 'selected="selected"';}?> value="N">No</option>
+        <option <?php if($privilege_discount == '1') { echo 'selected="selected"';}?> value="1">Yes</option>
+        <option <?php if($privilege_discount == '0') { echo 'selected="selected"';}?> value="0">No</option>
       </select></td>
     </tr>
-    <tr>
-      <td>UPS Enabled : </td>
-      <td><input type="checkbox" name="ups" value="Y" <?php if($DB_UPS =='Y'){ ?> checked="checked"<?php }?> /></td>
-    </tr>
-    <tr>
-      <td>Fedex Enabled : </td>
-      <td><input type="checkbox" name="fedex" value="Y" <?php if($DB_FEDEX =='Y'){ ?> checked="checked"<?php }?>  /></td>
-    </tr>
-    <tr>
-      <td>Canada Post Enabled : </td>
-      <td><input type="checkbox" name="canada" value="Y" <?php if($DB_CANADAPOST =='Y'){ ?> checked="checked"<?php }?> /></td>
-    </tr>
-    <tr>
-      <td>Purolator Enabled : </td>
-      <td><input type="checkbox" name="purolator" value="Y" <?php if($DB_PUROLATOR =='Y'){ ?> checked="checked"<?php }?> /></td>
-    </tr>
-    <tr>
-      <td>DHL Enabled : </td>
-      <td><input type="checkbox" name="dhl" value="Y" <?php if($DB_DHL =='Y'){ ?> checked="checked"<?php }?>  /></td>
-    </tr>
-    <tr>
-      <td>TnT Enabled : </td>
-      <td><input type="checkbox" name="tnt" value="Y" <?php if($DB_TNT =='Y'){ ?> checked="checked"<?php }?> /></td>
-    </tr>
-    <tr>
-      <td>Loomis Enabled : </td>
-      <td><input type="checkbox" name="loomis" value="Y" <?php if($DB_LOOMIS =='Y'){ ?> checked="checked"<?php }?> /></td>
-    </tr>
-<!--    <tr>
-      <td>&nbsp;</td>
-      <td><input name="Submit" type="submit" id="Submit" value="Update" />
-        <span class="button float_r">
-        <input name="cancel" type="reset" id="cancel" value="Cancel" />
-      </span></td>
-    </tr>-->
+    <?php $carriers = getCarriers();
+	$carriersOptions = '';
+		while($carrier = mysql_fetch_array($carriers))
+		{
+			if($DB_UPS =='1'){ $checked = 'checked="checked"'; } else { $checked = '';}
+			$carriersOptions .= '<tr>';
+			  $carriersOptions .= '<td>'.$carrier['name'].' Enabled : </td>';
+			  $carriersOptions .= '<td><input type="checkbox" name="'.str_replace(' ', '_', strtolower($carrier['name'])).'" value="1" '.$checked.'/></td>';
+			$carriersOptions .= '</tr>';
+		}
+		echo $carriersOptions;
+	?>
   </table>
   </div>
 
@@ -569,7 +552,7 @@ while($data = mysql_fetch_array($Query))
 
 h2 {
     color: #000;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: normal;
     line-height: 30px;
     margin: 0 0 30px;
@@ -579,7 +562,7 @@ h2 {
 #form1 {
     border: 1px solid #666 !important;
     float: left;
-    padding: 2% !important;
+    padding: 5px 2% !important;
     width: 27% !important;
 }
 #form_discount {
@@ -587,7 +570,7 @@ h2 {
     float: left;
     margin-left: 2%;
     min-height: 455px;
-    padding: 2% !important;
+    padding: 5px 2% !important;
     width: 27% !important;
 }
 
@@ -597,7 +580,7 @@ h2 {
     float: left;
     margin-left: 2%;
     min-height: 455px;
-    padding: 2% !important;
+    padding: 5px 2% !important;
     width: 27% !important;
 }
 </style>
