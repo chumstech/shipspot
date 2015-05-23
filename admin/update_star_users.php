@@ -1,4 +1,7 @@
 <?php
+
+$countries = getCountries();
+$user_id = @$_GET['user_id'];
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
 $first_name = @$_POST['txt_Fname'];
@@ -11,6 +14,12 @@ $password = @$_POST['txt_Password'];
 $user_type = 2;
 $created_by = $_SESSION['user']['id'];
 $Submit = @$_POST['Submit'];
+
+$query = "SELECT * from users where id={$user_id}";
+$res = mysql_query($query,$cn) or die(mysql_error());
+$userDetail = mysql_fetch_array($res,MYSQL_ASSOC);
+$userDetail = (object) $userDetail;
+echo '<pre>';print_r($userDetail);
 if($Submit)
 {
 	   if($email!="" & $password!="")
@@ -95,15 +104,15 @@ if($Submit)
 	<tr>
 	  <td height="36"><div align="right">First Name: </div></td>
 	  <td>        <div align="center">
-	    <input name="txt_Fname" type="text" id="txt_Fname"/>      
+	    <input name="txt_Fname" type="text" id="txt_Fname" value="<?php echo $userDetail->first_name;?>"/>      
       </div></td>
 	  <td><div align="right">Last Name : </div></td>
 	  <td width="22%">
 	    <div align="left">
-	      <input name="txt_Lname" type="text" id="txt_Lname"/>
+	      <input name="txt_Lname" type="text" id="txt_Lname" value="<?php echo $userDetail->last_name;?>"/>
           </div></td><td width="8%"><div align="right">Email:</div></td>
 	  <td><div align="center">
-	    <input name="txt_Email" type="text" id="txt_Email"/>
+	    <input name="txt_Email" type="text" id="txt_Email" value="<?php echo $userDetail->email;?>"/>
 	  </div></td>
     </tr>
 	<tr>
@@ -113,8 +122,15 @@ if($Submit)
         <div align="center">
           <select name="txt_Country" id="txt_Country">
             <option value="">------- SELECT --------</option>
-            <option value="CA">Canada</option>
-            <option value="US">Unites State</option>
+            <?php foreach($countries as $country){
+              if($country['cid'] == $userDetail->email){
+              $selected = 'selected:selected';
+              }else{
+              $selected = '';
+              }
+            	?>
+            <option value="<?=$country['cid'];?>"><?=$country['name'];?></option>
+            <?php }?>
           </select>
         </div></td>
 	  <td><div align="right">Phone: </div></td>
