@@ -70,6 +70,12 @@ function checkCarrierAllowed($carrier_id,$user_id)
   return $row['is_allowed'] ;
 }
 
+function updateCarrierAllowed($carrier_id,$user_id,$value)
+{
+  $query = "UPDATE user_carrier_details SET is_allowed = $value where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
+}
+
 function checkCarrierDiscount($carrier_id,$user_id)
 {
   $query = "SELECT discount from users_discount where user_id=$user_id AND carrier_id =$carrier_id";
@@ -78,10 +84,22 @@ function checkCarrierDiscount($carrier_id,$user_id)
   return $row['discount'] ;	
 }
 
+function updateCarrierDiscount($carrier_id,$user_id,$discount)
+{
+  $query = "UPDATE users_discount SET discount = $discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
+}
+
 function checkCarrierPriviligedDiscount($carrier_id,$user_id)
 {
   $query = "SELECT privilege_discount from users_discount where user_id=$user_id AND carrier_id =$carrier_id";
   $ref =  mysql_query($query);
   $row = mysql_fetch_array($ref,MYSQL_ASSOC);
   return $row['privilege_discount'] ;	
+}
+
+function updateCarrierPriviligedDiscount($carrier_id,$user_id,$privilege_discount)
+{
+  $query = "UPDATE users_discount SET privilege_discount = $privilege_discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $ref =  mysql_query($query);
 }

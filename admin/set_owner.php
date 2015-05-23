@@ -22,7 +22,7 @@ $userdhl 	= @$_POST['dhl'];
 $userloomis = @$_POST['loomis'];
 $userprivilege_discount = @$_POST['privilege_discount'];
 
-$Update = @$_POST['Update'];
+$Update = isset($_POST['Update']);
 
 /********** assign privillege discount fields *****************/
 
@@ -164,129 +164,56 @@ if($Submit)
 
 if($Update)
 {
+$parent_id = @$_POST['txt_owner'];
+$is_posted_rate = @$_POST['show_posted'];
+$is_discounted_rate = @$_POST['show_disc'];
+$is_privilege_discount = @$_POST['privilege_discount'];
 	
-	$privilege_discount = @$_POST['privilege_discount'];
- if (@$_SESSION['Admin_Email'] && @$_SESSION['Owner'] == "self")
-		{
-	$QueryString = "update users set 
-									owner ='$owner_posted',
-									Posted_Rates ='$show_posted', 
-									Discounted_Rates = '$show_disc', 
-									privilege_discount = '$privilege_discount',
-									UPS 	= '$userups',
-									FEDEX 	= '$userfedex',
-									CANADAPOST 	= '$usercanada',
-									PUROLATOR 	= '$userpurolator',
-									TNT 	= '$usertnt',
-									DHL 	= '$userdhl',	
-									LOOMIS	= '$userloomis',
-									MBy = '$usermby' 
-					where User_Id= '$User_Id'";
-		}
-		else
-		{
-		$QueryString = "update users set 
-									Posted_Rates ='$show_posted', 
-									Discounted_Rates = '$show_disc', 
-									privilege_discount = '$privilege_discount',
-									UPS 	= '$userups',
-									FEDEX 	= '$userfedex',
-									CANADAPOST 	= '$usercanada',
-									PUROLATOR 	= '$userpurolator',
-									TNT 	= '$usertnt',
-									DHL 	= '$userdhl',	
-									LOOMIS	= '$userloomis',
-									MBy = '$usermby' 
-					where User_Id= '$User_Id'";
-		}
 
+	$QueryString = "update users set parent_id =$parent_id, is_posted_rate =$is_posted_rate, is_discounted_rate = $is_discounted_rate, is_privilege_discount = $is_privilege_discount where id= $user_id";
+	
 	$res = mysql_query($QueryString,$cn) or die(mysql_error());
 	
-	//die(print_r($_POST));
-	if($Email!="")
+	//updating General Carriers Allowed
+	if($res)
 	{
-			$q = "update privilege_discount 
-			set UPS = '$aups',
-			Fedex = '$afedex',
-			Canada_post = '$acanada',
-			Purolator ='$apurolator',
-			TnT = '$atnt',
-			DHL = '$adhl',
-			Loomis = '$aloomis',
-			User_Email = '$Email',
-			MBy = '$aCBy' where User_Email= '$Email'";
-					
-			$res = mysql_query($q,$cn) or die(mysql_error());
-			@$msg= "Values have been Updated!";
-		//	header("location:../index.php?para=7&msg=$msg");		
-	}
-	else
-	{
-		@$msg= "User Email required!";
-		header("location:index.php?para=13&msg=$msg");	
-	}
-
-	//die(print_r($_POST));
-	if($Email!="")
-	{
-			$q = "update discount 
-			set UPS = '$ups',
-			Fedex = '$fedex',
-			Canada_post = '$canada',
-			Purolator ='$purolator',
-			TnT = '$tnt',
-			DHL = '$dhl',
-			Loomis = '$loomis',
-			User_Email = '$Email',
-			MBy = '$CBy' where User_Email= '$Email'";
-					
-			$res = mysql_query($q,$cn) or die(mysql_error());
-			@$msg= "Values have been Updated!";
-			//header("location:../index.php?para=7&msg=$msg");		
-	}
-	else
-	{
-		@$msg= "User Email required!";
-		header("location:index.php?para=16&msg=$msg");	
-	}
-
-}
-
-
-$user_email = @$_GET['user_email'];
-if(isset($user_email))
-{
-		$QueryString = "select * from discount where User_Email= '$user_email'";		
-		$Query = mysql_query($QueryString,@$cn);
-		$data = mysql_fetch_array($Query);
+		$carriers = getCarriers();
+		while($carrier = mysql_fetch_array($carriers))
+		{
+			$carrierName = str_replace(' ', '_', strtolower($carrier['name']));
+			$carrierId = $carrier['id'];
+			$value = $_POST[$carrierName];
+			if($value != 1)
+			{
+				$value = 0;
+			}
+			updateCarrierAllowed($carrierId,$user_id,$value);
+		}
 			
-			$v_user_email = @$data['User_Email'];
-			$v_ups = @$data['UPS'];
-			$v_fedex = @$data['Fedex'];
-			$v_canada = @$data['Canada_post'];
-			$v_purolator = @$data['Purolator'];
-			$v_tnt = @$data['TnT'];
-			$v_dhl = @$data['DHL'];
-			$v_loomis = @$data['Loomis'];
+		//UPDATEING Users Discounts for Carriers;
+		$carriers = getCarriers();
+		while($carrier = mysql_fetch_array($carriers))
+		{
+			$carrierName = str_replace(' ', '_', strtolower($carrier['name']))."_discount";
+			$carrierId = $carrier['id'];
+			$discount = $_POST[$carrierName];
+			updateCarrierDiscount($carrierId,$user_id,$discount);
+		}
 		
-}
-
-
-if(isset($user_email))
-{
-		$QueryStringP = "select * from privilege_discount where User_Email= '$user_email'";		
-		$QueryP = mysql_query($QueryStringP,@$cn);
-		$dataP = mysql_fetch_array($QueryP);
+		//UPDATEING Users Privileged Discounts for Carriers;
+		$carriers = getCarriers();
+		while($carrier = mysql_fetch_array($carriers))
+		{
+			$carrierName = str_replace(' ', '_', strtolower($carrier['name']))."_p_discount";
+			$carrierId = $carrier['id'];
+			$privilege_discount = $_POST[$carrierName];
+			updateCarrierPriviligedDiscount($carrierId,$user_id,$privilege_discount);
+		}
+		
+		@$msg= "User Data Updated Successfully!";
+		header("location:index.php?para=7&msg=$msg");		
+	}
 			
-			$p_user_email = @$dataP['User_Email'];
-			$p_ups = @$dataP['UPS'];
-			$p_fedex = @$dataP['Fedex'];
-			$p_canada = @$dataP['Canada_post'];
-			$p_purolator = @$dataP['Purolator'];
-			$p_tnt = @$dataP['TnT'];
-			$p_dhl = @$dataP['DHL'];
-			$p_loomis = @$dataP['Loomis'];
-		
 }
 
 
@@ -469,7 +396,7 @@ while($data = mysql_fetch_array($Query))
   </table>
   </div>
   <div style="float:right;width:90px;margin-top:10px;margin-bottom:10px;margin-right:25px">
-  <?php if(isset($_GET['update'])){ ?>
+  <?php if(isset($_GET['user_id'])){ ?>
 	  <input name="Update" class="btn btn-primary" type="submit" id="submit" value="Update" i />
 	  <?php }else{?>
 	  <input name="Submit" class="btn btn-primary" type="submit" id="Submit" value="Submit" /> 
