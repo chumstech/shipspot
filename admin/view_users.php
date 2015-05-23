@@ -53,7 +53,8 @@ $userData = getUsers($cn);
        foreach($userData as $data){
   		?>
         <tr>
-          <td><a href="index.php?para=13&User_Id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
+          
+          <td><a href="index.php?para=13&user_dd=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
 		  <?php echo @$data['id'].' - '.@$data['first_name'].' '.@$data['last_name']; ?></a></td>
           <td><?php echo @$data['address']; ?></td>
           <td><?php echo @$data['country']; ?></td>
@@ -61,14 +62,18 @@ $userData = getUsers($cn);
           <td><?php echo @$data['email']; ?></td>
           <td><?php echo getUserName($data['parent_id']); ?>	</td>
 		
-        <td><a href="admin/del_selected_entity.php?user_id=<?php echo $data['User_Id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
+        <td><a href="admin/del_selected_entity.php?user_id=<?php echo $data['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
+        <?php if($data['user_type'] == 2){?> 
+        <td><a href="index.php?para=17&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
+        <?php }else{?>
         <td><a href="index.php?para=13&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
+        <?php }?>
         </tr>
            <?php if(isset($data['child']) and count($data['child']) > 0){
            	  foreach($data['child'] as $chalidData){
             ?>
            <tr id="child_detail_<?php echo $chalidData['id']?>">
-          <td><a href="index.php?para=13&User_Id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
+          <td><a href="index.php?para=13&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
 		  <?php echo @$chalidData['id'].' - '.@$chalidData['first_name'].' '.@$chalidData['last_name']; ?></a></td>
           <td><?php echo @$chalidData['address']; ?></td>
           <td><?php echo @$chalidData['country']; ?></td>

@@ -1,4 +1,5 @@
 <?php
+$countries = getCountries();
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
 $first_name = @$_POST['txt_Fname'];
@@ -113,8 +114,9 @@ if($Submit)
         <div align="center">
           <select name="txt_Country" id="txt_Country">
             <option value="">------- SELECT --------</option>
-            <option value="CA">Canada</option>
-            <option value="US">Unites State</option>
+           <?php foreach($countries as $country){?>
+            <option value="<?=$country['cid']?>"><?=$country['name'];?></option>
+            <?php }?>
           </select>
         </div></td>
 	  <td><div align="right">Phone: </div></td>

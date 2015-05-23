@@ -200,6 +200,7 @@ $(document).ready(function() {
 		case 14 : include('admin/view_carrier.php'); echo "<title>Shipspot View Carrier</title>"; break ; 
 		case 15 : include('controls/user_inbox.php'); echo "<title>Shipspot inbox</title>"; break ; 
 		case 16 : include('admin/assign_discount.php'); echo "<title>Shipspot Assign Discount </title>"; break ; 
+		case 17 : include('admin/update_star_users.php'); echo "<title>Update Star User </title>"; break ;
 		default: 
 			echo "<title>ShipSpot Home</title>"; 
 			header("location:index.php?para=1");		
