@@ -19,7 +19,6 @@ $query = "SELECT * from users where id={$user_id}";
 $res = mysql_query($query,$cn) or die(mysql_error());
 $userDetail = mysql_fetch_array($res,MYSQL_ASSOC);
 $userDetail = (object) $userDetail;
-echo '<pre>';print_r($userDetail);
 if($Submit)
 {
 	   if($email!="" & $password!="")
@@ -123,29 +122,26 @@ if($Submit)
           <select name="txt_Country" id="txt_Country">
             <option value="">------- SELECT --------</option>
             <?php foreach($countries as $country){
-              if($country['cid'] == $userDetail->email){
+              if($country['cid'] == $userDetail->country){
               $selected = 'selected:selected';
               }else{
               $selected = '';
               }
             	?>
-            <option value="<?=$country['cid'];?>"><?=$country['name'];?></option>
+            <option <?php echo $selected;?> value="<?=$country['cid'];?>"><?=$country['name'];?></option>
             <?php }?>
           </select>
         </div></td>
 	  <td><div align="right">Phone: </div></td>
 	  <td>
 	    <div align="left">
-	      <input name="txt_Phone_number" type="text" id="txt_Phone_number"/>
+	      <input name="txt_Phone_number" type="text" id="txt_Phone_number" value="<?php echo $userDetail->contact;?>"/>
           </div></td><td><div align="right">Password:</div></td>
-	  <td><div align="center">
-	    <input name="txt_Password" type="text" id="txt_Password"/>
-	  </div></td>
     </tr>
 	<tr>
 	  <td height="55"><div align="right">Address</div></td>
 	  <td>	    <div align="center">
-	    <input name="txt_Address" type="text" id="txt_Address"/>      
+	    <input name="txt_Address" type="text" id="txt_Address" value="<?php echo $userDetail->address;?>"/>      
       </div></td>
     </tr>
 	<tr>
@@ -163,22 +159,25 @@ if($Submit)
 		$QueryString = "select * from genreal_carriers";
 		$Query = mysql_query($QueryString,@$cn);
 		while($data = mysql_fetch_array($Query)){
+           $queryString = "select * from star_user_carriers where carrier_id={$data['id']}";
+           $res = mysql_query($queryString,@$cn);
+           $row = mysql_fetch_array($res,MYSQL_ASSOC);
   		?>
         <tr>
           <td height="38"><div align="center">
-            <input type="text" name="name[]" value="<?php echo @$data['name']; ?>" />
+            <input type="text" name="name[]" value="<?php echo @$data['name']; ?>" readonly="readonly"/>
           </div></td>
           <td><div align="center">
-            <input type="text" name="col1[]" />
+            <input type="text" name="col1[]" value="<?php if(count($row) > 0){ echo $row['api_key'];}?>"/>
           </div></td>
           <td><div align="center">
-            <input type="text" name="col2[]" />
+            <input type="text" name="col2[]" value="<?php if(count($row) > 0){ echo $row['password'];}?>"/>
           </div></td>
           <td colspan="2"><div align="center">
-            <input type="text" name="col3[]" />
+            <input type="text" name="col3[]" value="<?php if(count($row) > 0){echo $row['account_no'];}?>"/>
           </div></td>
           <td><div align="center">
-            <input type="text" name="col4[]"/>
+            <input type="text" name="col4[]" value="<?php if(count($row) > 0){echo $row['other_account_no'];}?>"/>
           </div></td>
         </tr>
       <?php

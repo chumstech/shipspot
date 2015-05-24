@@ -39,14 +39,15 @@ if($Submit)
 								$col2 = @$_POST['col2'];
 								$col3 = @$_POST['col3'];
 								$col4 = @$_POST['col4'];
+								$carrier_ids = @$_POST['carrier_ids'];
 								for($i=0; $i<count($name); $i++)
 									{
 										$createdDate = date('Y-m-d H:i:s');
 										if($col1[$i]!="" || $col2[$i]!="")
 										{
 											$q1 = "insert into star_user_carriers 
-											(name, api_key, password, account_no, other_account_no,user_id,created_date,is_active)
-											values('$name[$i]','$col1[$i]','$col2[$i]','$col3[$i]','$col4[$i]',$used_id,'$createdDate',1)";
+											(name, api_key, password, account_no, other_account_no,user_id,created_date,is_active,carrier_id)
+											values('$name[$i]','$col1[$i]','$col2[$i]','$col3[$i]','$col4[$i]',$used_id,'$createdDate',1,$carrier_ids[$i])";
 											mysql_query($q1,$cn) or die(mysql_error());
 										}
 									
@@ -151,6 +152,7 @@ if($Submit)
 		while($data = mysql_fetch_array($Query)){
   		?>
         <tr>
+         <input type="hidden" name="carrier_ids[]" value="<?php echo $data['id']?>"/>
           <td height="38"><div align="center">
             <input type="text" name="name[]" value="<?php echo @$data['name']; ?>" />
           </div></td>
