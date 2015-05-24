@@ -267,14 +267,14 @@ div.login {
 
 
 .message {
-    background: none repeat scroll 0 0 khaki;
+    background: khaki none repeat scroll 0 0;
     border-radius: 5px;
     float: left;
-    line-height: 25px;
+    line-height: 35px;
     margin: 8px 0;
     padding: 0 1%;
-    text-align: center;
-    width: 96%;
+    text-align: left;
+    width: 98%;
 }
 
 
@@ -636,4 +636,24 @@ td.date {
     padding: 10px 0;
     text-align: center;
     width: 100%;
+}
+
+
+.heading {
+    background: grey none repeat scroll 0 0;
+    border-radius: 3px 3px 0 0;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0 0 20px;
+    padding: 10px 0 10px 3%;
+    width: 97%;
+}
+
+
+.heading h2 {
+    color: #fff;
+    float: left;
+    margin-bottom: 0;
+    width: 80%;
 }

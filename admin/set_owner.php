@@ -247,13 +247,10 @@ while($data = mysql_fetch_array($Query))
 <div id="form1">
   <table width="100%" height="454" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-    <tr>
       <td colspan="2"><?php echo @$msg;?></td>
     </tr>
     <tr>
-      <td colspan="2"><h2>Client Configuration  </h2></td>
+      <td colspan="2" class=""><h2>Client Configuration  </h2></td>
     </tr>
     <tr>
       <td width="52%">First Name: </td>
@@ -416,9 +413,11 @@ h2 {
     padding: 0;
 }
 
+
 #form1 {
     border: 1px solid #666 !important;
     float: left;
+    margin-bottom: 25px;
     padding: 5px 2% !important;
     width: 27% !important;
 }

@@ -1,7 +1,7 @@
 <?php 
 function getUsers($cn)
 {
-	 $queryString = "select * from users where user_type !=1 order by id";
+	 $queryString = "select * from users where user_type =2 order by id";
 	$quesry = mysql_query($queryString,@$cn);
 	$userData = array();
 	while($data = mysql_fetch_array($quesry,MYSQL_ASSOC)){
@@ -73,16 +73,16 @@ $userData = getUsers($cn);
            	  foreach($data['child'] as $chalidData){
             ?>
            <tr id="child_detail_<?php echo $chalidData['id']?>">
-          <td><a href="index.php?para=13&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
+          <td><a href="index.php?para=13&user_id=<?php echo $chalidData['id']; ?>&user_email=<?php echo $chalidData['email']; ?>">
 		  <?php echo @$chalidData['id'].' - '.@$chalidData['first_name'].' '.@$chalidData['last_name']; ?></a></td>
           <td><?php echo @$chalidData['address']; ?></td>
           <td><?php echo @$chalidData['country']; ?></td>
           <td><?php echo @$chalidData['contact']; ?></td>
           <td><?php echo @$chalidData['email']; ?></td>
-          <td><?php echo getUserName($data['parent_id']); ?>	</td>
+          <td><?php echo getUserName($chalidData['parent_id']); ?>	</td>
 		
         <td><a href="admin/del_selected_entity.php?user_id=<?php echo $chalidData['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
-        <td><a href="index.php?para=13&user_id=<?php echo $chalidData['User_Id']; ?>&user_email=<?php echo $chalidData['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
+        <td><a href="index.php?para=13&user_id=<?php echo $chalidData['id']; ?>&user_email=<?php echo $chalidData['email']; ?>"> <img src="images/edit.png" width="18" title="Edit" alt="edit"/> </a></td>
         </tr>
            <?php 
             }

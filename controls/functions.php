@@ -103,3 +103,23 @@ function updateCarrierPriviligedDiscount($carrier_id,$user_id,$privilege_discoun
   $query = "UPDATE users_discount SET privilege_discount = $privilege_discount where user_id=$user_id AND carrier_id =$carrier_id";
   $ref =  mysql_query($query);
 }
+
+/*============DEFAULT FUNCTIONS AFTER USER SIGNUP==================*/
+
+function defaultCarrierAllowed($carrier_id,$user_id,$value)
+{
+  $query = "INSERT into user_carrier_details (carrier_id,user_id,is_allowed) VALUES ($carrier_id,$user_id,$value)";
+  $ref =  mysql_query($query);
+}
+
+function defaultDiscountAllowed($carrier_id,$user_id,$value)
+{
+  $query = "INSERT into users_discount (carrier_id,user_id,discount) VALUES ($carrier_id,$user_id,$value)";
+  $ref =  mysql_query($query);
+}
+
+function defaultPriviligedDiscountAllowed($carrier_id,$user_id,$value)
+{
+  $query = "INSERT into users_discount (carrier_id,user_id,privilege_discount) VALUES ($carrier_id,$user_id,$value)";
+  $ref =  mysql_query($query);
+}
