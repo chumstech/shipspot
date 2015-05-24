@@ -126,7 +126,6 @@ $(document).ready(function() {
 			?>	
 						<li class="<?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current"> Users</a></li>
                         <li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
-						<li class="<?php if($_GET['para']== 10){echo 'active';} ?>"><a href="index.php?para=10" class="current"> Star Users</a></li>
 						<li class="<?php if($_GET['para']== 9){echo 'active';} ?>"><a href="index.php?para=9" class="current">Create Carriers</a></li>
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
