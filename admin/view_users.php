@@ -52,7 +52,7 @@ $userData = getUsers($cn);
 	//	while($data = mysql_fetch_array($quesry)){
        foreach($userData as $data){
   		?>
-        <tr>
+        <tr row-id="<?php echo $data['id']; ?>">
           
           <td><a href="index.php?para=13&user_dd=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
 		  <?php echo @$data['id'].' - '.@$data['first_name'].' '.@$data['last_name']; ?></a></td>
@@ -72,7 +72,7 @@ $userData = getUsers($cn);
            <?php if(isset($data['child']) and count($data['child']) > 0){
            	  foreach($data['child'] as $chalidData){
             ?>
-           <tr id="child_detail_<?php echo $chalidData['id']?>">
+           <tr id="child_detail_<?php echo $chalidData['id']?>" row-id="<?php echo $chalidData['id']?>" parent-id="<?php echo $data['id']; ?>">
           <td><a href="index.php?para=13&user_id=<?php echo $chalidData['id']; ?>&user_email=<?php echo $chalidData['email']; ?>">
 		  <?php echo @$chalidData['id'].' - '.@$chalidData['first_name'].' '.@$chalidData['last_name']; ?></a></td>
           <td><?php echo @$chalidData['address']; ?></td>
