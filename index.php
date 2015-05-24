@@ -29,7 +29,7 @@ if(isset($_SESSION['user'])){
 <!-- <link href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 
 <script src="js/jquery.js"></script> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jqueryui.js"></script>
 <script src="js/apiCalls.js" type="text/javascript"></script>
 <script src="js/jquery.tablesorter.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>

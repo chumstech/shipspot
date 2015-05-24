@@ -21,7 +21,16 @@ $userData = getUsers($cn);
 ?>
 <h2>View Users </h2>
 <div class="action">
-	<a href="index.php?para=2" class="button btn">Create User</a>
+	<?php if(isset($userObj) && $userObj->user_type == 1) { ?>
+    	 <div class="btn-group">
+  			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=8';">Create Star User</button>
+  			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=2';">Create User</button>
+		</div>
+    <?php } elseif(isset($userObj) && $userObj->user_type == 2) { ?>
+    	<div class="btn-group">
+  			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=2';">Create User</button>
+		</div>
+    <?php } ?>
 </div>    
 <div class="message"><?php echo $msg;?></div>                  
     <form id="form1" name="form1" method="post" action="">
