@@ -4,11 +4,11 @@
 		{
 		 function setCredentials($col1,$col2,$col3,$col4,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo) // 
 		 {
-		 $path_to_wsdl = APP_PATH."api/FedEx/RateService_v14.wsdl";
-		 //var_dump($path_to_wsdl);
+		 //$path_to_wsdl = APP_PATH."api/FedEx/RateService_v14.wsdl";
+		
+		$path_to_wsdl = "http://96.126.101.70/shipping/api/FedEx/RateService_v14.wsdl";
 		 ini_set("soap.wsdl_cache_enabled", "1");
     	$client = new SoapClient($path_to_wsdl, array('trace' => 1)); 
-		//var_dump($client);
 				$request['WebAuthenticationDetail'] = array(
 													'UserCredential' => array(
 																	'Key' => $col1, 
@@ -73,7 +73,6 @@
 																					
 																					
 					$response = $client->getRates($request);
-					//var_dump($response);
 					if(is_array($response -> RateReplyDetails))
 					{
 						

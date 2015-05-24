@@ -3,6 +3,7 @@
 		session_start();
 		require_once('../connections/db.php');
 		require_once("../admin/adminRates.php");
+		require_once("../controls/functions.php");
 		require_once("TnT/TnT.php");
 		
 		$userObj = "";
@@ -12,7 +13,7 @@
 		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
-		
+
 		$from 	= $_GET['txt_from'];
 		$to		= $_GET['txt_to'];
 		$weight = $_GET['txt_weight'];
@@ -45,6 +46,10 @@
 			$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 			}
 		}
+		
+		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $tntDetail->id);
+		$carrierDiscounts =  geGenrealCarrierDiscount($object);
+		
 		$check = array();
 		foreach($rateData as $canadaRate)
 		{
@@ -56,13 +61,13 @@
 				{
 					  if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_tnt'] * $canadaRate['rate']);
+					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100 );
 						$canDiscount = round($canDiscount,2);
 						
 				   }else{
 					if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 					{	
-						$canDiscount =$canadaRate['rate']- ($_SESSION['discount_tnt'] * $canadaRate['rate']);
+						$canDiscount =$canadaRate['rate']- ($carrierDiscounts->discount* $canadaRate['rate'] / 100 );
 						$canDiscount = round($canDiscount,2);
 					}
 					else

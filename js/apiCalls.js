@@ -28,7 +28,7 @@ function updateUserSelectedCarriers()
 function getRates()
 {       
     console.log('Fetching rates');
-	$('#loading-image').show();
+	//$('#loading-image').show();
 	$('.mainRecords').show();
 	
 	//console.log('Fetching rates from Canada Post API');
@@ -159,7 +159,7 @@ function getRates()
 			}	
 	}
 	//console.log("==========ALL DONE========");
-	setTimeout(function(){ $('#loading-image').hide(); }, 25000);
+	setTimeout(function(){ $('#loading-image').hide(); }, 2000);
 }
 
 function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo)

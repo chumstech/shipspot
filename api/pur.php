@@ -3,6 +3,7 @@
 		session_start();
 		require_once('../connections/db.php');
 		require_once("../admin/adminRates.php");
+		require_once("../controls/functions.php");
 		require_once("Purolator/purolator.php");
 		
 		
@@ -49,17 +50,20 @@
 			}
 		}
 		
+		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $purolatorDetail->id);
+		$carrierDiscounts =  geGenrealCarrierDiscount($object);
+		
 		foreach($rateData as $canadaRate)
 		{
 			if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] + ($_SESSION['privilege_discount_purolator'] * $canadaRate['rate']);
+					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
 			if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 			{	
-				$canDiscount = $canadaRate['rate'] - $_SESSION['discount_purolator'] * $canadaRate['rate'];
+				$canDiscount = $canadaRate['rate'] - ($carrierDiscounts->discount* $canadaRate['rate'] / 100 );
 				$canDiscount = round($canDiscount,2);
 			}
 			else

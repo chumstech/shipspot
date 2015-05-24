@@ -213,8 +213,7 @@ class CanadaPost
 								//$_SESSION['canada_'.$eachProduct['name']] = $eachProduct['rate'];
 								$rateData[] = $eachProduct;
 							}
-							
-							
+
 						return $rateData;	
 				}
 				

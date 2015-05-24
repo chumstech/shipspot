@@ -29,7 +29,7 @@ function getGenrealCarriers($selectClause = '*',$whereClause = "")
 
 function geGenrealCarrierDiscount(&$object)
 {
-	echo $query = "SELECT * from  users_discount WHERE user_id={$object->user_id} AND carrier_id={$object->carrier_id}" ;
+	$query = "SELECT * from  users_discount WHERE user_id={$object->user_id} AND carrier_id={$object->carrier_id}" ;
 	$ref =  mysql_query($query);
 	$row = (object) mysql_fetch_array($ref,MYSQL_ASSOC);
 	return $row;

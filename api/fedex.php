@@ -10,6 +10,7 @@
 			$userObj = (object)	$_SESSION['user'];
 		}
 		
+		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
 		
@@ -23,12 +24,12 @@
         $selectClause = "*";
         $whereClause = " name='Fedex'";
 		$fedexDetail = getGenrealCarriers($selectClause,$whereClause);
+		
 		$fedexRate = new FedEx;	
 		
 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 		{
 			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
-			
 		}
 		else
 		{
@@ -46,14 +47,16 @@
 			$carrierDiscounts =  geGenrealCarrierDiscount($object);
 			if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $fedexRate['rate'] + ($carrierDiscounts->privilege_discount * $fedexRate['rate']);
+					    $canDiscount = $fedexRate['amount'] - ($carrierDiscounts->privilege_discount * $fedexRate['amount'] / 100);
+					  //  var_dump($canDiscount);
+					   // var_dump($fedexRate['amount']);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
 			if($userObj->is_discounted_rate == 1) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
 			{	
 				
-				$canDiscount = $fedexRate['amount']- ($carrierDiscounts->discount *$fedexRate['amount']);
+				$canDiscount = $fedexRate['amount']- ($carrierDiscounts->discount *$fedexRate['amount'] / 100);
 				$canDiscount = round($canDiscount,2);
 			}
 			else

@@ -89,7 +89,7 @@ div.login {
 .right-data .boxs {
     float: left;
     margin-right: 5%;
-    width: 17%;
+    width: 16%;
 }
 
 .rates-data .left-data, .rates-data .right-data {
@@ -145,4 +145,10 @@ div.login {
     margin-left: 10px;
     margin-right: 10px;
     margin-top: -5px;
+}
+
+.pakageDetail
+{
+width:100%;
+float:left;
 }

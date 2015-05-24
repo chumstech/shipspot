@@ -14,6 +14,7 @@ class puroRate
 	
 	 function setCredentials($key,$pass,$billingAccount,$registerAccount,$postalCode,$dest_zip,$length,$width,$height,$weight)
 	 {
+
 		$this->PRODUCTION_KEY = $key;
 		$this->PRODUCTION_PASS = $pass;
 		$this->BILLING_ACCOUNT = $billingAccount;	
@@ -23,16 +24,17 @@ class puroRate
 		$this->Disc = $disc;
 		$this->Weight = $weight; 
 		$rateData = $this->getRates();
-		//var_dump($rateData);
+
 		return $rateData;
 	}
 
 	function createPWSSOAPClient()
 	{
-		$path_to_wsdl = APP_PATH."/api/Purolator/EstimatingService.wsdl";
+		//$path_to_wsdl = APP_PATH."/api/Purolator/EstimatingService.wsdl";
+		$path_to_wsdl = "http://96.126.101.70/shipping/api/Purolator/EstimatingService.wsdl";
   		$client1 = new SoapClient( $path_to_wsdl, 
                             array	(
-                                    'trace'			=>	true,
+                                    'trace'			=>	1,
                                     'location'	=>	"https://devwebservices.purolator.com/PWS/V1/Estimating/EstimatingService.asmx",
 									'uri'				=>	"http://purolator.com/pws/datatypes/v1",
                                     'login'			=>	$this->PRODUCTION_KEY,

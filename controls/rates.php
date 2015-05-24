@@ -74,7 +74,7 @@ require_once("functions.php");
                 </div>
                 <?php  } ?>
             </div>
-            <div class="right-data">
+            <div class="right-data pakageDetail">
             	 <div class="boxs">
                <input placeholder="Weight" name="txt_weight" type="text" id="txt_weight" size="10"  value="<?php echo $weight;?>" />
                </div>
@@ -87,7 +87,14 @@ require_once("functions.php");
                <div class="boxs dm">
                 <input placeholder="Height" name="txt_height" type="text" id="txt_height" size="10"  value="<?php echo $height;?>"/>      
                </div>
+           <!--     <div class="" style="margin-top: 10px;float: left">
+                <a href="javascript:;"> <img src="images/icn_plus01.png"/> </a>     
+               </div>
+               <div class="" style="float: left; margin-top: 10px; margin-left: 5px;">
+                <a href="javascript:;"> <img src="images/icn_minus.png"/> </a>     
+               </div>--> 
 		 </div>
+		 
         </div>    
             
             <div class="submit">
@@ -97,8 +104,8 @@ require_once("functions.php");
           <input name="checkPur" type="hidden" id="checkPur" value="0" />
           <input name="checkUps" type="hidden" id="checkUps" value="0" />
           <input name="checkTnt" type="hidden" id="checkTnt" value="0" />
-          <input name="checkPostRates" type="hidden" id="checkPostRates" value="" />
-          <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="" />
+          <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
+          <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
            <input name="star_user_id" type="hidden" id="star_user_id" value="<?php $userObj->id?>" />
              <input name="submit" class="btn btn-primary" type="button" id="submit" onclick="return getRates();" value="Get Rates" />
          	</div>
