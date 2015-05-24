@@ -11,6 +11,9 @@ $country  = @$_POST['txt_Country'];
 $phone_number = @$_POST['txt_Phone_number'];
 $email  = @$_POST['txt_Email'];
 $password = @$_POST['txt_Password'];
+$new_carier_ids = @$_POST['new_carrier_id'];
+$update_carier_ids = @$_POST['update_carrier_id'];
+
 $user_type = 2;
 $created_by = $_SESSION['user']['id'];
 $Submit = @$_POST['Submit'];
@@ -21,7 +24,7 @@ $userDetail = mysql_fetch_array($res,MYSQL_ASSOC);
 $userDetail = (object) $userDetail;
 if($Submit)
 {
-	   if($email!="" & $password!="")
+	   if($email!="")
 	   {
 						if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  
 						{
@@ -31,58 +34,55 @@ if($Submit)
 						}
 						else
 						{
-
-							$res=mysql_query("select *from users where email='$email'",$cn) or die(mysql_error());
-							if(mysql_num_rows($res)<1)
-							{
 								$user_created_date = date('Y-m-d H:i:s');
-								 $q = "insert into users 
-								(first_name, last_name, address, country, email, password, contact,user_type,created_date,created_by,status)
-								values('$first_name','$last_name','$address','$country','$email','$password','$phone_number',$user_type,'$user_created_date',$created_by,1)";
+								$q = "UPDATE users set first_name='$first_name',last_name='$last_name',address='$address',country='$country',email='$email',contact='$phone_number' WHERE id={$user_id}";
+// 								(first_name, last_name, address, country, email, password, contact,created_date,created_by,status)
+// 								values('$first_name','$last_name','$address','$country','$email','$password','$phone_number',$user_type,'$user_created_date',$created_by,1)";
 								$res = mysql_query($q,$cn) or die(mysql_error());
-								$used_id = mysql_insert_id($cn);
 								$name = @$_POST['name'];
 								$col1 = @$_POST['col1'];
 								$col2 = @$_POST['col2'];
 								$col3 = @$_POST['col3'];
 								$col4 = @$_POST['col4'];
-								for($i=0; $i<count($name); $i++)
+								for($i=0; $i<count($new_carier_ids); $i++)
 									{
 										$createdDate = date('Y-m-d H:i:s');
 										if($col1[$i]!="" || $col2[$i]!="")
 										{
-											$q1 = "insert into star_user_carriers 
-											(name, api_key, password, account_no, other_account_no,user_id,created_date,is_active)
-											values('$name[$i]','$col1[$i]','$col2[$i]','$col3[$i]','$col4[$i]',$used_id,'$createdDate',1)";
+										   $q1 = "insert into star_user_carriers 
+											(name, api_key, password, account_no, other_account_no,user_id,created_date,is_active,carrier_id)
+											values('$name[$i]','$col1[$i]','$col2[$i]','$col3[$i]','$col4[$i]',$user_id,'$createdDate',1,$new_carier_ids[$i])";
 											mysql_query($q1,$cn) or die(mysql_error());
 										}
 									
 									}
+									for($i=0; $i<count($update_carier_ids); $i++)
+									{
+									if($col1[$i]!="" || $col2[$i]!="")
+									{
+									$q1 = "UPDATE star_user_carriers SET name='$name[$i]',api_key='$col1[$i]',password='$col2[$i]',account_no='$col3[$i]',other_account_no='$col4[$i]' Where carrier_id={$update_carier_ids[$i]}";
+									mysql_query($q1,$cn) or die(mysql_error());
+									}
+										
+									}
 										if($res) 
 										{
-											@$msg= "Your are registerd now!";
-											header("location:index.php?para=8&msg=$msg");				
+											@$msg= "User update successfully now!";
+											header("location:index.php?para=17&user_id={$user_id}&msg=$msg");				
 										}
 										else
 										{
 											
 											@$msg="All fields are required";
-											header("location:index.php?para=8&msg=$msg");					
+											header("location:index.php?para=17&user_id={$user_id}&msg=$msg");					
 										}
-							}
-							else
-							{
-								@$msg = "A user has already signed up with the same email address";	
-								header("location:index.php?para=8&msg=$msg");					
-			
-							}
 						}
 				
 		}
 		else
 		{
 			@$msg="Email and Password both are require!";
-			header("location:index.php?para=8&msg=$msg");					
+			header("location:index.php?para=17&user_id={$user_id}&msg=$msg");					
 
 		}
 }	
@@ -90,7 +90,8 @@ if($Submit)
 
 ?>
 
-<form id="form1" name="form1" method="post" action="index.php?para=8">
+<form id="form1" name="form1" method="post" action="">
+ <input type="hidden" name="user_id" value="<?php echo $userDetail->id;?>">
   
   <table width="83%" border="0" align="center" cellpadding="0" cellspacing="0">
 	
@@ -123,7 +124,7 @@ if($Submit)
             <option value="">------- SELECT --------</option>
             <?php foreach($countries as $country){
               if($country['cid'] == $userDetail->country){
-              $selected = 'selected:selected';
+              $selected = "selected='selected'";
               }else{
               $selected = '';
               }
@@ -136,7 +137,7 @@ if($Submit)
 	  <td>
 	    <div align="left">
 	      <input name="txt_Phone_number" type="text" id="txt_Phone_number" value="<?php echo $userDetail->contact;?>"/>
-          </div></td><td><div align="right">Password:</div></td>
+          </div></td>
     </tr>
 	<tr>
 	  <td height="55"><div align="right">Address</div></td>
@@ -162,8 +163,16 @@ if($Submit)
            $queryString = "select * from star_user_carriers where carrier_id={$data['id']}";
            $res = mysql_query($queryString,@$cn);
            $row = mysql_fetch_array($res,MYSQL_ASSOC);
+           if($row == FALSE){
+             $row = array();
+           }
   		?>
         <tr>
+        <?php if(count($row) > 0){?>
+          <input type="hidden" name="update_carrier_id[]" value="<?php if(count($row) > 0){ echo $row['carrier_id'];}?>"/>
+      <?php }else{?>
+        <input type="hidden" name="new_carrier_id[]" value="<?php echo $data['id'];?>"/>
+      <?php }?>
           <td height="38"><div align="center">
             <input type="text" name="name[]" value="<?php echo @$data['name']; ?>" readonly="readonly"/>
           </div></td>
