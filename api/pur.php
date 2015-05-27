@@ -23,6 +23,8 @@
 		$width 	= $_GET['txt_width'];
 		$height = $_GET['txt_height'];
 		
+		
+		
 		$check_canada 	= $_GET['check_canada'];;
 		$check_ups 		= $_GET['check_ups'];
 		$check_puro 	= $_GET['check_puro'];

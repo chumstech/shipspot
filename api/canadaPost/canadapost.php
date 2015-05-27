@@ -10,7 +10,7 @@ class CanadaPost
 	protected $errorMessage;
 	
 
-		public function setMain($cpc_no,$from,$countryFrom)
+		public function setMain($cpc_no,$from)
 		 {
 			$this->merchatInfo = array( 
  			'merchantCPCID' => $cpc_no,   //'CPC_MY_STORE',
@@ -35,12 +35,12 @@ class CanadaPost
 		$this->merchantInfo['itemsPrice'] = $itemPrice;
 	}	
 	
-	public function setCustomer($to) 
+	public function setCustomer($to,$countryTo) 
 	{
 		$this->customerInfo = array( 
 				'city' => '',
 				'provOrState' => '',
-				'country' => 'CA',
+				'country' => $countryTo,
 				'postalCode' => $to,
 			 						) ;
 	}
@@ -193,7 +193,7 @@ class CanadaPost
 	
 	public function setCredentials($cpc_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo)
 	{	
-		 $this->setMain($cpc_no,$from,$countryFrom);
+		 $this->setMain($cpc_no,$from);
 		 $this->setCustomer($to,$countryTo);
 		 $this->addProduct($weight,$length,$width,$height);		
 		 $this->setPrice(15);	

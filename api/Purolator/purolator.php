@@ -10,9 +10,15 @@ class puroRate
 	var $PRODUCTION_PASS;
 	var $BILLING_ACCOUNT;
 	var $REGISTERED_ACCOUNT;
+	var $From;
+	var $To;
+	var $Disc;
+	var $Weight;
+	var $countryFrom;
+	var $countryTo;
 	
 	
-	 function setCredentials($key,$pass,$billingAccount,$registerAccount,$postalCode,$dest_zip,$length,$width,$height,$weight)
+	 function setCredentials($key,$pass,$billingAccount,$registerAccount,$postalCode,$dest_zip,$length,$width,$height,$weight,$countryFrom,$countryTo)
 	 {
 
 		$this->PRODUCTION_KEY = $key;
@@ -23,6 +29,9 @@ class puroRate
 		$this->To= $dest_zip; 
 		$this->Disc = $disc;
 		$this->Weight = $weight; 
+		$this->countryTo = $countryTo;
+		$this->countryFrom = $countryFrom;
+		
 		$rateData = $this->getRates();
 
 		return $rateData;
@@ -60,7 +69,7 @@ class puroRate
 		
 		$request1->BillingAccountNumber = $this->BILLING_ACCOUNT;
 		$request1->SenderPostalCode = $this->From;
-		$request1->ReceiverAddress->Country = "CA";
+		$request1->ReceiverAddress->Country = $this->countryFrom;
 		$request1->ReceiverAddress->PostalCode = $this->To;  
 		$request1->PackageType = "CustomerPackaging";
 		$request1->TotalWeight->Value = $this->Weight;
