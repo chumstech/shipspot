@@ -10,6 +10,7 @@ function getUserSelectedCarriers($object)
 	}
 }
 
+
 function getCountries()
 {
    $query = mysql_query("select * from countries")or die(mysql_error());
@@ -25,6 +26,18 @@ function getGenrealCarriers($selectClause = '*',$whereClause = "")
   $ref =  mysql_query($query);
   $row = (object) mysql_fetch_array($ref,MYSQL_ASSOC);
   return $row;
+}
+
+function getStarUserCarriers($selectClause = '*',$whereClause = "")
+{
+	$query = "SELECT {$selectClause} from star_user_carriers WHERE {$whereClause}" ;
+	$ref =  mysql_query($query);
+	$row = mysql_fetch_array($ref,MYSQL_ASSOC);
+	if(count($row) > 0){
+		return (object) $row;
+	}else{
+		return array();
+	}
 }
 
 function geGenrealCarrierDiscount(&$object)
@@ -83,7 +96,13 @@ function checkCarrierDiscount($carrier_id,$user_id)
   $row = mysql_fetch_array($ref,MYSQL_ASSOC);
   return $row['discount'] ;	
 }
-
+function getUserDetailById($id)
+{
+	$query = "SELECT * from users where id=$id ";
+	$ref =  mysql_query($query);
+	$row = mysql_fetch_array($ref,MYSQL_ASSOC);
+	return $row ;
+}
 function updateCarrierDiscount($carrier_id,$user_id,$discount)
 {
   $query = "UPDATE users_discount SET discount = $discount where user_id=$user_id AND carrier_id =$carrier_id";

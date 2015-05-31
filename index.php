@@ -10,7 +10,6 @@ $userObj = "";
 if(isset($_SESSION['user'])){
 	$userObj = (object)	$_SESSION['user'];
 }
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -180,9 +179,12 @@ $(document).ready(function() {
     </div>
 		 <div id="content_wrapper">
 		     <?php 
-
+		     if(!isset($_SESSION['user'])){
+		     	include('controls/home.php'); echo "<title>Shipspot Home</title>"; break ; 
+		     }else{
 	switch($para)
 	{
+
 		case 1 : include('controls/home.php'); echo "<title>Shipspot Home</title>"; break ; 
 		case 2 : include('controls/signup.php'); echo  "<title>Shipspot Signup</title>"; break ; 
 		case 3 : include('controls/rates.php'); echo "<title>Shipspot Rates</title>"; break ; 
@@ -202,6 +204,7 @@ $(document).ready(function() {
 		default: 
 			echo "<title>ShipSpot Home</title>"; 
 			header("location:index.php?para=1");		
+	}
 	}
 
 ?>

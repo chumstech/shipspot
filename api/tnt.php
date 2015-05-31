@@ -30,22 +30,41 @@
 		$packingType 	= $_GET['ship_type'];
 		
 		$tntRate = new tnt;
-		$selectClause = "*";
-		$whereClause = " name='TnT'";
-		$tntDetail = getGenrealCarriers($selectClause,$whereClause);
+		
+		if($userObj->is_privilege_discount == 1 ){
+			$selectClause = "*";
+			if($userObj->parent_id != 0 and $userObj->user_type ==  3){
+				$starUserDetail = getUserDetailById($userObj->parent_id);
+				$starUserDetail = (object) $starUserDetail;
+				$whereClause = " name='TnT' AND user_id = $starUserDetail->id";
+			}else if($userObj->user_type ==  2){
+				$whereClause = " name='TnT' AND user_id = $userObj->id";
+			}
+			$tntDetail = getStarUserCarriers($selectClause,$whereClause);
+			if(count($tntDetail) == 0){
+				$selectClause = "*";
+				$whereClause = " name='TnT'";
+				$tntDetail = getGenrealCarriers($selectClause,$whereClause);
+			}
+		}else{
+			$selectClause = "*";
+			$whereClause = " name='TnT'";
+			$tntDetail = getGenrealCarriers($selectClause,$whereClause);
+		}
+		$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		
 	//	$tntDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
-		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-		{
-				$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-		}
-		else
-		{		
-			if($_SESSION['DB_TNT'] =='Y')
-			{
-			$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-			}
-		}
+// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
+// 		{
+// 				$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+// 		}
+// 		else
+// 		{		
+// 			if($_SESSION['DB_TNT'] =='Y')
+// 			{
+// 			$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+// 			}
+// 		}
 		
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $tntDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);

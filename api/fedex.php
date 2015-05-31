@@ -9,7 +9,7 @@
 		if(isset($_SESSION['user'])){
 			$userObj = (object)	$_SESSION['user'];
 		}
-		
+
 		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
@@ -21,23 +21,41 @@
 		$width 	= $_GET['txt_width'];
 		$height = $_GET['txt_height'];
         
-        $selectClause = "*";
-        $whereClause = " name='Fedex'";
-		$fedexDetail = getGenrealCarriers($selectClause,$whereClause);
-		
+		if($userObj->is_privilege_discount == 1 ){
+			$selectClause = "*";
+		 if($userObj->parent_id != 0 and $userObj->user_type ==  3){
+		 	$starUserDetail = getUserDetailById($userObj->parent_id);
+		 	$starUserDetail = (object) $starUserDetail;
+		 	$whereClause = " name='Fedex' AND user_id = $starUserDetail->id";
+		 }else if($userObj->user_type ==  2){
+		   $whereClause = " name='Fedex' AND user_id = $userObj->id";
+		 }
+		 $fedexDetail = getStarUserCarriers($selectClause,$whereClause);
+		 if(count($fedexDetail) == 0){
+		 	$selectClause = "*";
+		 	$whereClause = " name='Fedex'";
+		 	$fedexDetail = getGenrealCarriers($selectClause,$whereClause);
+		 }
+		}else{
+			$selectClause = "*";
+			$whereClause = " name='Fedex'";
+			$fedexDetail = getGenrealCarriers($selectClause,$whereClause);
+		}		
 		$fedexRate = new FedEx;	
+		$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
 		
-		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-		{
-			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
-		}
-		else
-		{
-			if($_SESSION['DB_FEDEX'] == 'Y')
-			{
-			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
-			}
-		}
+// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
+// 		{
+			
+// 		}
+// 		else
+// 		{
+// 			if($_SESSION['DB_FEDEX'] == 'Y')
+// 			{
+// 			$rateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
+// 			}
+// 		}
+
 		foreach($rateData as $fedexRate)
 		{
 			

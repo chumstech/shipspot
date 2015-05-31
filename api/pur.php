@@ -35,22 +35,41 @@
 
 		$purolatorRate = new puroRate;
 		
-		$selectClause = "*";
-		$whereClause = " name='Purolator'";
-		$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
+		
+		if($userObj->is_privilege_discount == 1 ){
+			$selectClause = "*";
+			if($userObj->parent_id != 0 and $userObj->user_type ==  3){
+				$starUserDetail = getUserDetailById($userObj->parent_id);
+				$starUserDetail = (object) $starUserDetail;
+				$whereClause = " name='Purolator' AND user_id = $starUserDetail->id";
+			}else if($userObj->user_type ==  2){
+				$whereClause = " name='Purolator' AND user_id = $userObj->id";
+			}
+			$purolatorDetail = getStarUserCarriers($selectClause,$whereClause);
+			if(count($purolatorDetail) == 0){
+				$selectClause = "*";
+				$whereClause = " name='Purolator'";
+				$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
+			}
+		}else{
+			$selectClause = "*";
+			$whereClause = " name='Purolator'";
+			$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
+		}
+		$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
 		
 		//$purolatorDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
-		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-		{
-				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
-		}
-		else
-		{
-			if($_SESSION['DB_PUROLATOR']=='Y')
-			{
-				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
-			}
-		}
+// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
+// 		{
+// 				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
+// 		}
+// 		else
+// 		{
+// 			if($_SESSION['DB_PUROLATOR']=='Y')
+// 			{
+// 				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
+// 			}
+// 		}
 		
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $purolatorDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
