@@ -64,10 +64,9 @@
 // 				$rateData = $canadaPostRate->setCredentials($admin_col1_canada,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 // 			}
 // 		}
-		
+		//print_r($rateData);
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $canadaDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
-		
 		foreach($rateData as $canadaRate)
 		{
 			if($userObj->is_privilege_discount == 1){
@@ -76,16 +75,16 @@
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
-			if($userObj->is_discounted_rate) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
-			{	
-				$canDiscount = $canadaRate['rate'] - ($carrierDiscounts->discount * $canadaRate['rate'] / 100 );
-				$canDiscount = round($canDiscount,2);
+				if($userObj->is_discounted_rate) ////check if admin alow a client to see discounted rates? if yes then form an array of posted rates
+				{	
+					$canDiscount = $canadaRate['rate'] - ($carrierDiscounts->discount * $canadaRate['rate'] / 100 );
+					$canDiscount = round($canDiscount,2);
+				}
+				else
+				{
+					$canDiscount = 0;
+				}
 			}
-			else
-			{
-				$canDiscount = 0;
-			}
-				   }
 			$canName = "Canada Post ".$canadaRate['name'];
 			$canDelivery = $canadaRate['deliveryDate'];
 			//$canShipping = $canadaRate['shippingDate'];
@@ -97,14 +96,14 @@
 			{
 				$canRate = 0;
 			}
-			$canShipping = date('Y-m-d');
-			$date1=date_create($canDelivery);
+			$canShipping = $canadaRate['shippingDate'];
+			/*$date1=date_create($canDelivery);
 			$date2=date_create($canShipping);
 			$diff=date_diff($date1,$date2);
-			
+			echo $diff;
 			$canDelivery = date("F d Y", strtotime($canDelivery));
 			$canType = $diff->format("%a");
-			
+			echo $canType;
 			if($canType == 1)
 			{
 			$canType = 1; 	
@@ -114,9 +113,9 @@
 			$canType = 2; 	
 			}
 			if($canType > 2)
-			{
+			{*/
 			$canType = 3;
-			}
+			/*}*/
 			
 			
 			$canadaRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);

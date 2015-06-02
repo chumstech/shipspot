@@ -198,6 +198,8 @@ class CanadaPost
 		 $this->addProduct($weight,$length,$width,$height);		
 		 $this->setPrice(15);	
 		 $assoc_Array = $this->getRates('array');
+		 /*print_r($assoc_Array);
+		 die();*/
 
 				
 				if( $assoc_Array === false ) 
@@ -213,7 +215,8 @@ class CanadaPost
 								//$_SESSION['canada_'.$eachProduct['name']] = $eachProduct['rate'];
 								$rateData[] = $eachProduct;
 							}
-
+						//print_r($rateData);
+						//die();
 						return $rateData;	
 				}
 				
