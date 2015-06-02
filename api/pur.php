@@ -1,4 +1,5 @@
 <?php
+
 		ini_set('display_errors',0);
 		session_start();
 		require_once('../connections/db.php');
@@ -9,21 +10,25 @@
 		
 		$countryFrom = $_GET['countryFrom'];
 		$countryTo = $_GET['countryTo'];
-		
-		
-		$userObj = "";
-		if(isset($_SESSION['user'])){
-			$userObj = (object)	$_SESSION['user'];
-		}
-		
 		$from 	= $_GET['txt_from'];
 		$to		= $_GET['txt_to'];
 		$weight = $_GET['txt_weight'];
 		$length = $_GET['txt_length'];
 		$width 	= $_GET['txt_width'];
 		$height = $_GET['txt_height'];
+		$countryToState = '';
+		
+		if($countryTo == 'US')
+		{
+			$countryToZipInfo = get_zip_info($to);
+			$countryToState = $countryToZipInfo['state'];
+		}
 		
 		
+		$userObj = "";
+		if(isset($_SESSION['user'])){
+			$userObj = (object)	$_SESSION['user'];
+		}
 		
 		$check_canada 	= $_GET['check_canada'];;
 		$check_ups 		= $_GET['check_ups'];
@@ -56,7 +61,7 @@
 			$whereClause = " name='Purolator'";
 			$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
 		}
-		$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
+		$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo,$countryToState);
 		
 		//$purolatorDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
 // 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier

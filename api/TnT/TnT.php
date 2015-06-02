@@ -23,7 +23,6 @@ class tnt
 			   false, 
 			   $context 
 			 );
-	
 			 return $output;
     } 
 	///////////////////////////
@@ -32,33 +31,6 @@ class tnt
 
 	function setCredentials($admin_col1_tnt,$admin_col2_tnt,$admin_col3_tnt,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo)
 	{
-		/*$XmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
-                  <PRICEREQUEST> 
-                       <LOGIN> 
-                           <COMPANY>$admin_col1_tnt</COMPANY> 
-                           <PASSWORD>$admin_col2_tnt</PASSWORD> 
-                           <APPID>PC</APPID> 
-                       </LOGIN> 
-                       <PRICECHECK> 
-                           <RATEID>rate1</RATEID> 
-                           <ORIGINCOUNTRY>CA</ORIGINCOUNTRY> 
-                           <ORIGINTOWNNAME></ORIGINTOWNNAME> 
-                           <ORIGINPOSTCODE>$from</ORIGINPOSTCODE> 
-                           <ORIGINTOWNGROUP/> 
-                           <DESTCOUNTRY>CA</DESTCOUNTRY> 
-                           <DESTTOWNNAME></DESTTOWNNAME> 
-                           <DESTPOSTCODE>$to</DESTPOSTCODE> 
-                           <DESTTOWNGROUP/> 
-                           <CONTYPE>N</CONTYPE> 
-                           <CURRENCY>GBP</CURRENCY> 
-                           <WEIGHT>$weight</WEIGHT> 
-                           <VOLUME>0.1</VOLUME> 
-                           <ACCOUNT/> 
-                           <ITEMS>1</ITEMS> 
-                     </PRICECHECK> 
-                </PRICEREQUEST>";
-	*/
-	
 	
 	$XmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
                   <PRICEREQUEST> 
@@ -95,7 +67,7 @@ class tnt
 		{
 					
 					$arr = $child->attributes();
-					//echo $child->RATE;
+					//print_r($child);
 					$service_code = $child->SERVICE;
 					$rate =  $child->RATE[0];
 					$service_code = 'TnT '.$service_code;

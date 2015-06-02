@@ -142,3 +142,35 @@ function defaultPriviligedDiscountAllowed($carrier_id,$user_id,$value)
   $query = "INSERT into users_discount (carrier_id,user_id,privilege_discount) VALUES ($carrier_id,$user_id,$value)";
   $ref =  mysql_query($query);
 }
+
+
+		function get_zip_info($zip) { 
+		//Function to retrieve the contents of a webpage and put it into $pgdata
+		  $pgdata =""; //initialize $pgdata
+		// Open the url based on the user input and put the data into $fd:
+		  $fd = fopen("http://zipinfo.com/cgi-local/zipsrch.exe?zip=$zip","r"); 
+		  while(!feof($fd)) {//while loop to keep reading data into $pgdata till its all gone
+			$pgdata .= fread($fd, 1024); //read 1024 bytes at a time
+		  }
+		  fclose($fd); //close the connection
+		  if (preg_match("/is not currently assigned/", $pgdata)) {
+			$city = "N/A";
+			$state = "N/A";
+		  } else {
+			$citystart = strpos($pgdata, "Code</th></tr><tr><td align=center>");
+			$citystart = $citystart + 35;
+			$pgdata    = substr($pgdata, $citystart);
+			$cityend   = strpos($pgdata, "</font></td><td align=center>");
+			$city      = substr($pgdata, 0, $cityend);
+		  
+			$statestart = strpos($pgdata, "</font></td><td align=center>");
+			$statestart = $statestart + 29;
+			$pgdata     = substr($pgdata, $statestart);
+			$stateend   = strpos($pgdata, "</font></td><td align=center>");
+			$state      = substr($pgdata, 0, $stateend);
+		  }
+		  $zipinfo['zip']   = $zip;
+		  $zipinfo['city']  = $city;
+		  $zipinfo['state'] = $state;
+		  return $zipinfo;
+		}

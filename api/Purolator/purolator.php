@@ -16,9 +16,10 @@ class puroRate
 	var $Weight;
 	var $countryFrom;
 	var $countryTo;
+	var $countryToState;
 	
 	
-	 function setCredentials($key,$pass,$billingAccount,$registerAccount,$postalCode,$dest_zip,$length,$width,$height,$weight,$countryFrom,$countryTo)
+	 function setCredentials($key,$pass,$billingAccount,$registerAccount,$postalCode,$dest_zip,$length,$width,$height,$weight,$countryFrom,$countryTo,$countryToState)
 	 {
 
 		$this->PRODUCTION_KEY = $key;
@@ -31,16 +32,16 @@ class puroRate
 		$this->Weight = $weight; 
 		$this->countryTo = $countryTo;
 		$this->countryFrom = $countryFrom;
+		$this->countryToState = $countryToState;
 		
 		$rateData = $this->getRates();
 
 		return $rateData;
 	}
-
 	function createPWSSOAPClient()
 	{
-		//$path_to_wsdl = APP_PATH."/api/Purolator/EstimatingService.wsdl";
-		$path_to_wsdl = "http://96.126.101.70/shipping/api/Purolator/EstimatingService.wsdl";
+		$path_to_wsdl = APP_PATH."/api/Purolator/EstimatingService.wsdl";
+		//$path_to_wsdl = "http://96.126.101.70/shipping/api/Purolator/EstimatingService.wsdl";
   		$client1 = new SoapClient( $path_to_wsdl, 
                             array	(
                                     'trace'			=>	1,
@@ -50,6 +51,7 @@ class puroRate
                                     'password'	=>	$this->PRODUCTION_PASS
                                   )
                           );
+		
   		$headers[] = new SoapHeader ( 'http://purolator.com/pws/datatypes/v1', 
                                 'RequestContext', 
                                 array (
@@ -65,20 +67,29 @@ class puroRate
 
 	function getRates()
 	{
-		$client1 = $this->createPWSSOAPClient();
+		$client = $this->createPWSSOAPClient();
 		
-		$request1->BillingAccountNumber = $this->BILLING_ACCOUNT;
-		$request1->SenderPostalCode = $this->From;
-		$request1->ReceiverAddress->Country = $this->countryFrom;
-		$request1->ReceiverAddress->PostalCode = $this->To;  
-		$request1->PackageType = "CustomerPackaging";
-		$request1->TotalWeight->Value = $this->Weight;
-		$request1->TotalWeight->WeightUnit = "lb";
-		$request1->Shipment->PickupInformation->PickupType = "DropOff";
-		$request1->ShowAlternativeServicesIndicator = "true";
 		
-		$response = $client1->GetQuickEstimate($request1);
 		
+		$request->BillingAccountNumber = $this->BILLING_ACCOUNT;
+		//Populate the Origin Information
+		$request->SenderPostalCode = $this->From;
+		//Populate the Desination Information
+		//$request->ReceiverAddress->City = "New York";
+		$request->ReceiverAddress->Province = $this->countryToState;
+		$request->ReceiverAddress->Country = $this->countryTo; 
+		$request->ReceiverAddress->PostalCode = $this->To;  
+		 //Populate the Package Information
+		$request->PackageType = "CustomerPackaging";
+		//Populate the Shipment Weight
+		$request->TotalWeight->Value = $this->Weight;
+		$request->TotalWeight->WeightUnit = "lb";
+		$request->Shipment->PickupInformation->PickupType = "DropOff";
+		$request->ShowAlternativeServicesIndicator = "true";
+		//Execute the request and capture the response
+		$response = $client->GetQuickEstimate($request);
+		//print_r($response);
+		//die();
 		if($response && $response->ShipmentEstimates->ShipmentEstimate)
 		{
 		
