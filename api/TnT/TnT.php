@@ -32,32 +32,42 @@ class tnt
 	function setCredentials($admin_col1_tnt,$admin_col2_tnt,$admin_col3_tnt,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo)
 	{
 	
-	$XmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> 
+	$XmlString = "<?xml version='1.0' standalone='no'?><!DOCTYPE PRICEREQUEST SYSTEM
+'http://164.39.41.88:81/PriceCheckerDTD1.0/PriceRequestIN.dtd'> 
                   <PRICEREQUEST> 
                        <LOGIN> 
                            <COMPANY>$admin_col1_tnt</COMPANY> 
                            <PASSWORD>$admin_col2_tnt</PASSWORD> 
                            <APPID>$admin_col3_tnt</APPID> 
-                       </LOGIN> 
+                       </LOGIN>
+					   <DATASETS>
+							<COUNTRY>1.0</COUNTRY>
+							<CURRENCY>1.0</CURRENCY>
+							<POSTCODEMASK>1.0</POSTCODEMASK>
+							<TOWNGROUP>1.0</TOWNGROUP>
+							<SERVICE>1.0</SERVICE>
+							<OPTION>1.0</OPTION>
+						</DATASETS>
                        <PRICECHECK> 
-                         <RATEID>rate1</RATEID> 
+                         <RATEID>RATE1</RATEID> 
                          <ORIGINCOUNTRY>$countryFrom</ORIGINCOUNTRY>
                            <ORIGINTOWNNAME></ORIGINTOWNNAME>
                            <ORIGINPOSTCODE>$from</ORIGINPOSTCODE>
-                           <ORIGINTOWNGROUP/>
+                           <ORIGINTOWNGROUP></ORIGINTOWNGROUP>
                            <DESTCOUNTRY>$countryTo</DESTCOUNTRY>
                            <DESTTOWNNAME></DESTTOWNNAME>
                            <DESTPOSTCODE>$to</DESTPOSTCODE>
-                           <DESTTOWNGROUP/> 
+                           <DESTTOWNGROUP></DESTTOWNGROUP>
                            <CONTYPE>N</CONTYPE> 
                            <CURRENCY>CAD</CURRENCY> 
                            <WEIGHT>$weight</WEIGHT> 
                            <VOLUME>$width</VOLUME> 
-                           <ACCOUNT/> 
-                           <ITEMS>1</ITEMS> 
+                           <ACCOUNT></ACCOUNT>
+                           <ITEMS>1</ITEMS>
+						   
                      </PRICECHECK> 
                 </PRICEREQUEST>";
-				
+	//echo $XmlString;		
 	$this->returnXml = $this-> sendToTNTServer($XmlString );
 	$xml2 = simplexml_load_string($this->returnXml);
 	//echo "<pre>";

@@ -97,7 +97,10 @@ $(document).ready(function() {
 						$('td.discount').hide();
 						$('th.discount').hide();
 					}
-					
+					function showMenu()
+					{
+						$('.mobile-menu').toggle();
+					}
 				</script>
         
 </head>
@@ -105,7 +108,39 @@ $(document).ready(function() {
 
 	<div id="header">
     	<div class="topBar">
-        	    	<div class="logo"><a href="index.php"><img src="images/shipspot.png" alt="ShipSpot" /></a>
+        	 <div class="logo"><a href="index.php"><img src="images/shipspot.png" alt="ShipSpot" /></a>
+        </div>
+        <div class="mobileBar">
+        <a href="javascript:void(0);" onclick="showMenu();"><img style="border-radius: 3px;" src="images/menu.png" alt="Menu" /></a>
+        <ul class="list-group mobile-menu" style="display:none;">      
+	   		   <li class="list-group-item <?php if($_GET['para']== 1){echo 'active';} ?>"><a href="index.php?para=1">Home</a></li>
+               <li class="list-group-item <?php if($_GET['para']== 4){echo 'active';} ?>"><a href="index.php?para=4">Create Shipment</a></li>
+               <li class="list-group-item <?php if($_GET['para']== 5){echo 'active';} ?>"><a href="index.php?para=5">Tracking</a></li>
+			   <li class="list-group-item <?php if($_GET['para']== 11){echo 'active';} ?>"><a href="index.php?para=11" >Contact</a></li>
+			<?php   
+			$userObj = "";
+              if(isset($_SESSION['user'])){
+               $userObj = (object) $_SESSION['user'];
+            }
+			?>
+
+			  <?php	if ($userObj->user_type == 1)
+				{
+			?>	
+						<li class="list-group-item <?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current"> Users</a></li>
+                        <li class="list-group-item <?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="list-group-item <?php if($_GET['para']== 9){echo 'active';} ?>"><a href="index.php?para=9" class="current">Create Carriers</a></li>
+						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
+					
+			<?php
+					}else if ($userObj->email && $userObj->user_type != 1)
+					{
+					
+			?>
+            			<li class="list-group-item <?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="list-group-item <?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current">View Users</a></li>
+			<?php }?>
+        </ul>
         </div>
         <div class="menu">
         <ul>      

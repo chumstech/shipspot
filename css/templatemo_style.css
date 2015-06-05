@@ -199,11 +199,12 @@ div.login {
     border: medium none;
 }
 /* User TOp Bar */
+
 .user_dashboard {
-    background: none repeat scroll 0 0 #1f68a7;
+    background: #1f68a7 none repeat scroll 0 0;
     float: right;
     padding: 1.7%;
-    width: 11%;
+    width: 145px;
 }
 
 .user_dashboard h3 {

@@ -93,6 +93,26 @@
   .hidden-phone {
     display: none !important;
   }
+  .menu
+  {
+	  display:none;
+  }
+
+.mobileBar {
+    display: block;
+    margin-top: 10px;
+}
+}
+@media (max-width: 1024px) {
+  .menu
+  {
+	  display:none;
+  }
+
+.mobileBar {
+    display: block;
+    margin-top: 20px;
+}
 }
 
 .visible-print {
