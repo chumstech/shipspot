@@ -392,7 +392,7 @@ while($data = mysql_fetch_array($Query))
 		?>
   </table>
   </div>
-  <div style="float:right;width:90px;margin-top:10px;margin-bottom:10px;margin-right:25px">
+  <div style="margin-top: 10px; margin-bottom: 10px; margin-right: 25px; float: left; width: 100% ! important;">
   <?php if(isset($_GET['user_id'])){ ?>
 	  <input name="Update" class="btn btn-primary" type="submit" id="submit" value="Update" i />
 	  <?php }else{?>
@@ -419,7 +419,7 @@ h2 {
     float: left;
     margin-bottom: 25px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 #form_discount {
     border: 1px solid #666 !important;
@@ -427,7 +427,7 @@ h2 {
     margin-left: 2%;
     min-height: 455px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 
 
@@ -437,7 +437,7 @@ h2 {
     margin-left: 2%;
     min-height: 455px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 </style>
 

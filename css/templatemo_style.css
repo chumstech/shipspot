@@ -656,3 +656,24 @@ td.date {
     margin-bottom: 0;
     width: 80%;
 }
+.list-group-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: block;
+    float: left;
+    margin-bottom: -1px;
+    position: relative;
+    width: 100%;
+	padding:0px !important; 
+}
+.list-group-item a {
+    display: block;
+    float: left;
+    padding: 10px 5%;
+    width: 90%;
+}
+.list-group-item a:hover {
+	text-decoration:none !important;
+	background:#428bca;
+	color:#fff;
+}

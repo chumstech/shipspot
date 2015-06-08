@@ -1127,3 +1127,136 @@
     overflow: visible !important;
   }
 }
+
+@media (min-width: 220px) and (max-width: 340px) {
+  body {
+    float: left;
+    padding: 0 !important;
+    width: 100% !important;
+ }
+ 
+.logo {
+    color: blue;
+    float: left;
+    font-family: Verdana,Geneva,sans-serif;
+    font-size: 18px;
+    margin: 20px 30%;
+    width: 40%;
+}
+
+.mobileBar {
+    display: block;
+    margin-top: 20px;
+    position: absolute;
+}
+.user_dashboard
+{
+	display:none !important;
+}
+.mobile_user_dashboard {
+    display: block !important;
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    width: 35px;
+}
+.mobile_user_dashboard .dropdown-menu
+{
+	right:0px !important;
+	left:auto !important;
+}
+.mobile_user_dashboard a {
+    padding:2px !important;
+}
+.mobile_user_dashboard img {
+    width: 100%;
+}
+
+.leftContent {
+    float: left;
+    margin-right: 2%;
+    width: 100%;
+}
+
+.leftContent .homeTxt img {
+    margin: auto !important;
+    width: 100%;
+}
+
+.rightContent {
+    float: right;
+    width: 100%;
+}
+.hideMobile
+{
+	display:none !important;
+}
+
+#form1 {
+    border: 1px solid #666 !important;
+    float: left;
+    margin-bottom: 25px;
+    padding: 5px 2% !important;
+    width: 96% !important;
+		margin-top:15px;
+}
+
+select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 100% !important;
+}
+
+#form_discount {
+    border: 1px solid #666 !important;
+    float: left;
+    margin-left: 0 !important;
+    min-height: 455px;
+    padding: 5px 2% !important;
+    width: 96% !important;
+	margin-top:15px;
+}
+
+#form_privilege_discount {
+    border: 1px solid #666 !important;
+    float: left;
+    margin-left: 0 !important;
+    min-height: 455px;
+    padding: 5px 2% !important;
+    width: 96% !important;
+		margin-top:15px;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 90%;
+}
+
+.image_wrapper_rate textarea {
+    height: 145px;
+    width: 94% !important;
+}
+.mainRecords tr {
+    font-size: 12px;
+    height: 40px;
+    width: 100%;
+}
+.box {
+    border: 1px solid #bebebe;
+    float: left;
+    margin-right: 1%;
+    margin-top: 10px;
+    width: 99%;
+}
+th.service {
+    background: #f0f0f0 none repeat scroll 0 0;
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    padding-left: 2%;
+    text-align: left;
+    width: 40%;
+}
+}

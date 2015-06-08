@@ -38,11 +38,11 @@ $userData = getUsers($cn);
       <thead>
 		<tr>
           <td width="14%"><strong>Name</strong></td>
-          <td width="15%"><strong>Address</strong></td>
-          <td width="12%"><strong>Country</strong></td>
-          <td width="12%"><strong>Phone</strong></td>
+          <td class="hideMobile" width="15%"><strong>Address</strong></td>
+          <td class="hideMobile" width="12%"><strong>Country</strong></td>
+          <td class="hideMobile"><strong>Phone</strong></td>
           <td width="19%"><strong>Email</strong></td>
-          <td width="20%"><strong>Owner</strong></td>
+          <td class="hideMobile"><strong>Owner</strong></td>
           <td width="4%"><strong>Delete</strong></td>
           <td width="4%"><strong>Edit</strong></td>
         </tr>
@@ -65,11 +65,11 @@ $userData = getUsers($cn);
           
           <td><a href="index.php?para=13&user_dd=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
 		  <?php echo @$data['id'].' - '.@$data['first_name'].' '.@$data['last_name']; ?></a></td>
-          <td><?php echo @$data['address']; ?></td>
-          <td><?php echo @$data['country']; ?></td>
-          <td><?php echo @$data['contact']; ?></td>
+          <td class="hideMobile"><?php echo @$data['address']; ?></td>
+          <td class="hideMobile"><?php echo @$data['country']; ?></td>
+          <td class="hideMobile"><?php echo @$data['contact']; ?></td>
           <td><?php echo @$data['email']; ?></td>
-          <td><?php echo getUserName($data['parent_id']); ?>	</td>
+          <td class="hideMobile"><?php echo getUserName($data['parent_id']); ?>	</td>
 		
         <td><a href="admin/del_selected_entity.php?user_id=<?php echo $data['id']; ?>"  onclick="return confirm('Are you sure?');"> <img src="images/delete.png" width="21" title="Delete" alt="delete"/> </a></td>
         <?php if($data['user_type'] == 2){?> 
