@@ -122,11 +122,23 @@ div.login {
 
 .submit {
     float: left;
-    margin-left: 4%;
-    margin-right: 10%;
+    margin-left: 3%;
     margin-top: 15px;
-    text-align: center;
+    width: 100%;
 }
+.fields
+{
+	float:left;
+	width:100%;
+}
+.fields .title {
+    float: left;
+    min-width: 100px;
+}
+.fields input, .fields select {
+    float: left;
+}
+
 #submit {
 /*    background: none repeat scroll 0 0 #666666;
     border: medium none;

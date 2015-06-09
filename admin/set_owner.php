@@ -415,14 +415,14 @@ h2 {
 
 
 #form1 {
-    border: 1px solid #666 !important;
+    border: 1px solid #ccc;
     float: left;
     margin-bottom: 25px;
     padding: 5px 2% !important;
     width: 27%;
 }
 #form_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #666;
     float: left;
     margin-left: 2%;
     min-height: 455px;
@@ -432,7 +432,7 @@ h2 {
 
 
 #form_privilege_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #666;
     float: left;
     margin-left: 2%;
     min-height: 455px;

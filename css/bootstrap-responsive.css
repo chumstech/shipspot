@@ -1189,26 +1189,42 @@
 }
 .hideMobile
 {
-	display:none !important;
+	/*display:none !important;*/
 }
 
+#content_wrapper h2 {
+    float: left;
+    font-size: 20px;
+    width: 60%;
+}
+
+.action {
+    float: right;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: 0;
+    width: 100%;
+}
 #form1 {
-    border: 1px solid #666 !important;
+    border: none;
+    border-radius: 5px;
     float: left;
     margin-bottom: 25px;
-    padding: 5px 2% !important;
-    width: 96% !important;
-		margin-top:15px;
+    margin-top: 10px;
+    overflow-x: scroll;
+    padding: 0 !important;
+    width: 100% !important;
 }
 
 select {
     background-color: #fff;
     border: 1px solid #ccc;
-    width: 100% !important;
+    width: 95% !important;
 }
 
 #form_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
     float: left;
     margin-left: 0 !important;
     min-height: 455px;
@@ -1218,7 +1234,8 @@ select {
 }
 
 #form_privilege_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
     float: left;
     margin-left: 0 !important;
     min-height: 455px;
@@ -1232,7 +1249,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     border: 1px solid #ccc;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-    width: 90%;
+    width: 90% !important;
 }
 
 .image_wrapper_rate textarea {
@@ -1259,4 +1276,113 @@ th.service {
     text-align: left;
     width: 40%;
 }
+.ratesOptions
+{
+	float:left;
+	width:100% !important;
+}
+
+.rates-data .left-rates input, .rates-data .right-rates input, .right-data .boxs input {
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 20px;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    margin-top: 5px;
+    padding: 6px 3%;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 94%;
+}
+
+.country select {
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 35px;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    margin-top: 5px;
+    padding: 5px 3%;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 94%;
+}
+
+.country {
+    float: left;
+    width: 100%;
+}
+
+.rates-data .left-rates, .rates-data .right-rates, .country .left, .country .right {
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 90%;
+}
+.image_wrapper_rate .rates-data {
+    float: left;
+    width: 100%;
+}
+.shippingMode
+{
+	float:left;
+	width:100%;
+}
+.carrier {
+    float: left;
+    margin-left: 3%;
+    margin-top: 10px;
+    width: 94%;
+}
+.carrier .carier .left {
+    display: block !important;
+    float: left;
+    padding-bottom: 15px;
+    padding-left: 2%;
+    width: 50%;
+}
+.carrier .carier .right {
+    display: block !important;
+    float: left;
+    width: 45%;
+}
+
+.left-data .boxs {
+    float: left;
+    margin: 10px 0;
+    width: 100% !important;
+}
+
+
+.rates-data .left-data, .rates-data .right-data {
+    float: left;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 90%;
+}
+.right-data .boxs {
+    float: left;
+    margin-right: 3%;
+    width: 22%;
+}
+
+#content_wrapper h2 {
+	background: grey none repeat scroll 0 0;
+    border-radius: 3px 3px 0 0;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0 0 20px;
+    padding: 10px 0 10px 3%;
+    width: 97%;
+}
+
 }
