@@ -53,7 +53,7 @@ require_once("functions.php");
             <input placeholder="Postal Code To" name="txt_to" type="text" id="txt_to" value="<?php echo $to;?>" size="10" />
             </div>
             <div class="left-data">
-                    <div class="boxs" style="width:50%; float:left;">
+                    <div class="boxs boxleft" style="width:50%; float:left;">
                     <label>Shipment Types :</label>
                     <br />
                     <input name="ship_type" type="radio" value="02" checked="checked" onclick="show()"/>
@@ -63,7 +63,7 @@ require_once("functions.php");
                 <label>Courier Envelope</label>
                 </div>
                 <?php if($userObj->is_discounted_rate == 1) { ?>
-                <div class="boxs" style="float:left;">
+                <div class="boxs boxright" style="float:left;">
                     <label>Show Discount ?</label>
                     <br />
                     <input name="show_disc" class="show_disc" type="radio" value="1" checked="checked" onclick="showDisc()"/>
