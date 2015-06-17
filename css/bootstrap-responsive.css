@@ -1128,13 +1128,24 @@
   }
 }
 
-@media (min-width: 220px) and (max-width: 340px) {
+@media (min-width: 220px) and (max-width: 460px) {
   body {
     float: left;
     padding: 0 !important;
     width: 100% !important;
  }
- 
+ .login h2 {
+    float: left;
+    margin-bottom: 5px !important;
+    width: 97% !important;
+}
+.login .field input[type="text"], .login .field input[type="password"] {
+    border: 1px solid #ccc !important;
+    border-radius: 5px;
+    float: left;
+    height: 30px;
+    width: 130px;
+}
 .logo {
     color: blue;
     float: left;
@@ -1374,9 +1385,10 @@ th.service {
     width: 22%;
 }
 
+
 #content_wrapper h2 {
-	background: grey none repeat scroll 0 0;
-    border-radius: 3px 3px 0 0;
+    background: grey none repeat scroll 0 0;
+    border-radius: 3px;
     color: rgb(255, 255, 255);
     font-size: 20px;
     line-height: 20px;
