@@ -296,9 +296,9 @@ while($data = mysql_fetch_array($Query))
       <?php if ($userObj->user_type == 2 && $userObj->email) 
 		{
 	  ?>
-	  <select name="txt_owner" id="txt_owner" >
- 		  <option selected="<?php echo @$owner;?>"><?php echo getUserName($owner);?></option>	   
-      </select><?php }?>
+	  <input type="hidden" name="txt_owner" value="<?php echo @$owner; ?>"/>
+ 		  <?php echo getUserName($owner);?>  
+      <?php }?>
       </td>
     </tr>
     <tr>

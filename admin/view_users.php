@@ -16,7 +16,29 @@ function getUsers($cn)
 	}
 	return $userData;
 }
-$userData = getUsers($cn);
+
+function getUserInfo($cn,$userObj)
+{
+	$queryString = "select * from users where id=$userObj->id";
+	$quesry = mysql_query($queryString,@$cn);
+	$userData = array();
+	while($data = mysql_fetch_array($quesry,MYSQL_ASSOC)){
+		if($data['parent_id'] != ''){
+			$queryString2 = "select * from users where parent_id={$data['id']}";
+			$quesry2 = mysql_query($queryString2,@$cn);
+			while($cdata = mysql_fetch_array($quesry2,MYSQL_ASSOC)){
+				$data['child'][] = $cdata;
+			}
+		}
+		$userData[] = $data;
+	}
+	return $userData;
+}
+if($userObj->user_type == 2){
+	$userData = getUserInfo($cn,$userObj);
+}else{
+	$userData = getUsers($cn);
+}
 //echo '<pre>';print_r($userData);
 ?>
 <h2>View Users </h2>
