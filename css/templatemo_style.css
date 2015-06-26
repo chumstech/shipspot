@@ -111,7 +111,7 @@ h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0;}
 
 
 .action .button {
-    background: none repeat scroll 0 0 #666666;
+    background: none repeat scroll 0 0 #ccc;
     border-radius: 5px;
     color: white;
     display: block;
@@ -128,7 +128,7 @@ h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0;}
 }
 
 div.login {
-    border: 1px solid #666666;
+    border: 1px solid #ccc !important;
     border-radius: 5px;
     float: none;
     height: 190px;
@@ -139,8 +139,8 @@ div.login {
 }
 .login h2 {
     float: left;
-    width: 100% !important;
-	margin-bottom:0px;
+    margin-bottom: 0;
+    width: 97% !important;
 }
 
 .login .fields {
@@ -156,15 +156,16 @@ div.login {
 
 
 .login .field label {
-	width:90px;
-	float:left;
+    float: left;
+    text-align: left;
+    width: 90px;
 }
 
 .login .field input[type="text"], .login .field input[type="password"] {
 	float:left;
 	height:20px;
 	width:130px;
-    border: 1px solid #666666;
+    border: 1px solid #ccc;
 	border-radius:5px;
 	
 }
@@ -655,4 +656,25 @@ td.date {
     float: left;
     margin-bottom: 0;
     width: 80%;
+}
+.list-group-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: block;
+    float: left;
+    margin-bottom: -1px;
+    position: relative;
+    width: 100%;
+	padding:0px !important; 
+}
+.list-group-item a {
+    display: block;
+    float: left;
+    padding: 10px 5%;
+    width: 90%;
+}
+.list-group-item a:hover {
+	text-decoration:none !important;
+	background:#428bca;
+	color:#fff;
 }

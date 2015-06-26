@@ -86,59 +86,44 @@ if($Submit)
 
 <form id="form1" name="form1" method="post" action="index.php?para=8">
   
-  <table width="83%" border="0" align="center" cellpadding="0" cellspacing="0">
-	
-	<tr>
-	  <td colspan="6"><h2>Star Users </h2></td>
-    </tr>
-	<tr>
-	  <td colspan="6"><?php echo @$msg;?></td>
-    </tr>
-	<tr>
-	  <td height="36"><div align="right">First Name: </div></td>
-	  <td>        <div align="center">
-	    <input name="txt_Fname" type="text" id="txt_Fname"/>      
-      </div></td>
-	  <td><div align="right">Last Name : </div></td>
-	  <td width="22%">
-	    <div align="left">
-	      <input name="txt_Lname" type="text" id="txt_Lname"/>
-          </div></td><td width="8%"><div align="right">Email:</div></td>
-	  <td><div align="center">
-	    <input name="txt_Email" type="text" id="txt_Email"/>
-	  </div></td>
-    </tr>
-	<tr>
-	  <td height="31"><div align="right">Country: </div></td>
-	  <td>
-	    
-        <div align="center">
-          <select name="txt_Country" id="txt_Country">
+	<h2>Star Users </h2>
+    <div class="msg"><?php echo @$msg;?></div>
+    <div class="fields">
+    	<div class="title">First Name: </div>
+		<input name="txt_Fname" type="text" id="txt_Fname"/>
+    </div>
+    <div class="fields">
+    	<div class="title">Last Name: </div>
+        <input name="txt_Lname" type="text" id="txt_Lname"/>
+    </div>
+    <div class="fields">
+    	<div class="title">Email: </div>
+        <input name="txt_Email" type="text" id="txt_Email"/>
+    </div>
+    <div class="fields">
+    	<div class="title">Country: </div>
+        <select name="txt_Country" id="txt_Country">
             <option value="">------- SELECT --------</option>
            <?php foreach($countries as $country){?>
-            <option value="<?=$country['cid']?>"><?=$country['name'];?></option>
+            <option value="<?php echo $country['cid'];?>"><?php echo $country['name'];?></option>
             <?php }?>
           </select>
-        </div></td>
-	  <td><div align="right">Phone: </div></td>
-	  <td>
-	    <div align="left">
-	      <input name="txt_Phone_number" type="text" id="txt_Phone_number"/>
-          </div></td><td><div align="right">Password:</div></td>
-	  <td><div align="center">
-	    <input name="txt_Password" type="text" id="txt_Password"/>
-	  </div></td>
-    </tr>
-	<tr>
-	  <td height="55"><div align="right">Address</div></td>
-	  <td>	    <div align="center">
-	    <input name="txt_Address" type="text" id="txt_Address"/>      
-      </div></td>
-    </tr>
-	<tr>
-	  <td colspan="6"><h2>Carrier Detail</h2></td>
-    </tr>
-	<tr>
+    </div>
+    <div class="fields">
+    	<div class="title">Phone: </div>
+        <input name="txt_Phone_number" type="text" id="txt_Phone_number"/>
+    </div>
+    <div class="fields">
+        <div class="title">Password: </div>
+        <input name="txt_Password" type="text" id="txt_Password"/>
+    </div>
+    <div class="fields">
+        <div class="title">Address: </div>
+        <input name="txt_Address" type="text" id="txt_Address"/> 
+    </div>
+	<h2>Carrier Detail</h2>
+    <table>
+    	<tr>
           <td width="18%"><div align="center"><strong>Name</strong></div></td>
           <td width="15%"><div align="center"><strong>Key / CPCID </strong></div></td>
       <td width="15%"><div align="center"><strong>Password</strong></div></td>
@@ -172,16 +157,14 @@ if($Submit)
       <?php
 		}			
 		?>
-		<tr>
-		  <td colspan="2">&nbsp;</td>
-		  <td><div align="right">Enter Verification Code :</div></td>
-		  <td colspan="2">
-		    <div align="center">
-		      <input name="vercode" type="text" id="vercode"/>
-            </div></td>
-		  <td valign="baseline"><div align="center"><img src="./images/captcha.php" width="117" height="50" />
-	        <input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary"/>
-		  </div></td>
-		</tr>
   </table>
+  <div class="fields">
+  	<div class="title" style="width:100%;">Enter Verification Code: </div>
+    <img style="float: left; clear: both; margin-left: 0%; margin-right: 75%;" src="./images/captcha.php" width="117" height="50" />
+	<input name="vercode" type="text" id="vercode"/>
+  </div>
+  <div class="fields">
+  	<input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary"/>
+  </div>
 </form>
+

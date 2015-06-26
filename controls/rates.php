@@ -17,7 +17,7 @@ require_once("functions.php");
   <h3>Get Rates</h3>
   		<div class="rates-data">
         <div class="inter"> 
-        <label>International / Domestic ?</label>
+        <label class="shippingMode">International / Domestic ?</label>
         <input name="ship_mode" type="radio" class="ship_mode" value="int" /><label>International</label>
         <input name="ship_mode" type="radio" class="ship_mode" value="dom" checked="checked"/><label>Domestic</label>
         </div>
@@ -45,7 +45,7 @@ require_once("functions.php");
         </select>
       	</div>
     	</div>
-        <div style="float: left; width: 85%;">
+        <div class="ratesOptions" style="float: left; width: 85%;">
     		<div class="left-rates">
             <input placeholder="Postal Code From" name="txt_from" type="text" id="txt_from" value="<?php echo $from;?>" size="10"/>
             </div>
@@ -53,7 +53,7 @@ require_once("functions.php");
             <input placeholder="Postal Code To" name="txt_to" type="text" id="txt_to" value="<?php echo $to;?>" size="10" />
             </div>
             <div class="left-data">
-                    <div class="boxs" style="width:50%; float:left;">
+                    <div class="boxs boxleft" style="width:50%; float:left;">
                     <label>Shipment Types :</label>
                     <br />
                     <input name="ship_type" type="radio" value="02" checked="checked" onclick="show()"/>
@@ -63,7 +63,7 @@ require_once("functions.php");
                 <label>Courier Envelope</label>
                 </div>
                 <?php if($userObj->is_discounted_rate == 1) { ?>
-                <div class="boxs" style="float:left;">
+                <div class="boxs boxright" style="float:left;">
                     <label>Show Discount ?</label>
                     <br />
                     <input name="show_disc" class="show_disc" type="radio" value="1" checked="checked" onclick="showDisc()"/>
@@ -97,18 +97,7 @@ require_once("functions.php");
 		 
         </div>    
             
-            <div class="submit">
-            <input name="loginType" type="hidden" id="loginType"  value="<?php if($userObj->user_type == 1) { echo "admin";} else { echo "user"; } ?>" />
-          <input name="checkCanada" type="hidden" id="checkCanada" value="0" />
-          <input name="checkFedex" type="hidden" id="checkFedex" value="1" />
-          <input name="checkPur" type="hidden" id="checkPur" value="0" />
-          <input name="checkUps" type="hidden" id="checkUps" value="0" />
-          <input name="checkTnt" type="hidden" id="checkTnt" value="0" />
-          <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
-          <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
-           <input name="star_user_id" type="hidden" id="star_user_id" value="<?php $userObj->id?>" />
-             <input name="submit" class="btn btn-primary" type="button" id="submit" onclick="return getRates();" value="Get Rates" />
-         	</div>
+            
     
   	 </div>
      <div class="carrier">
@@ -139,6 +128,18 @@ require_once("functions.php");
          </div>
 	 <?php }?>    
           </div>
+          <div class="submit">
+            <input name="loginType" type="hidden" id="loginType"  value="<?php if($userObj->user_type == 1) { echo "admin";} else { echo "user"; } ?>" />
+          <input name="checkCanada" type="hidden" id="checkCanada" value="0" />
+          <input name="checkFedex" type="hidden" id="checkFedex" value="1" />
+          <input name="checkPur" type="hidden" id="checkPur" value="0" />
+          <input name="checkUps" type="hidden" id="checkUps" value="0" />
+          <input name="checkTnt" type="hidden" id="checkTnt" value="0" />
+          <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
+          <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
+           <input name="star_user_id" type="hidden" id="star_user_id" value="<?php $userObj->id?>" />
+             <input name="submit" class="btn btn-primary" type="button" id="submit" onclick="return getRates();" value="Get Rates" />
+         	</div>
   </div>
 </form>
 <div class="mainRecords" style="display:none;">

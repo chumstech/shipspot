@@ -296,9 +296,9 @@ while($data = mysql_fetch_array($Query))
       <?php if ($userObj->user_type == 2 && $userObj->email) 
 		{
 	  ?>
-	  <select name="txt_owner" id="txt_owner" >
- 		  <option selected="<?php echo @$owner;?>"><?php echo getUserName($owner);?></option>	   
-      </select><?php }?>
+	  <input type="hidden" name="txt_owner" value="<?php echo @$owner; ?>"/>
+ 		  <?php echo getUserName($owner);?>  
+      <?php }?>
       </td>
     </tr>
     <tr>
@@ -392,7 +392,7 @@ while($data = mysql_fetch_array($Query))
 		?>
   </table>
   </div>
-  <div style="float:right;width:90px;margin-top:10px;margin-bottom:10px;margin-right:25px">
+  <div style="margin-top: 10px; margin-bottom: 10px; margin-right: 25px; float: left; width: 100% ! important;">
   <?php if(isset($_GET['user_id'])){ ?>
 	  <input name="Update" class="btn btn-primary" type="submit" id="submit" value="Update" i />
 	  <?php }else{?>
@@ -415,29 +415,29 @@ h2 {
 
 
 #form1 {
-    border: 1px solid #666 !important;
+    border: 1px solid #ccc;
     float: left;
     margin-bottom: 25px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 #form_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #666;
     float: left;
     margin-left: 2%;
     min-height: 455px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 
 
 #form_privilege_discount {
-    border: 1px solid #666 !important;
+    border: 1px solid #666;
     float: left;
     margin-left: 2%;
     min-height: 455px;
     padding: 5px 2% !important;
-    width: 27% !important;
+    width: 27%;
 }
 </style>
 

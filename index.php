@@ -191,6 +191,22 @@ $(document).ready(function() {
 			$str = str_replace(array('_', ',', '-', '.'), ' ', $user_name);
 			$user_name =  $str;
 			?>
+            <div class="mobile_user_dashboard" style="display:none;">
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <img src="images/user.png" alt="user" />
+                  </a>
+                  <ul class="dropdown-menu">
+                    <?php if ($userObj->user_type == 1) { ?>		
+                        <li><a tabindex="-1" href="index.php?para=6">Inbox</a></li>
+                  		<li><a tabindex="-1" href="./controls/logout.php">Logout</a></li>
+                	<?php	} elseif ($userObj->email) {?>
+                		<li><a tabindex="-1" href="index.php?para=15">Inbox</a></li>
+                  		<li><a tabindex="-1" href="./controls/logout.php">Logout</a></li>
+                	<?php } ?>  
+                  </ul>
+                </div>
+             </div>
             <div class="user_dashboard">
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -207,7 +223,7 @@ $(document).ready(function() {
                 	<?php } ?>  
                   </ul>
                 </div>
-                    </div>
+             </div>
     		<?php } ?>
         </div>
 	

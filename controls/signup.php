@@ -83,7 +83,6 @@ if($Submit)
 		}
 }	
 
-
 ?>
 <div class="rates">
 <div class="message"><?php echo @$msg;?></div>
@@ -91,6 +90,7 @@ if($Submit)
 <h3>Sign Up</h3>
 <form style="padding: 20px 3%;" method="post" action="index.php?para=2">
   	<div class="form-group">
+  	  <?php if($userObj->user_type == 1){?>
     	<select name="starowner" style="width:31%;">
         	<option value="">Select Star Owner</option>
             <?php $starOwners = getStarUsers(); ?>
@@ -98,6 +98,9 @@ if($Submit)
       		<option value="<?php echo $starowner['id']; ?>"><?php echo $starowner['first_name']." ".$starowner['last_name']; ?></option>
 		<?php }  ?>
       	</select>
+      	<?php }else{?>
+      	 <input type="hidden" name="starowner" value="<?php echo $userObj->id;?>"/>
+      	<?php }?>
   	</div>
   	<div class="form-group">
     	<input name="txt_Fname" type="text" placeholder="First Name" class="form-control input-lg" style="width:30%;" id="txt_Fname"/>
