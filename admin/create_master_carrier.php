@@ -15,17 +15,16 @@ $Update = @$_POST['Update'];
 
 if(isset($carrier_id))
 {
-		$QueryString = "select * from carriers where carrierr_Id= '$carrier_id'";
+		$QueryString = "select * from genreal_carriers where id= '$carrier_id'";
 		$Query = mysql_query($QueryString,@$cn);
 		$data = mysql_fetch_array($Query);
-		
-		$v_name = @$data['carrier_name'];
-        $v_key = @$data['carrier_key'];
-        $v_password = @$data['carrier_password'];
-        $v_account = @$data['carrier_account_number'];
-        $v_other = @$data['carrier_other_number'];
-        $v_otherinfo = @$data['carrier_otherinfo'];
-        $v_email = @$data['User_Email'];		
+		//print_r($data);
+		$v_name = @$data['name'];
+        $v_key = @$data['api_key'];
+        $v_password = @$data['password'];
+        $v_account = @$data['account_no'];
+        $v_other = @$data['other_account_no'];
+        $v_otherinfo = @$data['carrier_other_info'];		
 }
 
 if($Update)
@@ -33,14 +32,10 @@ if($Update)
 	   if($key!="")
 	   {
 
-							$q=mysql_query("update carriers set  
-							carrier_key = '$key', carrier_password = '$password', 
-							carrier_account_number = '$account_number', 
-							carrier_other_number = '$shipper_number', 
-							MBy = '$mby', 
-							carrier_otherinfo = '$otherinfo',
-							MBy = '$mby'
-							where carrierr_Id= '$carrier_id'",$cn);
+							$q=mysql_query("update genreal_carriers set  
+							api_key = '$key', password = '$password', 
+							account_no = '$account_number', 
+							other_account_no = '$shipper_number',carrier_other_info = '$otherinfo' where id= '$carrier_id'",$cn);
 						
 						if($q)
 						{					
@@ -113,9 +108,7 @@ if($Submit)
 <h3>Create Carriers</h3>
 <form style="padding: 20px 3%;">
   <div class="form-group">
-    <?php if(isset($carrier_id)){ echo @$v_name; } else {?>
-	  <input name="txt_name" placeholder="Carrier Name" style="width: 30%;" class="form-control input-lg" type="text" id="txt_name" value=""/>
-	<?php } ?>
+	  <input name="txt_name" placeholder="Carrier Name" style="width: 30%;" class="form-control input-lg" type="text" id="txt_name" value="<?php echo @$v_name; ?>"/>
   </div>
   <div class="form-group">
     <input name="txt_key" placeholder="Key / CPCID" style="width: 30%;" type="text" id="txt_key" value="<?php echo @$v_key; ?>"/>

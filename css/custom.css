@@ -196,3 +196,13 @@ float:left;
     top: 28px;
     width: 240px;
 }
+
+.notice {
+    background: darkseagreen none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #000;
+    float: left;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 99%;
+}
