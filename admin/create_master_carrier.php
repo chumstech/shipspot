@@ -27,7 +27,7 @@ if(isset($carrier_id))
         $v_otherinfo = @$data['carrier_other_info'];		
 }
 
-if($Update)
+if(isset($Update))
 {
 	   if($key!="")
 	   {
@@ -106,7 +106,7 @@ if($Submit)
 <div class="message"><?php echo @$msg;?></div>
 <div class="image_wrapper_rate">
 <h3>Create Carriers</h3>
-<form style="padding: 20px 3%;">
+<form style="padding: 20px 3%;" method="post" action="">
   <div class="form-group">
 	  <input name="txt_name" placeholder="Carrier Name" style="width: 30%;" class="form-control input-lg" type="text" id="txt_name" value="<?php echo @$v_name; ?>"/>
   </div>

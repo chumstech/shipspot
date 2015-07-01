@@ -90,38 +90,27 @@ if($Submit)
 
 ?>
 
+<h2>Star Users </h2>
+<div class="notice"><?php echo @$msg;?></div>
 <form id="form1" name="form1" method="post" action="">
- <input type="hidden" name="user_id" value="<?php echo $userDetail->id;?>">
-  
-  <table width="83%" border="0" align="center" cellpadding="0" cellspacing="0">
-	
-	<tr>
-	  <td colspan="6"><h2>Star Users </h2></td>
-    </tr>
-	<tr>
-	  <td colspan="6"><?php echo @$msg;?></td>
-    </tr>
-	<tr>
-	  <td height="36"><div align="right">First Name: </div></td>
-	  <td>        <div align="center">
-	    <input name="txt_Fname" type="text" id="txt_Fname" value="<?php echo $userDetail->first_name;?>"/>      
-      </div></td>
-	  <td><div align="right">Last Name : </div></td>
-	  <td width="22%">
-	    <div align="left">
-	      <input name="txt_Lname" type="text" id="txt_Lname" value="<?php echo $userDetail->last_name;?>"/>
-          </div></td><td width="8%"><div align="right">Email:</div></td>
-	  <td><div align="center">
-	    <input name="txt_Email" type="text" id="txt_Email" value="<?php echo $userDetail->email;?>"/>
-	  </div></td>
-    </tr>
-	<tr>
-	  <td height="31"><div align="right">Country: </div></td>
-	  <td>
-	    
-        <div align="center">
-          <select name="txt_Country" id="txt_Country">
-            <option value="">------- SELECT --------</option>
+ 	<input type="hidden" name="user_id" value="<?php echo $userDetail->id;?>">
+    <div class="container-fluid">
+		<div class="row-fluid">
+    	<div class="span4">
+        	<div class="form-group">
+            <input name="txt_Fname" type="text" id="txt_Fname" placeholder="First Name" class="form-control" value="<?php echo $userDetail->first_name;?>"/>
+            </div>
+            <div class="form-group">
+            <input name="txt_Lname" type="text" id="txt_Lname" placeholder="Last Name" class="form-control" value="<?php echo $userDetail->last_name;?>"/>
+            </div>
+            <div class="form-group">
+            <input name="txt_Email" type="email" id="txt_Email" class="form-control" placeholder="Email"  value="<?php echo $userDetail->email;?>"/>
+            </div>
+        </div>
+  		<div class="span4">
+        	 <div class="form-group">
+            <select name="txt_Country" id="txt_Country" class="form-control">
+            <option value="">Select</option>
             <?php foreach($countries as $country){
               if($country['cid'] == $userDetail->country){
               $selected = "selected='selected'";
@@ -129,25 +118,23 @@ if($Submit)
               $selected = '';
               }
             	?>
-            <option <?php echo $selected;?> value="<?=$country['cid'];?>"><?=$country['name'];?></option>
+            <option <?php echo $selected;?> value="<?php echo $country['cid'];?>"><?php echo $country['name'];?></option>
             <?php }?>
           </select>
-        </div></td>
-	  <td><div align="right">Phone: </div></td>
-	  <td>
-	    <div align="left">
-	      <input name="txt_Phone_number" type="text" id="txt_Phone_number" value="<?php echo $userDetail->contact;?>"/>
-          </div></td>
-    </tr>
-	<tr>
-	  <td height="55"><div align="right">Address</div></td>
-	  <td>	    <div align="center">
-	    <input name="txt_Address" type="text" id="txt_Address" value="<?php echo $userDetail->address;?>"/>      
-      </div></td>
-    </tr>
-	<tr>
-	  <td colspan="6"><h2>Carrier Detail</h2></td>
-    </tr>
+            </div>
+            <div class="form-group">
+            <input name="txt_Phone_number" type="text" id="txt_Phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $userDetail->contact;?>"/>
+            </div>
+            <div class="form-group">
+            <input name="txt_Address" type="text" id="txt_Address" class="form-control" placeholder="Address" value="<?php echo $userDetail->address;?>"/> 
+            </div>
+
+        </div>
+        </div>
+       </div>
+
+  <h2>Carrier Detail</h2>
+  <table width="100%" class="table table-bordered table-responsive">
 	<tr>
           <td width="18%"><div align="center"><strong>Name</strong></div></td>
           <td width="15%"><div align="center"><strong>Key / CPCID </strong></div></td>
@@ -192,16 +179,14 @@ if($Submit)
       <?php
 		}			
 		?>
-		<tr>
-		  <td colspan="2">&nbsp;</td>
-		  <td><div align="right">Enter Verification Code :</div></td>
-		  <td colspan="2">
-		    <div align="center">
-		      <input name="vercode" type="text" id="vercode"/>
-            </div></td>
-		  <td valign="baseline"><div align="center"><img src="./images/captcha.php" width="117" height="50" />
-	        <input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary"/>
-		  </div></td>
-		</tr>
   </table>
+  		<div class="form-group">
+        <img src="./images/captcha.php" width="117" height="50" />
+        </div>
+        <div class="form-group">
+        <input name="vercode" type="text" class="form-control" placeholder="Enter Verification Code :" id="vercode"/> 
+        </div>
+        <div class="form-group">
+        <input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary btn-lg"/>
+        </div>
 </form>
