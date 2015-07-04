@@ -27,18 +27,14 @@
 		$check_tnt 		= $_GET['check_tnt'];
 		$check_dhl 		= $_GET['check_dhl'];
 		$packingType 	= $_GET['ship_type'];
-		
-		if($userObj->is_privilege_discount == 1 ){
+				
+		if($userObj->is_privilege_discount == 1 and $userObj->user_type !=  2){
 			$selectClause = "*";
-			if($userObj->parent_id != 0 and $userObj->user_type ==  3){
-				$starUserDetail = getUserDetailById($userObj->parent_id);
-				$starUserDetail = (object) $starUserDetail;
-				$whereClause = " name='Canada Post' AND user_id = $starUserDetail->id";
-			}else if($userObj->user_type ==  2){
-				$whereClause = " name='Canada Post' AND user_id = $userObj->id";
-			}
+			$starUserDetail = getUserDetailById($userObj->parent_id);
+			$starUserDetail = (object) $starUserDetail;
+			$whereClause = " name='Canada Post' AND user_id = $starUserDetail->id";
 			$canadaDetail = getStarUserCarriers($selectClause,$whereClause);
-			if(count($canadaDetail) == 0){
+			if(count($fedexDetail) == 0){
 				$selectClause = "*";
 				$whereClause = " name='Canada Post'";
 				$canadaDetail = getGenrealCarriers($selectClause,$whereClause);
@@ -52,7 +48,12 @@
 
 		$canadaPostRate = new CanadaPost();
 		$rateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-
+		if($userObj->user_type == 2){
+			$selectClause = '*';
+			$whereClause = " name='Canada Post' AND user_id = $userObj->id";
+			$canadaDetail = getStarUserCarriers($selectClause,$whereClause);
+			$starRateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+		}
 // 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 // 		{
 // 				$rateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
@@ -85,10 +86,15 @@
 					$canDiscount = 0;
 				}
 			}
+			
+		    if(isset($starRateData[$key]['amount'])){
+				 $canDiscount = $starRateData[$key]['amount'];
+			}
+			
 			$canName = "Canada Post ".$canadaRate['name'];
 			$canDelivery = $canadaRate['deliveryDate'];
 			//$canShipping = $canadaRate['shippingDate'];
-			if($userObj->is_posted_rate  == 1)
+			if($userObj->is_posted_rate  == 1 or $userObj->user_type == 2)
 			{
 				$canRate = $canadaRate['rate'];
 			}

@@ -1,6 +1,5 @@
 <?php
 require_once("functions.php");
-
 		    $selectedCarriers = array();
 			$object = (object) array('user_id' => $userObj->id);
 			$selectedCarriers = getUserSelectedCarriers($object);
@@ -101,12 +100,12 @@ require_once("functions.php");
     
   	 </div>
      <div class="carrier">
-    <?php if($userObj->user_type == 1)
+    <?php if($userObj->user_type == 2)
 	 {?>
      	<div class="carier">
 		<h3>Carriers:</h3>
         	<div class="left">
-           <input type="checkbox" id="check_canada"  class="selectedCarriers" carrier_selected_id ="1" name="check_canada" value="yes" <?php if(in_array(1,$selectedCarriers)){ ?> checked="checked"<?php }?>  /> 
+           <input type="checkbox" id="check_canada"  class="selectedCarriers" carrier_selected_id ="1" name="check_canada"  onclick="return updateUserSelectedCarriers();" value="yes" <?php if(in_array(1,$selectedCarriers)){ ?> checked="checked"<?php }?>  /> 
            <label>Canada Post</label> 
           <br />
            <input type="checkbox" id="check_fedex"  class="selectedCarriers" carrier_selected_id ="2" name="check_fedex" onclick="return updateUserSelectedCarriers();" value="yes" <?php if(in_array(2,$selectedCarriers)){ ?> checked="checked"<?php }?>/>
@@ -137,7 +136,7 @@ require_once("functions.php");
           <input name="checkTnt" type="hidden" id="checkTnt" value="0" />
           <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
           <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
-           <input name="star_user_id" type="hidden" id="star_user_id" value="<?php $userObj->id?>" />
+           <input name="star_user_id" type="hidden" id="star_user_id" value="<?php echo $userObj->id?>" />
              <input name="submit" class="btn btn-primary" type="button" id="submit" onclick="return getRates();" value="Get Rates" />
          	</div>
   </div>

@@ -39,21 +39,15 @@
 		$packingType 	= $_GET['ship_type'];
 
 		$purolatorRate = new puroRate;
-		
-		
-		if($userObj->is_privilege_discount == 1 ){
+		if($userObj->is_privilege_discount == 1 and $userObj->user_type !=  2){
 			$selectClause = "*";
-			if($userObj->parent_id != 0 and $userObj->user_type ==  3){
-				$starUserDetail = getUserDetailById($userObj->parent_id);
-				$starUserDetail = (object) $starUserDetail;
-				$whereClause = " name='Purolator' AND user_id = $starUserDetail->id";
-			}else if($userObj->user_type ==  2){
-				$whereClause = " name='Purolator' AND user_id = $userObj->id";
-			}
+			$starUserDetail = getUserDetailById($userObj->parent_id);
+			$starUserDetail = (object) $starUserDetail;
+			$whereClause = " name='Purolator' AND user_id = $starUserDetail->id";
 			$purolatorDetail = getStarUserCarriers($selectClause,$whereClause);
-			if(count($purolatorDetail) == 0){
+			if(count($fedexDetail) == 0){
 				$selectClause = "*";
-				$whereClause = " name='Purolator'";
+				$whereClause = " name='Fedex'";
 				$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
 			}
 		}else{
@@ -61,8 +55,14 @@
 			$whereClause = " name='Purolator'";
 			$purolatorDetail = getGenrealCarriers($selectClause,$whereClause);
 		}
-		$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo,$countryToState);
 		
+		$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo,$countryToState);
+		if($userObj->user_type == 2){
+			$selectClause = '*';
+			$whereClause = " name='Purolator' AND user_id = $userObj->id";
+			$purolatorDetail = getStarUserCarriers($selectClause,$whereClause);
+			$starRateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo,$countryToState);
+		}
 		//$purolatorDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
 // 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 // 		{
@@ -97,7 +97,9 @@
 				$canDiscount = 0;
 			} 
 			}
-			
+		    if(isset($starRateData[$key]['amount'])){
+				 $canDiscount = $starRateData[$key]['amount'];
+			}
 			
 			$canName = $canadaRate['name'];
 			$canName = preg_replace('/(?<!\ )[A-Z]/', ' $0', $canName);
@@ -107,7 +109,7 @@
 			
 			$canDelivery = $canadaRate['deliveryDate'];
 			$canShipping = $canadaRate['shippingDate'];
-			if($userObj->is_posted_rate == 1)
+			if($userObj->is_posted_rate == 1 or $userObj->user_type == 2)
 			{
 				$canRate = $canadaRate['rate'];
 			}
@@ -116,6 +118,7 @@
 				$canRate = 0;
 			}
 			
+
 			
 			$date1=date_create($canDelivery);
 			$date2=date_create($canShipping);

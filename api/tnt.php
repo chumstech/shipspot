@@ -31,28 +31,30 @@
 		
 		$tntRate = new tnt;
 		
-		if($userObj->is_privilege_discount == 1 ){
+	  if($userObj->is_privilege_discount == 1 and $userObj->user_type !=  2){
 			$selectClause = "*";
-			if($userObj->parent_id != 0 and $userObj->user_type ==  3){
-				$starUserDetail = getUserDetailById($userObj->parent_id);
-				$starUserDetail = (object) $starUserDetail;
-				$whereClause = " name='TnT' AND user_id = $starUserDetail->id";
-			}else if($userObj->user_type ==  2){
-				$whereClause = " name='TnT' AND user_id = $userObj->id";
-			}
-			$tntDetail = getStarUserCarriers($selectClause,$whereClause);
-			if(count($tntDetail) == 0){
-				$selectClause = "*";
-				$whereClause = " name='TnT'";
-				$tntDetail = getGenrealCarriers($selectClause,$whereClause);
-			}
+		 	$starUserDetail = getUserDetailById($userObj->parent_id);
+		 	$starUserDetail = (object) $starUserDetail;
+		 	$whereClause = " name='TnT' AND user_id = $starUserDetail->id";
+		    $tntDetail = getStarUserCarriers($selectClause,$whereClause);
+		 if(count($fedexDetail) == 0){
+		 	$selectClause = "*";
+		 	$whereClause = " name='TnT'";
+		 	$tntDetail = getGenrealCarriers($selectClause,$whereClause);
+		  }
 		}else{
 			$selectClause = "*";
 			$whereClause = " name='TnT'";
 			$tntDetail = getGenrealCarriers($selectClause,$whereClause);
 		}
-		$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		
+		$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+		if($userObj->user_type == 2){
+			$selectClause = '*';
+			$whereClause = " name='TnT' AND user_id = $userObj->id";
+			$tntDetail = getStarUserCarriers($selectClause,$whereClause);
+			$starRateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
+		}
 	//	$tntDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
 // 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
 // 		{
@@ -94,8 +96,11 @@
 						$canDiscount = 0;
 					} 
 				   }
+				if(isset($starRateData[$key]['amount'])){
+				 $canDiscount = $starRateData[$key]['amount'];
+				}
 				$canName = $canadaRate['name'];
-					if($userObj->is_posted_rate == 1)
+					if($userObj->is_posted_rate == 1 or $userObj->user_type == 2)
 					{
 						$canRate = $canadaRate['rate'];
 					}

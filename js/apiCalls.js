@@ -1,5 +1,5 @@
 //var appBaseURL = document.location.protocol + '//96.126.101.70/';
-var appBaseURL = document.location.protocol + '//localhost/';
+var appBaseURL = document.location.protocol + '//localhost/shipspot';
 function updateUserSelectedCarriers()
 {
 	var dataArry = [];
@@ -9,7 +9,7 @@ function updateUserSelectedCarriers()
 		}	
 	});
 	$.ajax({
-        url:appBaseURL+"shipping/controls/carrier.php",
+        url:appBaseURL+"/controls/carrier.php",
         type: "POST",
         dataType: "jsonp",
 		data: {cerrier_id : dataArry , uId : $('#star_user_id').val()},
@@ -103,8 +103,8 @@ function getRates()
 		txt_width = 1;
 	}
   
-	if(loginType == 'admin')
-	{
+//	if(loginType == 'admin')
+//	{
 		if($('#check_canada').is(":checked") || $('#check_fedex').is(":checked") || $('#check_ups').is(":checked") || $('#check_puro').is(":checked") || $('#check_tnt').is(":checked") || $('#check_tnt').is(":checked"))
 		{
 			if($('#check_canada').is(":checked"))
@@ -134,30 +134,30 @@ function getRates()
 			$('#loading-image').hide();
 			alert("Please select Carriers First!");	
 		}
-	}
-	else
-	{
-			if(check_canada == 1)
-			{
-				getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
-			}
-			if(check_fedex == 1)
-			{
-				getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);	
-			}
-			if(check_ups == 1)
-			{
-				getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, ship_type, countryFrom, countryTo);	
-			}
-			if(check_puro == 1)
-			{
-				getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
-			}
-			if(check_tnt == 1)
-			{
-				getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
-			}	
-	}
+//	}
+//	else
+//	{
+//			if(check_canada == 1)
+//			{
+//				getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
+//			}
+//			if(check_fedex == 1)
+//			{
+//				getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);	
+//			}
+//			if(check_ups == 1)
+//			{
+//				getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, ship_type, countryFrom, countryTo);	
+//			}
+//			if(check_puro == 1)
+//			{
+//				getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
+//			}
+//			if(check_tnt == 1)
+//			{
+//				getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo);
+//			}	
+//	}
 	//console.log("==========ALL DONE========");
 	setTimeout(function(){ $('#loading-image').hide(); }, 2000);
 }
@@ -180,7 +180,7 @@ function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width,
 	var Posted_Rate_Flag = $('#checkPostRates').val();
 	var checkDiscountRates = $('#checkDiscountRates').val();
 	$.ajax({
-        url:appBaseURL+"shipping/api/canada.php",
+        url:appBaseURL+"/api/canada.php",
         type: "GET",
         dataType: "jsonp",
 		data: data,
@@ -262,7 +262,7 @@ function getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_
 	var Posted_Rate_Flag = $('#checkPostRates').val();
 	var checkDiscountRates = $('#checkDiscountRates').val();	
 	$.ajax({
-        url:appBaseURL+"shipping/api/fedex.php",
+        url:appBaseURL+"/api/fedex.php",
         type: "GET",
         dataType: "jsonp",
 		data: data,
@@ -340,7 +340,7 @@ function getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
 	var Posted_Rate_Flag = $('#checkPostRates').val();
 	var checkDiscountRates = $('#checkDiscountRates').val();
 	$.ajax({
-        url:"http://localhost/shipping/api/ups.php",
+        url:appBaseURL+"/api/ups.php",
         type: "GET",
         dataType: "jsonp",
 		data: data,
@@ -417,7 +417,7 @@ function getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, t
 	var Posted_Rate_Flag = $('#checkPostRates').val();
 	var checkDiscountRates = $('#checkDiscountRates').val();
 	$.ajax({
-        url:appBaseURL+"shipping/api/pur.php",
+        url:appBaseURL+"/api/pur.php",
         type: "GET",
         dataType: "jsonp",
 		data: data,
@@ -494,7 +494,7 @@ function getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
 	var Posted_Rate_Flag = $('#checkPostRates').val();
 	var checkDiscountRates = $('#checkDiscountRates').val();
 	$.ajax({
-        url:appBaseURL+"shipping/api/tnt.php",
+        url:appBaseURL+"/api/tnt.php",
         type: "GET",
         dataType: "jsonp",
 		data: data,
