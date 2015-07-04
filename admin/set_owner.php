@@ -238,6 +238,7 @@ while($data = mysql_fetch_array($Query))
   	$DB_TNT  = @$data['TNT'];	  
   	$DB_LOOMIS  = @$data['LOOMIS'];	  
 	$DB_DHL =  @$data['DHL'];
+	$parentId =  @$data['parent_id'];
 }
 
 
@@ -287,8 +288,13 @@ while($data = mysql_fetch_array($Query))
 	  	$QueryString = "select distinct * from users where user_type = 2";
 		$Query = mysql_query($QueryString);
 		while($data = mysql_fetch_array($Query)){
+            if($parentId == $data['id']){
+              $selected = 'selected="selected"';
+            }else{
+              $selected = '';
+            }
 	   ?>
-          <option value="<?php echo @$data['id'];?>" ><?php echo @$data['first_name']." ".@$data['last_name'];?></option>
+          <option <?php echo $selected;?> value="<?php echo @$data['id'];?>" ><?php echo @$data['first_name']." ".@$data['last_name'];?></option>
 		<?php
 		}
 		?>
