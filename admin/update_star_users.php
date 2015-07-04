@@ -17,12 +17,16 @@ $update_carier_ids = @$_POST['update_carrier_id'];
 $user_type = 2;
 $created_by = $_SESSION['user']['id'];
 $Submit = @$_POST['Submit'];
+$Update = @$_POST['update'];
 
+if($user_id)
+{
 $query = "SELECT * from users where id={$user_id}";
 $res = mysql_query($query,$cn) or die(mysql_error());
 $userDetail = mysql_fetch_array($res,MYSQL_ASSOC);
 $userDetail = (object) $userDetail;
-if($Submit)
+}
+if($Update)
 {
 	   if($email!="")
 	   {
@@ -30,7 +34,7 @@ if($Submit)
 						{
 						
 							@$msg = 'Incorrect verification code!' ;
-							header("location:index.php?para=8&msg=$msg");					
+							header("location:index.php?para=17&user_id={$user_id}&msg=$msg");					
 						}
 						else
 						{
@@ -83,6 +87,74 @@ if($Submit)
 		{
 			@$msg="Email and Password both are require!";
 			header("location:index.php?para=17&user_id={$user_id}&msg=$msg");					
+
+		}
+}	
+if($Submit)
+{
+	   if($email!="" & $password!="")
+	   {
+						if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  
+						{
+						
+							@$msg = 'Incorrect verification code!' ;
+							header("location:index.php?para=8&msg=$msg");					
+						}
+						else
+						{
+
+							$res=mysql_query("select *from users where email='$email'",$cn) or die(mysql_error());
+							if(mysql_num_rows($res)<1)
+							{
+								$user_created_date = date('Y-m-d H:i:s');
+								 $q = "insert into users 
+								(first_name, last_name, address, country, email, password, contact,user_type,created_date,created_by,status)
+								values('$first_name','$last_name','$address','$country','$email','$password','$phone_number',$user_type,'$user_created_date',$created_by,1)";
+								$res = mysql_query($q,$cn) or die(mysql_error());
+								$used_id = mysql_insert_id($cn);
+								$name = @$_POST['name'];
+								$col1 = @$_POST['col1'];
+								$col2 = @$_POST['col2'];
+								$col3 = @$_POST['col3'];
+								$col4 = @$_POST['col4'];
+								$carrier_ids = @$_POST['carrier_ids'];
+								for($i=0; $i<count($name); $i++)
+									{
+										$createdDate = date('Y-m-d H:i:s');
+										if($col1[$i]!="" || $col2[$i]!="")
+										{
+											$q1 = "insert into star_user_carriers 
+											(name, api_key, password, account_no, other_account_no,user_id,created_date,is_active,carrier_id)
+											values('$name[$i]','$col1[$i]','$col2[$i]','$col3[$i]','$col4[$i]',$used_id,'$createdDate',1,$carrier_ids[$i])";
+											mysql_query($q1,$cn) or die(mysql_error());
+										}
+									
+									}
+										if($res) 
+										{
+											@$msg= "Your are registerd now!";
+											header("location:index.php?para=8&msg=$msg");				
+										}
+										else
+										{
+											
+											@$msg="All fields are required";
+											header("location:index.php?para=8&msg=$msg");					
+										}
+							}
+							else
+							{
+								@$msg = "A user has already signed up with the same email address";	
+								header("location:index.php?para=8&msg=$msg");					
+			
+							}
+						}
+				
+		}
+		else
+		{
+			@$msg="Email and Password both are require!";
+			header("location:index.php?para=8&msg=$msg");					
 
 		}
 }	
@@ -143,16 +215,20 @@ if($Submit)
       <td width="22%"><div align="center"><strong>Shipper / Meter  / Registerd Account  </strong></div></td>
     </tr>
         <?php 
-		
 		$QueryString = "select * from genreal_carriers";
 		$Query = mysql_query($QueryString,@$cn);
 		while($data = mysql_fetch_array($Query)){
-           $queryString = "select * from star_user_carriers where carrier_id={$data['id']}";
+			if(!($user_id))
+			{
+				$user_id = 0;
+			}
+           $queryString = "select * from star_user_carriers where user_id = {$user_id} AND carrier_id={$data['id']}";
            $res = mysql_query($queryString,@$cn);
            $row = mysql_fetch_array($res,MYSQL_ASSOC);
            if($row == FALSE){
              $row = array();
-           }
+        
+		   }
   		?>
         <tr>
         <?php if(count($row) > 0){?>
@@ -187,6 +263,13 @@ if($Submit)
         <input name="vercode" type="text" class="form-control" placeholder="Enter Verification Code :" id="vercode"/> 
         </div>
         <div class="form-group">
-        <input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary btn-lg"/>
+        <?php if($_GET['user_id']){?>
+			<input name="update" type="submit" id="Update" value="Update" class="btn btn-primary btn-lg"/>
+		<?php }else
+		{?>
+		<input name="Submit" type="submit" id="Submit" value="Submit" class="btn btn-primary btn-lg"/>	
+		<?php }?>
+        
+        
         </div>
 </form>

@@ -20,6 +20,13 @@ function getCountries()
 	return $countries;
 }
 
+function getCountryByCode($code)
+{
+   $query = mysql_query("select * from countries where cid='".$code."' ")or die(mysql_error());
+	$country = mysql_fetch_array($query,MYSQL_ASSOC);
+	return $country['name'];
+}
+
 function getGenrealCarriers($selectClause = '*',$whereClause = "")
 {
   $query = "SELECT {$selectClause} from genreal_carriers WHERE {$whereClause}" ;

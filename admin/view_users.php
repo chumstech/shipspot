@@ -45,7 +45,7 @@ if($userObj->user_type == 2){
 <div class="action">
 	<?php if(isset($userObj) && $userObj->user_type == 1) { ?>
     	 <div class="btn-group">
-  			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=8';">Create Star User</button>
+  			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=17';">Create Star User</button>
   			<button type="button" class="btn btn-primary" onclick="window.location ='index.php?para=2';">Create User</button>
 		</div>
     <?php } elseif(isset($userObj) && $userObj->user_type == 2) { ?>
@@ -60,10 +60,10 @@ if($userObj->user_type == 2){
       <thead>
 		<tr>
           <td width="14%"><strong>Name</strong></td>
-          <td class="hideMobile" width="15%"><strong>Address</strong></td>
-          <td class="hideMobile" width="12%"><strong>Country</strong></td>
-          <td class="hideMobile"><strong>Phone</strong></td>
-          <td width="19%"><strong>Email</strong></td>
+          <td class="hideMobile" width="20%"><strong>Address</strong></td>
+          <td class="hideMobile" width="15%"><strong>Country</strong></td>
+          <td class="hideMobile" width="10%"><strong>Phone</strong></td>
+          <td width="15%"><strong>Email</strong></td>
           <td class="hideMobile"><strong>Owner</strong></td>
           <td width="4%"><strong>Delete</strong></td>
           <td width="4%"><strong>Edit</strong></td>
@@ -75,10 +75,10 @@ if($userObj->user_type == 2){
   		?>
         <tr row-id="<?php echo $data['id']; ?>" class="parentRow">
           
-          <td><a href="index.php?para=17&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
-		  <?php echo @$data['id'].' - '.@$data['first_name'].' '.@$data['last_name']; ?></a></td>
+          <td style="padding: 0px ! important;"><a style="float: left; margin-left: 10px; margin-top: 7px ! important;" href="index.php?para=17&user_id=<?php echo $data['id']; ?>&user_email=<?php echo $data['email']; ?>">
+		  <?php echo @$data['first_name'].' '.@$data['last_name']; ?></a></td>
           <td class="hideMobile"><?php echo @$data['address']; ?></td>
-          <td class="hideMobile"><?php echo @$data['country']; ?></td>
+          <td class="hideMobile"><?php echo getCountryByCode(@$data['country']); ?></td>
           <td class="hideMobile"><?php echo @$data['contact']; ?></td>
           <td><?php echo @$data['email']; ?></td>
           <td class="hideMobile"><?php echo getUserName($data['parent_id']); ?>	</td>
@@ -95,9 +95,9 @@ if($userObj->user_type == 2){
             ?>
            <tr  class="childRow" id="child_detail_<?php echo $chalidData['id']?>" row-id="<?php echo $chalidData['id']?>" parent-id="<?php echo $data['id']; ?>">
           <td><a href="index.php?para=13&user_id=<?php echo $chalidData['id']; ?>&user_email=<?php echo $chalidData['email']; ?>">
-		  <?php echo @$chalidData['id'].' - '.@$chalidData['first_name'].' '.@$chalidData['last_name']; ?></a></td>
+		  <?php echo @$chalidData['first_name'].' '.@$chalidData['last_name']; ?></a></td>
           <td><?php echo @$chalidData['address']; ?></td>
-          <td><?php echo @$chalidData['country']; ?></td>
+          <td><?php echo getCountryByCode(@$chalidData['country']); ?></td>
           <td><?php echo @$chalidData['contact']; ?></td>
           <td><?php echo @$chalidData['email']; ?></td>
           <td><?php echo getUserName($chalidData['parent_id']); ?>	</td>

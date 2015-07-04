@@ -189,7 +189,7 @@ $(document).ready(function() {
     			$user_name = current(explode("@", $user_name));
 			}
 			$str = str_replace(array('_', ',', '-', '.'), ' ', $user_name);
-			$user_name =  $str;
+			$user_name =  $userObj->first_name." ".$userObj->last_name;
 			?>
             <div class="mobile_user_dashboard" style="display:none;">
                 <div class="btn-group">

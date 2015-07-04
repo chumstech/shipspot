@@ -197,18 +197,36 @@ float:left;
     width: 240px;
 }
 
+
 .notice {
-    background: darkseagreen none repeat scroll 0 0;
+    background: burlywood none repeat scroll 0 0;
     border-radius: 5px;
-    color: #000;
+    color: #3c3c3c;
     float: left;
-    line-height: 25px;
+    line-height: 35px;
     margin-bottom: 10px;
-    padding: 0 5px;
-    width: 99%;
+    padding: 0 2%;
+    width: 96%;
 }
 
+table thead {
+    background: #888 none repeat scroll 0 0;
+    color: #fff;
+}
 .parentRow
 {
-	background:#ccc;
+	background:#eee;
+}
+
+.tbltree-expander {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 20px !important;
+    margin-left: 5px;
+    margin-top: 8px;
+    position: relative;
+    width: 16px !important;
 }
