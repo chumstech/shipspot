@@ -161,7 +161,11 @@ if($Submit)
 
 
 ?>
-
+<style>
+label {
+  font-weight: bold;
+}
+</style>
 <h2>Star Users </h2>
 <div class="notice"><?php echo @$msg;?></div>
 <form id="form1" name="form1" method="post" action="">
@@ -170,19 +174,23 @@ if($Submit)
 		<div class="row-fluid">
     	<div class="span4">
         	<div class="form-group">
-            <input name="txt_Fname" type="text" id="txt_Fname" placeholder="First Name" class="form-control" value="<?php echo $userDetail->first_name;?>"/>
+            <label>First Name</label>
+            <input name="txt_Fname" type="text" id="txt_Fname" class="form-control" value="<?php echo $userDetail->first_name;?>"/>
             </div>
             <div class="form-group">
-            <input name="txt_Lname" type="text" id="txt_Lname" placeholder="Last Name" class="form-control" value="<?php echo $userDetail->last_name;?>"/>
+            <label>Last Name</label>
+            <input name="txt_Lname" type="text" id="txt_Lname" class="form-control" value="<?php echo $userDetail->last_name;?>"/>
             </div>
             <div class="form-group">
-            <input name="txt_Email" type="email" id="txt_Email" class="form-control" placeholder="Email"  value="<?php echo $userDetail->email;?>"/>
+            <label>Email Address</label>
+            <input name="txt_Email" type="email" id="txt_Email" class="form-control"  value="<?php echo $userDetail->email;?>"/>
             </div>
         </div>
   		<div class="span4">
         	 <div class="form-group">
+             <label>Country</label>
             <select name="txt_Country" id="txt_Country" class="form-control">
-            <option value="">Select</option>
+            <option value=""></option>
             <?php foreach($countries as $country){
               if($country['cid'] == $userDetail->country){
               $selected = "selected='selected'";
@@ -195,10 +203,12 @@ if($Submit)
           </select>
             </div>
             <div class="form-group">
-            <input name="txt_Phone_number" type="text" id="txt_Phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $userDetail->contact;?>"/>
+            <label>Phone Number</label>
+            <input name="txt_Phone_number" type="text" id="txt_Phone_number" class="form-control" value="<?php echo $userDetail->contact;?>"/>
             </div>
             <div class="form-group">
-            <input name="txt_Address" type="text" id="txt_Address" class="form-control" placeholder="Address" value="<?php echo $userDetail->address;?>"/> 
+            <label>Address</label>
+            <input name="txt_Address" type="text" id="txt_Address" class="form-control" value="<?php echo $userDetail->address;?>"/> 
             </div>
 
         </div>

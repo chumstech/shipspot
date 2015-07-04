@@ -1733,7 +1733,7 @@ select {
     width: 100%;
 }
 input, textarea, .uneditable-input {
-    width: 100%;
+  width: 95%;
 }
 .action {
     float: right;
