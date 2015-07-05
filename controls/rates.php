@@ -6,7 +6,17 @@ require_once("functions.php");
 			$countries = getCountries();
 
 ?>
+<style>
+table thead {
+    color: #666;
+}
+</style>
 <div class="rates">
+	<div class="loadingList">
+    	<!--<div class="item loadingUps"><img src="images/loading.gif" />Loading UPS Rates</div>
+        <div class="item loadingFedex"><img src="images/loading.gif" />Loading Fedex Rates</div>
+        <div class="item loadingPurolator"><img src="images/loading.gif" />Loading Purolator Rates</div>-->
+    </div>
 	<?php // echo '<pre>';print_r($userObj); ?>
 	<div id="loading-image" style="display:none;">
 	<img src="images/loading.gif" alt="Loading..." />

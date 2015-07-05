@@ -1,5 +1,5 @@
 //var appBaseURL = document.location.protocol + '//96.126.101.70/';
-var appBaseURL = document.location.protocol + '//localhost/shipspot';
+var appBaseURL = document.location.protocol + '//localhost/shipping';
 function updateUserSelectedCarriers()
 {
 	var dataArry = [];
@@ -29,6 +29,7 @@ function getRates()
 {       
     console.log('Fetching rates');
 	//$('#loading-image').show();
+	$('.loadingList').html('');
 	$('.mainRecords').show();
 	
 	//console.log('Fetching rates from Canada Post API');
@@ -163,7 +164,9 @@ function getRates()
 }
 
 function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo)
-{       
+{   
+	var loadingCanada = '<div class="item loadingCanada"><img src="images/loading.gif" />Loading Canda Post Rates</div>';
+	$('.loadingList').append(loadingCanada);    
 	console.log('Fetching rates from Canada Post API');
 	var show_disc = $('input[name="show_disc"]:checked').val();	
     var data = {
@@ -187,6 +190,8 @@ function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width,
         jsonp : "callback",
         success:function(data)
         {
+			$('.loadingCanada').html('Canada Post Rates Fetched');
+			setTimeout(function(){ $('.loadingCanada').fadeOut(); }, 5000);
 			var html = '';
 			console.log(data);
 			var firsthtml  = '';
@@ -237,7 +242,9 @@ function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width,
 			
         },
         error:function(){
-			//$('#loading-image').hide();         	
+			//$('#loading-image').hide();
+			$('.loadingCanada').html('Error Fetching Canada Post Rates.');
+			setTimeout(function(){ $('.loadingCanada').fadeOut(); }, 5000);      	
         	console.log('Error: There is some error please try again.'); 
            
         }
@@ -246,7 +253,9 @@ function getCanadaPostRates(txt_from, txt_to, txt_weight, txt_length, txt_width,
 }
 
 function getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo)
-{       
+{  
+	var loadingFedex = '<div class="item loadingFedex"><img src="images/loading.gif" />Loading Fedex Rates</div>';
+	$('.loadingList').append(loadingFedex);     
 	console.log('Fetching rates from Fedex API');
 	var show_disc = $('input[name="show_disc"]:checked').val();		
     var data = {
@@ -269,6 +278,8 @@ function getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_
         jsonp : "callback",
         success:function(data)
         {
+			$('.loadingFedex').html('Fedex Rates Fetched');
+			setTimeout(function(){ $('.loadingFedex').fadeOut(); }, 5000);
 			var html = '';
 			console.log(data);
 			var firsthtml  = '';
@@ -315,7 +326,9 @@ function getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_
 			}
         },
         error:function(){
-			//$('#loading-image').hide();         	
+			//$('#loading-image').hide();
+			$('.loadingFedex').html('Error Fetching Fedex Rates.');
+			setTimeout(function(){ $('.loadingFedex').fadeOut(); }, 5000);          	
         	console.log('Error: There is some error please try again.'); 
            
         }
@@ -323,7 +336,9 @@ function getFedexRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_
 }
 
 function getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, ship_type, countryFrom, countryTo)
-{       
+{    
+	var loadingUps = '<div class="item loadingUps"><img src="images/loading.gif" />Loading UPS Rates</div>';
+	$('.loadingList').append(loadingUps);   
 	console.log('Fetching rates from UPS API');
 	var show_disc = $('input[name="show_disc"]:checked').val();		
     var data = {
@@ -347,6 +362,8 @@ function getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
         jsonp : "callback",
         success:function(data)
         {
+			$('.loadingUps').html('UPS Rates Fetched');
+			setTimeout(function(){ $('.loadingUps').fadeOut(); }, 5000);
 			var html = '';
 			//console.log(data);
 			var firsthtml  = '';
@@ -393,7 +410,9 @@ function getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
 			}
         },
         error:function(){
-			//$('#loading-image').hide();         	
+			//$('#loading-image').hide();      
+			$('.loadingUps').html('Error Fetching UPS Rates.');
+			setTimeout(function(){ $('.loadingUps').fadeOut(); }, 5000);   	
         	console.log('Error: There is some error please try again.'); 
            
         }
@@ -401,7 +420,9 @@ function getUpsRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
 }
 
 function getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo)
-{       
+{   
+	var loadingPurolator = '<div class="item loadingPurolator"><img src="images/loading.gif" />Loading Purolator Rates</div>';
+	$('.loadingList').append(loadingPurolator);    
 	console.log('Fetching rates from UPS API');
 		var show_disc = $('input[name="show_disc"]:checked').val();	
     var data = {
@@ -424,6 +445,8 @@ function getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, t
         jsonp : "callback",
         success:function(data)
         {
+			$('.loadingPurolator').html('Purolator Rates Fetched.');
+			setTimeout(function(){ $('.loadingPurolator').fadeOut(); }, 5000);
 			var html = '';
 			//console.log(data);
 			var firsthtml  = '';
@@ -470,7 +493,9 @@ function getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, t
 			}
         },
         error:function(){
-			//$('#loading-image').hide();         	
+			//$('#loading-image').hide();
+			$('.loadingPurolator').html('Error Fetching Purolator Rates.');
+			setTimeout(function(){ $('.loadingPurolator').fadeOut(); }, 5000);         	
         	console.log('Error: There is some error please try again.'); 
            
         }
@@ -478,7 +503,9 @@ function getPurlatorRates(txt_from, txt_to, txt_weight, txt_length, txt_width, t
 }
 
 function getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_height, countryFrom, countryTo)
-{       
+{ 
+	var loadingTnt = '<div class="item loadingTnt"><img src="images/loading.gif" />Loading TNT Rates</div>';
+	$('.loadingList').append(loadingTnt);     
 	console.log('Fetching rates from UPS API');
 	var show_disc = $('input[name="show_disc"]:checked').val();		
     var data = {
@@ -501,6 +528,8 @@ function getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
         jsonp : "callback",
         success:function(data)
         {
+			$('.loadingTnt').html('TNT Rates Fetched.');
+			setTimeout(function(){ $('.loadingTnt').fadeOut(); }, 5000);
 			var html = '';
 			//console.log(data);
 			var firsthtml  = '';
@@ -548,7 +577,9 @@ function getTnTRates(txt_from, txt_to, txt_weight, txt_length, txt_width, txt_he
 			}
         },
         error:function(){ 
-			//$('#loading-image').hide();       	
+			//$('#loading-image').hide();    
+			$('.loadingTnt').html('Error Fetching TNT Rates.');
+			setTimeout(function(){ $('.loadingTnt').fadeOut(); }, 5000);   	
         	console.log('Error: There is some error please try again.'); 
            
         }
