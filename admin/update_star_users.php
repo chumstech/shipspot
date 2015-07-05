@@ -175,15 +175,15 @@ label {
     	<div class="span4">
         	<div class="form-group">
             <label>First Name</label>
-            <input name="txt_Fname" type="text" id="txt_Fname" class="form-control" value="<?php echo $userDetail->first_name;?>"/>
+            <input name="txt_Fname" type="text" id="txt_Fname" class="validate[required] form-control" value="<?php echo $userDetail->first_name;?>"/>
             </div>
             <div class="form-group">
             <label>Last Name</label>
-            <input name="txt_Lname" type="text" id="txt_Lname" class="form-control" value="<?php echo $userDetail->last_name;?>"/>
+            <input name="txt_Lname" type="text" id="txt_Lname" class="validate[required] form-control" value="<?php echo $userDetail->last_name;?>"/>
             </div>
             <div class="form-group">
             <label>Email Address</label>
-            <input name="txt_Email" type="email" id="txt_Email" class="form-control"  value="<?php echo $userDetail->email;?>"/>
+            <input name="txt_Email" type="email" id="txt_Email" class="validate[required,custom[email]] form-control"  value="<?php echo $userDetail->email;?>"/>
             </div>
         </div>
   		<div class="span4">
@@ -204,11 +204,11 @@ label {
             </div>
             <div class="form-group">
             <label>Phone Number</label>
-            <input name="txt_Phone_number" type="text" id="txt_Phone_number" class="form-control" value="<?php echo $userDetail->contact;?>"/>
+            <input name="txt_Phone_number" type="text" id="txt_Phone_number" class="validate[required] form-control" value="<?php echo $userDetail->contact;?>"/>
             </div>
             <div class="form-group">
             <label>Address</label>
-            <input name="txt_Address" type="text" id="txt_Address" class="form-control" value="<?php echo $userDetail->address;?>"/> 
+            <input name="txt_Address" type="text" id="txt_Address" class="validate[required] form-control" value="<?php echo $userDetail->address;?>"/> 
             </div>
 
         </div>
@@ -270,7 +270,7 @@ label {
         <img src="./images/captcha.php" width="117" height="50" />
         </div>
         <div class="form-group">
-        <input name="vercode" type="text" class="form-control" placeholder="Enter Verification Code :" id="vercode"/> 
+        <input name="vercode" type="text" class="validate[required] form-control" placeholder="Enter Verification Code :" id="vercode"/> 
         </div>
         <div class="form-group">
         <?php if($_GET['user_id']){?>

@@ -13,8 +13,15 @@ $Comments = @$_POST['txt_Comments'];
 $CBy =	$_SESSION['Admin_Email'];
 @$MBy = '';
 $Submit = @$_POST['Submit'];
-
-
+$Update = @$_POST['Update'];
+$user_id = $_GET['user_id'];
+if(isset($_GET['user_id']))
+{
+	$user_id = $_GET['user_id'];
+	$q = "Select * from users where id = $user_id";
+	$r = mysql_query($q);
+	$userRow = mysql_fetch_array($r);
+}
 
 function getStarUsers()
 {
@@ -23,7 +30,26 @@ function getStarUsers()
 }
 
 $starOwners = getStarUsers();
-
+if($Update)
+{
+						$user_id = $_POST['user_id'];
+						if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  
+						{
+						
+							@$msg = 'Incorrect verification code!' ;
+							header("location:index.php?para=2&user_id=$user_id&msg=$msg");					
+						}
+						else
+						{
+								$q = "Update users SET first_name= '$First_Name', last_name = '$Last_Name', address = '$Address', country = '$Country', email = '$Email', password = '$Password', contact = '$Phone_Number' where id = $user_id";
+								$res = mysql_query($q,$cn) or die(mysql_error());
+										if($res) 
+										{
+											@$msg= "Your Profile updated now!";
+											header("location:index.php?para=2&user_id=$user_id&msg=$msg");				
+										}
+						}
+}
 if($Submit)
 {
 	   if($Email!="" & $Password!="")
@@ -87,8 +113,8 @@ if($Submit)
 <div class="rates">
 <div class="message"><?php echo @$msg;?></div>
 <div class="image_wrapper_rate">
-<h3>Sign Up</h3>
-<form style="padding: 20px 3%;" method="post" action="index.php?para=2">
+<h3><?php if(isset($_GET['user_id'])){ echo "Update Profile";} else{ echo "Create User";} ?></h3>
+<form style="padding: 20px 3%;" method="post" action="index.php?para=2" id="create_user">
   	<div class="form-group">
   	  <?php if($userObj->user_type == 1){?>
     	<select name="starowner" style="width:31%;">
@@ -102,30 +128,33 @@ if($Submit)
       	 <input type="hidden" name="starowner" value="<?php echo $userObj->id;?>"/>
       	<?php }?>
   	</div>
+    <?php if(isset($_GET['user_id'])){?>
+    <input type="hidden" name="user_id" value="<?php echo $userObj->id;?>"/>
+    <?php }?>
   	<div class="form-group">
-    	<input name="txt_Fname" type="text" placeholder="First Name" class="form-control input-lg" style="width:30%;" id="txt_Fname"/>
+    	<input name="txt_Fname" type="text" placeholder="First Name" class="validate[required] form-control input-lg" value="<?php echo @$userRow['first_name'] ?>" style="width:30%;" id="txt_Fname"/>
   	</div>
     <div class="form-group">
-    	<input name="txt_Lname" placeholder="Last Name" class="form-control input-lg" style="width:30%;" type="text" id="txt_Lname"/>
+    	<input name="txt_Lname" placeholder="Last Name" class="validate[required] form-control input-lg" value="<?php echo @$userRow['last_name'] ?>" style="width:30%;" type="text" id="txt_Lname"/>
   	</div>
     <div class="form-group">
-    	<input name="txt_Phone_number" placeholder="Phone" class="form-control input-lg" style="width:30%;" type="text" id="txt_Phone_number"/>
+    	<input name="txt_Phone_number" placeholder="Phone" class="validate[required] form-control input-lg" value="<?php echo @$userRow['contact'] ?>" style="width:30%;" type="text" id="txt_Phone_number"/>
   	</div>
     <div class="form-group">
-    	<input name="txt_Email" placeholder="Email" class="form-control input-lg" style="width:30%;" type="text" id="txt_Email"/>
+    	<input name="txt_Email" placeholder="Email" class="validate[required,custom[email]] form-control input-lg" value="<?php echo @$userRow['email'] ?>" style="width:30%;" type="text" id="txt_Email"/>
   	</div>
     <div class="form-group">
-    	<input name="txt_Password" placeholder="Password" class="form-control input-lg" style="width:30%;" type="password" id="txt_Password"/>
+    	<input name="txt_Password" placeholder="Password" class="validate[required] form-control input-lg" value="<?php echo @$userRow['password'] ?>" style="width:30%;" type="password" id="txt_Password"/>
   	</div>
     <div class="form-group">
-    	<input name="txt_Address" placeholder="Address" class="form-control input-lg" style="width:30%;" type="text" id="txt_Address"/>
+    	<input name="txt_Address" placeholder="Address" class="validate[required] form-control input-lg" value="<?php echo @$userRow['address'] ?>" style="width:30%;" type="text" id="txt_Address"/>
   	</div>
     <div class="form-group">
     	<select name="txt_Country" style="width:31%;">
         	<option value="">Select Your Country</option>
             <?php $countries = getCountries(); ?>
       		<?php foreach ($countries as $country){?>
-      		<option value="<?php echo $country['cid']; ?>"><?php echo $country['name']; ?></option>
+      		<option <?php if($userRow['country'] == $country['cid']){ echo 'selected="selected"';} ?> value="<?php echo $country['cid']; ?>"><?php echo $country['name']; ?></option>
 		<?php }  ?>
       	</select>
   	</div>
@@ -138,7 +167,12 @@ if($Submit)
     <div class="form-group">
   	<textarea name="txt_Comments" id="txt_Comments" class="" style="width: 50%; height: 145px;" placeholder="Enter Your Comments"></textarea>
   </div>
+  <?php if(isset($_GET['user_id'])){?>
+  <input name="Update" class="btn btn-primary" type="submit" id="Update" value="Update" />
+  <?php } else{ ?>
   <input name="Submit" class="btn btn-primary" type="submit" id="Submit" value="Submit" />
+  <?php } ?>
+  
         <span class="button float_r">
         <input name="cancel" class="btn btn-default" type="reset" id="cancel" value="Cancel" />
       </span>

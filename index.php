@@ -35,7 +35,16 @@ if(isset($_SESSION['user'])){
 <script src="js/owl.carousel.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.tbltree.js"></script>
 <link type="text/css" href="css/jquery.tbltree.css" rel="stylesheet">
+
+<script type="text/javascript" src="js/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="js/jquery.validationEngine.js"></script>
+<link type="text/css" href="css/validationEngine.jquery.css" rel="stylesheet">
 <script type="text/javascript">
+jQuery(document).ready(function(){
+	// binds form submission and fields to the validation engine
+	jQuery("#create_user").validationEngine();
+	jQuery("#form1").validationEngine();
+});
 $(document).ready(function() {
    $( "#users" ).tbltree();
 });
@@ -133,12 +142,18 @@ $(document).ready(function() {
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
 			<?php
-					}else if ($userObj->email && $userObj->user_type != 1)
+					}else if ($userObj->email && $userObj->user_type == 2)
 					{
 					
 			?>
             			<li class="list-group-item <?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
 						<li class="list-group-item <?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current">View Users</a></li>
+			<?php }else if ($userObj->email && $userObj->user_type == 3)
+					{
+					
+			?>
+            			<li class="list-group-item <?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="list-group-item <?php if($_GET['para']== 2){echo 'active';} ?>"><a href="index.php?para=2&user_id=<?php echo $userObj->id;?>" class="current">Update Profile</a></li>
 			<?php }?>
         </ul>
         </div>
@@ -164,12 +179,18 @@ $(document).ready(function() {
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
 			<?php
-					}else if ($userObj->email && $userObj->user_type != 1)
+					}else if ($userObj->email && $userObj->user_type == 2)
 					{
 					
 			?>
             			<li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
 						<li class="<?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current">View Users</a></li>
+			<?php }else if ($userObj->email && $userObj->user_type == 3)
+					{
+					
+			?>
+            			<li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
+						<li class="<?php if($_GET['para']== 2){echo 'active';} ?>"><a href="index.php?para=2&user_id=<?php echo $userObj->id;?>" class="current">Update Profile</a></li>
 			<?php }?>
     </ul>
     </div>
@@ -252,6 +273,7 @@ $(document).ready(function() {
 		case 15 : include('controls/user_inbox.php'); echo "<title>Shipspot inbox</title>"; break ; 
 		case 16 : include('admin/assign_discount.php'); echo "<title>Shipspot Assign Discount </title>"; break ; 
 		case 17 : include('admin/update_star_users.php'); echo "<title>Update Star User </title>"; break ;
+		case 18 : include('admin/create_carrier_users.php'); echo "<title>Update Profile</title>"; break ;
 		
 		default: 
 			echo "<title>ShipSpot Home</title>"; 

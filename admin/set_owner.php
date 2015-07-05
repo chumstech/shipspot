@@ -187,6 +187,8 @@ $is_privilege_discount = @$_POST['privilege_discount'];
 			{
 				$value = 0;
 			}
+			//echo $carrierId." ".$value;
+			//die();
 			updateCarrierAllowed($carrierId,$user_id,$value);
 		}
 			

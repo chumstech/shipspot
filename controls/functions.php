@@ -92,8 +92,20 @@ function checkCarrierAllowed($carrier_id,$user_id)
 
 function updateCarrierAllowed($carrier_id,$user_id,$value)
 {
-  $query = "UPDATE user_carrier_details SET is_allowed = $value where user_id=$user_id AND carrier_id =$carrier_id";
-  $ref =  mysql_query($query);
+  $q = "SELECT * FROM user_carrier_details where user_id=$user_id AND carrier_id =$carrier_id";
+  $r =  mysql_query($q);
+  $count = mysql_num_rows($r);
+  if($count > 0)
+  {
+	$query = "UPDATE user_carrier_details SET is_allowed = $value where user_id=$user_id AND carrier_id =$carrier_id";
+  	$ref =  mysql_query($query);  
+  }
+  else
+  {
+	 
+	echo $query = "INSERT INTO user_carrier_details (carrier_id,user_id,is_allowed) VALUES ($carrier_id,$user_id,$value)";
+  	$ref =  mysql_query($query);    
+  }
 }
 
 function checkCarrierDiscount($carrier_id,$user_id)
@@ -112,8 +124,20 @@ function getUserDetailById($id)
 }
 function updateCarrierDiscount($carrier_id,$user_id,$discount)
 {
-  $query = "UPDATE users_discount SET discount = $discount where user_id=$user_id AND carrier_id =$carrier_id";
-  $ref =  mysql_query($query);
+  $q = "SELECT * FROM users_discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $r =  mysql_query($q);
+  $count = mysql_num_rows($r);
+  if($count > 0)
+  {
+	$query = "UPDATE users_discount SET discount = $discount where user_id=$user_id AND carrier_id =$carrier_id";
+  	$ref =  mysql_query($query);
+  }
+  else
+  {
+	 
+	echo $query = "INSERT INTO users_discount (carrier_id,user_id,discount) VALUES ($carrier_id,$user_id,$discount)";
+  	$ref =  mysql_query($query);    
+  }
 }
 
 function checkCarrierPriviligedDiscount($carrier_id,$user_id)
@@ -126,8 +150,21 @@ function checkCarrierPriviligedDiscount($carrier_id,$user_id)
 
 function updateCarrierPriviligedDiscount($carrier_id,$user_id,$privilege_discount)
 {
+  $q = "SELECT * FROM users_discount where user_id=$user_id AND carrier_id =$carrier_id";
+  $r =  mysql_query($q);
+  $count = mysql_num_rows($r);
+  if($count > 0)
+  {
   $query = "UPDATE users_discount SET privilege_discount = $privilege_discount where user_id=$user_id AND carrier_id =$carrier_id";
   $ref =  mysql_query($query);
+  }
+  else
+  {
+	 
+	echo $query = "INSERT INTO users_discount (carrier_id,user_id,privilege_discount) VALUES ($carrier_id,$user_id,$privilege_discount)";
+  	$ref =  mysql_query($query);    
+  }
+
 }
 
 /*============DEFAULT FUNCTIONS AFTER USER SIGNUP==================*/
