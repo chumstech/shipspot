@@ -238,6 +238,7 @@ while($data = mysql_fetch_array($Query))
   	$DB_TNT  = @$data['TNT'];	  
   	$DB_LOOMIS  = @$data['LOOMIS'];	  
 	$DB_DHL =  @$data['DHL'];
+	$parentId =  @$data['parent_id'];
 }
 
 
@@ -258,7 +259,6 @@ input, textarea, .uneditable-input {
 }
 </style>
 <form id="" name="form1" method="post" action="">
-	
 	<div class="container-fluid">
     	<h2 style="margin-bottom: 5px;">User Personal Info</h2>
         <div class="row-fluid">
@@ -269,26 +269,31 @@ input, textarea, .uneditable-input {
     			<?php echo "Email : ".@$Email."<br/>"; ?>
                 <div class="form-group">
             		<label style="">User Owner</label>
-                  <?php if ($userObj->user_type == 1 && $userObj->email) 
-				  {
-				  ?>
-				  <select class="form-control" name="txt_owner" id="txt_owner" >  
-				  <?php
-					$QueryString = "select distinct * from users where user_type = 2";
-					$Query = mysql_query($QueryString);
-					while($data = mysql_fetch_array($Query)){
-				   ?>
-					  <option value="<?php echo @$data['id'];?>" ><?php echo @$data['first_name']." ".@$data['last_name'];?></option>
-					<?php
-					}
-					?>
-				  </select><?php }?>
-				  <?php if ($userObj->user_type == 2 && $userObj->email) 
-					{
-				  ?>
-				  <input class="form-control" type="hidden" name="txt_owner" value="<?php echo @$owner; ?>"/>
-					  <?php echo getUserName($owner);?>  
-				  <?php }?>
+                  	  <?php if ($userObj->user_type == 1 && $userObj->email) 
+						{
+					  ?>
+					  <select name="txt_owner" id="txt_owner" >  
+					  <?php
+						$QueryString = "select distinct * from users where user_type = 2";
+						$Query = mysql_query($QueryString);
+						while($data = mysql_fetch_array($Query)){
+							if($parentId == $data['id']){
+							  $selected = 'selected="selected"';
+							}else{
+							  $selected = '';
+							}
+					   ?>
+						  <option <?php echo $selected;?> value="<?php echo @$data['id'];?>" ><?php echo @$data['first_name']." ".@$data['last_name'];?></option>
+						<?php
+						}
+						?>
+					  </select><?php }?>
+					  <?php if ($userObj->user_type == 2 && $userObj->email) 
+						{
+					  ?>
+					  <input type="hidden" name="txt_owner" value="<?php echo @$owner; ?>"/>
+						  <?php echo getUserName($owner);?>  
+					  <?php }?>
               </div>
          	</div>
         </div>
