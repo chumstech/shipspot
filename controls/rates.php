@@ -138,12 +138,12 @@ table thead {
 	 <?php }?>    
           </div>
           <div class="submit">
-            <input name="loginType" type="hidden" id="loginType"  value="<?php if($userObj->user_type == 1) { echo "admin";} else { echo "user"; } ?>" />
-          <input name="checkCanada" type="hidden" id="checkCanada" value="0" />
+            <input name="loginType" type="hidden" id="loginType"  value="<?php echo $userObj->user_type;?>" />
+          <input name="checkCanada" type="hidden" id="checkCanada" value="1" />
           <input name="checkFedex" type="hidden" id="checkFedex" value="1" />
-          <input name="checkPur" type="hidden" id="checkPur" value="0" />
-          <input name="checkUps" type="hidden" id="checkUps" value="0" />
-          <input name="checkTnt" type="hidden" id="checkTnt" value="0" />
+          <input name="checkPur" type="hidden" id="checkPur" value="1" />
+          <input name="checkUps" type="hidden" id="checkUps" value="1" />
+          <input name="checkTnt" type="hidden" id="checkTnt" value="1" />
           <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
           <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
            <input name="star_user_id" type="hidden" id="star_user_id" value="<?php echo $userObj->id?>" />
