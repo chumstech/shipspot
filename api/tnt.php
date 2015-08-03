@@ -56,9 +56,9 @@
 			$starRateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		}
 		if(!is_array($rateData)){
-			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response' => json_encode(array("No Response Return")));
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response_short' => 'Fail','response' => json_encode(array("No Response Return")));
 		}else{
-			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response' => json_encode($rateData));
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response_short' => 'Success','response' => json_encode($rateData));
 		}
 		addApiLog($insertClause);
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $tntDetail->id);

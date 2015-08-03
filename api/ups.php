@@ -49,9 +49,9 @@
 		}
 		
 		if(!is_array($rateData)){
-			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response' => json_encode(array("No Response Return")));
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response_short' => 'Fail','response' => json_encode(array("No Response Return")));
 		}else{
-			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response' => json_encode($rateData));
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response_short' => 'Success','response' => json_encode($rateData));
 		}
 		addApiLog($insertClause);
 		

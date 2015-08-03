@@ -40,6 +40,8 @@ if(isset($_SESSION['user'])){
 <link href="css/owl.transitions.css" rel="stylesheet" type="text/css" />
 <link href="css/owl.carousel.css" rel="stylesheet" type="text/css" />
 <link href="css/owl.theme.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 <!-- <link href="http://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 
 <script src="js/jquery.js"></script> 
@@ -153,7 +155,7 @@ $(document).ready(function() {
 			?>	
 						<li class="list-group-item <?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current"> Users</a></li>
                         <li class="list-group-item <?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
-						<li class="list-group-item <?php if($_GET['para']== 9){echo 'active';} ?>"><a href="index.php?para=9" class="current">Create Carriers</a></li>
+						<li class="list-group-item <?php if($_GET['para']== 14){echo 'active';} ?>"><a href="index.php?para=14" class="current">Carriers</a></li>
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
 			<?php
@@ -191,6 +193,7 @@ $(document).ready(function() {
 						<li class="<?php if($_GET['para']== 7){echo 'active';} ?>"><a href="index.php?para=7" class="current"> Users</a></li>
                         <li class="<?php if($_GET['para']== 3){echo 'active';} ?>"><a href="index.php?para=3">Get Rates</a></li>
 						<li class="<?php if($_GET['para']== 14){echo 'active';} ?>"><a href="index.php?para=14" class="current">Carriers</a></li>
+                        <li class="<?php if($_GET['para']== 19){echo 'active';} ?>"><a href="index.php?para=19" class="current">Get Rate Log</a></li>
 						<!--<li><a href="index.php?para=16" class="current">Discount</a></li>-->
 					
 			<?php
@@ -289,6 +292,7 @@ $(document).ready(function() {
 		case 16 : include('admin/assign_discount.php'); echo "<title>Shipspot Assign Discount </title>"; break ; 
 		case 17 : include('admin/update_star_users.php'); echo "<title>Update Star User </title>"; break ;
 		case 18 : include('admin/create_carrier_users.php'); echo "<title>Update Profile</title>"; break ;
+		case 19 : include('controls/get_rate_logs.php'); echo "<title>Get Rates Log</title>"; break ;
 		
 		default: 
 			echo "<title>ShipSpot Home</title>"; 

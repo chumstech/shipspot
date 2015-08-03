@@ -259,3 +259,22 @@ table thead {
   float: left;
   margin-right: 5px;
 }
+
+.filter
+{
+	float:left;
+	width:100%;
+}
+
+
+.filter label {
+    float: left;
+    font-size: 14px;
+    line-height: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.filter input
+{
+	float:left;
+}
