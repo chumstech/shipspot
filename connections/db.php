@@ -3,7 +3,7 @@ ob_start();
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "shipping_new";
+$database = "shipping";
 $cn = mysql_connect($hostname,$username,$password) or die(mysql_error());
 $db = mysql_select_db($database,$cn) or die(mysql_error());
 

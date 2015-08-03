@@ -63,18 +63,13 @@
 			$purolatorDetail = getStarUserCarriers($selectClause,$whereClause);
 			$starRateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo,$countryToState);
 		}
-		//$purolatorDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
-// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-// 		{
-// 				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
-// 		}
-// 		else
-// 		{
-// 			if($_SESSION['DB_PUROLATOR']=='Y')
-// 			{
-// 				$rateData = $purolatorRate->setCredentials($purolatorDetail->api_key,$purolatorDetail->password,$purolatorDetail->account_no,$tntDetail->other_account_no,$from, $to, $length, $width, $height, $weight,$countryFrom,$countryTo);
-// 			}
-// 		}
+		
+		if(!is_array($rateData)){
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Purolator','response' => json_encode(array("No Response Return")));
+		}else{
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Purolator','response' => json_encode($rateData));
+		}
+		addApiLog($insertClause);
 		
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $purolatorDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
@@ -83,7 +78,7 @@
 		{
 			if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100);
+					   $canDiscount = $canadaRate['rate'] + ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
@@ -138,6 +133,11 @@
 			if($canType > 2)
 			{
 			$canType = 3;
+			}
+			
+			if($canDelivery == '' || $canDelivery == 'null')
+			{
+				$canDelivery = '';
 			}
 			
 			

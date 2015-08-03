@@ -1,5 +1,6 @@
 //var appBaseURL = document.location.protocol + '//96.126.101.70/';
-var appBaseURL = document.location.protocol + '//96.126.101.70/shipping_new';
+//var appBaseURL = document.location.protocol + '//96.126.101.70/shipping_new';
+//var appBaseURL = document.location.protocol + '//localhost/shipspot/'
 function updateUserSelectedCarriers()
 {
 	var dataArry = [];

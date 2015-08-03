@@ -54,25 +54,21 @@
 			$canadaDetail = getStarUserCarriers($selectClause,$whereClause);
 			$starRateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		}
-// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-// 		{
-// 				$rateData = $canadaPostRate->setCredentials($canadaDetail->api_key,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-// 		}
-// 		else
-// 		{
-// 			if($_SESSION['DB_CANADAPOST'] == 'Y') //check if this carrier is enabled then call API to get rates
-// 			{
-// 				$rateData = $canadaPostRate->setCredentials($admin_col1_canada,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-// 			}
-// 		}
-		//print_r($rateData);
+		
+		if(!is_array($rateData)){
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Canada Post','response' => json_encode(array("No Response Return")));
+		}else{
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Canada Post','response' => json_encode($rateData));
+		}	
+		addApiLog($insertClause);
+		
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $canadaDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
 		foreach($rateData as $canadaRate)
 		{
 			if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100);
+					   $canDiscount = $canadaRate['rate'] + ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
@@ -103,13 +99,13 @@
 				$canRate = 0;
 			}
 			$canShipping = $canadaRate['shippingDate'];
-			/*$date1=date_create($canDelivery);
+			$date1=date_create($canDelivery);
 			$date2=date_create($canShipping);
 			$diff=date_diff($date1,$date2);
-			echo $diff;
+			//echo $diff;
 			$canDelivery = date("F d Y", strtotime($canDelivery));
 			$canType = $diff->format("%a");
-			echo $canType;
+			//echo $canType;
 			if($canType == 1)
 			{
 			$canType = 1; 	
@@ -119,9 +115,9 @@
 			$canType = 2; 	
 			}
 			if($canType > 2)
-			{*/
+			{
 			$canType = 3;
-			/*}*/
+			}/*}*/
 			
 			
 			$canadaRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);

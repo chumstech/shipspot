@@ -55,19 +55,12 @@
 			$tntDetail = getStarUserCarriers($selectClause,$whereClause);
 			$starRateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
 		}
-	//	$tntDetail->account_no,$tntDetail->api_key,$tntDetail->password,$tntDetail->other_account_no
-// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-// 		{
-// 				$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-// 		}
-// 		else
-// 		{		
-// 			if($_SESSION['DB_TNT'] =='Y')
-// 			{
-// 			$rateData = $tntRate->setCredentials($tntDetail->api_key,$tntDetail->password,$tntDetail->account_no,$length,$width,$height,$weight,$from,$to,$countryFrom,$countryTo);
-// 			}
-// 		}
-		
+		if(!is_array($rateData)){
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response' => json_encode(array("No Response Return")));
+		}else{
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'TnT','response' => json_encode($rateData));
+		}
+		addApiLog($insertClause);
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $tntDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
 		
@@ -82,7 +75,7 @@
 				{
 					  if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100 );
+					   $canDiscount = $canadaRate['rate'] + ($carrierDiscounts->privilege_discount * $canadaRate['rate'] / 100 );
 						$canDiscount = round($canDiscount,2);
 						
 				   }else{

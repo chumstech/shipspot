@@ -20,7 +20,6 @@
 		$length = $_GET['txt_length'];
 		$width 	= $_GET['txt_width'];
 		$height = $_GET['txt_height'];
-        
 	  if($userObj->is_privilege_discount == 1 and $userObj->user_type !=  2){
 			$selectClause = "*";
 		 	$starUserDetail = getUserDetailById($userObj->parent_id);
@@ -45,17 +44,21 @@
 			$fedexDetail = getStarUserCarriers($selectClause,$whereClause);
 	    	$starRateData = $fedexRate->setCredentials($fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no,$weight,$height,$width,$length,$from,$to,$countryFrom,$countryTo);
 		}
-//         echo '<pre>';print_r($rateData);
-//         echo '<pre>';print_r($starRateData);
+		if(!is_array($rateData)){
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Fedex','response' => json_encode(array("No Response Return")));
+		}else{
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'Fedex','response' => json_encode($rateData));
+		}
+		
+		
+		addApiLog($insertClause);
 		foreach($rateData as $key => $fedexRate)
 		{
 			$object = (object) array('user_id' => $userObj->id,'carrier_id' => $fedexDetail->id);
 			$carrierDiscounts =  geGenrealCarrierDiscount($object);
 			if($userObj->is_privilege_discount == 1){
 					   
-					    $canDiscount = $fedexRate['amount'] - ($carrierDiscounts->privilege_discount * $fedexRate['amount'] / 100);
-					  //  var_dump($canDiscount);
-					   // var_dump($fedexRate['amount']);
+					    $canDiscount = $fedexRate['amount'] + ($carrierDiscounts->privilege_discount * $fedexRate['amount'] / 100);
 						$canDiscount = round($canDiscount,2);
 						
 			}else{
@@ -131,6 +134,14 @@
 						}
 					}
 				}
+				
+						
+						if($canDelivery == '' || $canDelivery == 'null' || $canDelivery == ' ')
+						{
+							$canDelivery = '';
+						}
+						
+						//die($canDelivery);
 			
 			
 			

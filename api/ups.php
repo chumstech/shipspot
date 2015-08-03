@@ -48,20 +48,13 @@
 			$starRateData = $upsRate->setCredentials($upsDetail->account_no,$upsDetail->api_key,$upsDetail->password,$upsRate->other_account_no,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
 		}
 		
-		//$fedexDetail->api_key,$fedexDetail->password,$fedexDetail->account_no,$fedexDetail->other_account_no
-// 		if($userObj->user_type == 1) // check if admin login or local user to give an option to select carrier
-// 		{
-// 				$rateData = $upsRate->setCredentials($upsDetail->account_no,$upsDetail->api_key,$upsDetail->password,$upsRate->other_account_no,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
-// 		}
-// 		else
-// 		{
-// 			if($_SESSION['DB_UPS'] == 'Y')
-// 			{
-// 				$rateData = $upsRate->setCredentials($upsDetail->account_no,$upsDetail->api_key,$upsDetail->password,$upsRate->other_account_no,$from, $to, $length, $width, $height, $weight, $packingType,$countryFrom,$countryTo);
-// 			}
-// 		}
+		if(!is_array($rateData)){
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response' => json_encode(array("No Response Return")));
+		}else{
+			$insertClause = array('user_id' =>$userObj->id,'api_name' => 'UPS','response' => json_encode($rateData));
+		}
+		addApiLog($insertClause);
 		
-
 		$object = (object) array('user_id' => $userObj->id,'carrier_id' => $upsDetail->id);
 		$carrierDiscounts =  geGenrealCarrierDiscount($object);
 		
@@ -69,7 +62,7 @@
 		{
 			       if($userObj->is_privilege_discount == 1){
 					   
-					   $canDiscount = $canadaRate['rate'] - ($carrierDiscounts->privilege_discount* $canadaRate['rate'] / 100);
+					   $canDiscount = $canadaRate['rate'] + ($carrierDiscounts->privilege_discount* $canadaRate['rate'] / 100);
 						$canDiscount = round($canDiscount,2);
 						
 				   }else{		   

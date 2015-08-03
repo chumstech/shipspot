@@ -1,7 +1,11 @@
 <?php
 require_once("functions.php");
 		    $selectedCarriers = array();
+		    if($userObj->user_type == 2){
 			$object = (object) array('user_id' => $userObj->id);
+		    }else{
+		    	$object = (object) array('user_id' => $userObj->parent_id);
+		    }
 			$selectedCarriers = getUserSelectedCarriers($object);
 			$countries = getCountries();
 
@@ -139,11 +143,11 @@ table thead {
           </div>
           <div class="submit">
             <input name="loginType" type="hidden" id="loginType"  value="<?php echo $userObj->user_type;?>" />
-          <input name="checkCanada" type="hidden" id="checkCanada" value="1" />
-          <input name="checkFedex" type="hidden" id="checkFedex" value="1" />
-          <input name="checkPur" type="hidden" id="checkPur" value="1" />
-          <input name="checkUps" type="hidden" id="checkUps" value="1" />
-          <input name="checkTnt" type="hidden" id="checkTnt" value="1" />
+          <input name="checkCanada" type="hidden" id="checkCanada" value="<?php if(in_array(1,$selectedCarriers)){ echo 1;}else { echo 0;}?>" />
+          <input name="checkFedex" type="hidden" id="checkFedex" value="<?php if(in_array(2,$selectedCarriers)){ echo 1;}else { echo 0;}?>" />
+          <input name="checkPur" type="hidden" id="checkPur" value="<?php if(in_array(3,$selectedCarriers)){ echo 1;}else { echo 0;}?>" />
+          <input name="checkUps" type="hidden" id="checkUps" value="<?php if(in_array(4,$selectedCarriers)){ echo 1;}else { echo 0;}?>" />
+          <input name="checkTnt" type="hidden" id="checkTnt" value="<?php if(in_array(5,$selectedCarriers)){ echo 1;}else { echo 0;}?>" />
           <input name="checkPostRates" type="hidden" id="checkPostRates" value="<?php echo $userObj->is_posted_rate;?>" />
           <input name="checkDiscountRates" type="hidden" id="checkDiscountRates" value="<?php echo $userObj->is_discounted_rate;?>" />
            <input name="star_user_id" type="hidden" id="star_user_id" value="<?php echo $userObj->id?>" />
