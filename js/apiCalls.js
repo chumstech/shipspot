@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 //var appBaseURL = document.location.protocol + '//localhost/shipping/';
 var appBaseURL = document.location.protocol + '//96.126.101.70/shipping_new';
+=======
+//var appBaseURL = document.location.protocol + '//96.126.101.70/';
+//var appBaseURL = document.location.protocol + '//96.126.101.70/shipping_new';
+//var appBaseURL = document.location.protocol + '//localhost/shipspot/'
+>>>>>>> 32b34a49b603c58006c6ab92e43dc97a8208b56e
 function updateUserSelectedCarriers()
 {
 	var dataArry = [];

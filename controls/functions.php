@@ -10,7 +10,11 @@ function getUserSelectedCarriers($object)
 	}
 }
 
-
+function addApiLog($insertClause)
+{
+    $query = "INSERT INTO api_log (".implode(',',array_keys($insertClause)).") VALUES ('".implode("','",$insertClause)."')";
+	$ref =  mysql_query($query);
+}
 function getCountries()
 {
    $query = mysql_query("select * from countries")or die(mysql_error());
@@ -103,7 +107,7 @@ function updateCarrierAllowed($carrier_id,$user_id,$value)
   else
   {
 	 
-	echo $query = "INSERT INTO user_carrier_details (carrier_id,user_id,is_allowed) VALUES ($carrier_id,$user_id,$value)";
+    $query = "INSERT INTO user_carrier_details (carrier_id,user_id,is_allowed) VALUES ($carrier_id,$user_id,$value)";
   	$ref =  mysql_query($query);    
   }
 }
