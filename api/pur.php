@@ -140,6 +140,11 @@
 			$canType = 3;
 			}
 			
+			if($canDelivery == '' || $canDelivery == 'null')
+			{
+				$canDelivery = '';
+			}
+			
 			
 			$canadaRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);
 		} 

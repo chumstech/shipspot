@@ -131,6 +131,14 @@
 						}
 					}
 				}
+				
+						
+						if($canDelivery == '' || $canDelivery == 'null' || $canDelivery == ' ')
+						{
+							$canDelivery = '';
+						}
+						
+						//die($canDelivery);
 			
 			
 			

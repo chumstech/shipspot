@@ -32,6 +32,9 @@ else if($Email!="" or $Password!="")
 		else
 		{
 			   $_SESSION['user'] = $row;
+			   $_SESSION['start'] = time(); // Taking now logged in time.
+            	// Ending a session in 30 minutes from the starting time.
+            	$_SESSION['expire'] = $_SESSION['start'] + (15 * 60);
 				header("location:../index.php?para=3");
 		}
 }

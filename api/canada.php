@@ -103,13 +103,13 @@
 				$canRate = 0;
 			}
 			$canShipping = $canadaRate['shippingDate'];
-			/*$date1=date_create($canDelivery);
+			$date1=date_create($canDelivery);
 			$date2=date_create($canShipping);
 			$diff=date_diff($date1,$date2);
-			echo $diff;
+			//echo $diff;
 			$canDelivery = date("F d Y", strtotime($canDelivery));
 			$canType = $diff->format("%a");
-			echo $canType;
+			//echo $canType;
 			if($canType == 1)
 			{
 			$canType = 1; 	
@@ -119,9 +119,9 @@
 			$canType = 2; 	
 			}
 			if($canType > 2)
-			{*/
+			{
 			$canType = 3;
-			/*}*/
+			}/*}*/
 			
 			
 			$canadaRates[] = array("canDiscount" => $canDiscount, "canName" => $canName, "canDelivery" => $canDelivery, "canRate" => $canRate, "canType" => $canType);

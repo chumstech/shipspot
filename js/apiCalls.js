@@ -1,4 +1,4 @@
-//var appBaseURL = document.location.protocol + '//96.126.101.70/';
+//var appBaseURL = document.location.protocol + '//localhost/shipping/';
 var appBaseURL = document.location.protocol + '//96.126.101.70/shipping_new';
 function updateUserSelectedCarriers()
 {

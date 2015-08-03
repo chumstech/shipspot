@@ -1,10 +1,25 @@
 ﻿<?php
 ini_set('display_errors',0);
 session_start();
+if($para != 1 && $para != 11  && $para != 5 && $para != 4 )
+{
+		$now = time(); // Checking the time now when home page starts.
+		//echo $_SESSION['start'];
+		//echo $_SESSION['expire'];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+			$message = 'Session Expire Please Log in Again!';
+            header('Location : ../index.php?para=1&msg='.$message);
+			//echo "Your session has expired! <a href='http://localhost/somefolder/login.php'>Login here</a>";
+        }
+}
 require_once('connections/db.php'); 
 include('controls/functions.php');
 $para = @$_GET['para'];
 $msg = @$_GET['msg'];
+
+
+
 
 $userObj = "";
 if(isset($_SESSION['user'])){
